@@ -62,7 +62,7 @@ ul.social-icons li a {
 }
 
 ul.social-icons li a:hover {
-	background-color: #f33f3f;
+	background-color: #6eace4;
 	color: #fff;
 }
 
@@ -97,11 +97,11 @@ a.filled-button:hover {
 }
 
 .products-heading {
-	background-image: url(../images/products-heading.jpg);
+	background-image: url(../images/sobrenosotros.png);
 }
 
 .about-heading {
-	background-image: url(../images/about-heading.jpg);
+	background-image: url(../images/sobrenosotrosbien.png);
 }
 
 .contact-heading {
@@ -117,7 +117,7 @@ a.filled-button:hover {
 }
 
 .page-heading .text-content h4 {
-	color: #f33f3f;
+	color: #fff;
 	font-size: 22px;
 	text-transform: uppercase;
 	font-weight: 700;
@@ -574,11 +574,11 @@ header .navbar {
 }
 
 .best-features ul.featured-list li a:hover {
-	color: #f33f3f;
+	color: #6eace4;
 }
 
 .best-features ul.featured-list li a:hover::before {
-	background-color: #f33f3f;
+	background-color: #6eace4;
 }
 
 .best-features .filled-button {
@@ -752,7 +752,7 @@ footer .inner-content p a {
 
 .team-member .thumb-container .hover-effect .hover-content ul.social-icons li a:hover {
 	background-color: #fff;
-	color: #f33f3f;
+	color: #6eace4;
 }
 
 .team-member:hover .hover-effect {
@@ -780,7 +780,7 @@ footer .inner-content p a {
 /* Services */
 
 .services {
-	background-image: url(../images/services-bg.jpg);
+	background-image: url(../images/misionvision.png);
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -803,7 +803,7 @@ footer .inner-content p a {
 	display: inline-block;
 	text-align: center;
 	line-height: 100px;
-	background-color: #f33f3f;
+	background-color: #6eace4;
 	color: #fff;
 	font-size: 32px;
 }
