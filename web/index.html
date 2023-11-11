@@ -50,18 +50,22 @@
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="index.html">Inicio
+                                <a class="nav-link" href="index.html"> <i class="fa fa-home" aria-hidden="true"></i> Inicio
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="products.html">Nuestros Productos</a>
+                                <a class="nav-link" href="products.html"><i class="fa fa-car" aria-hidden="true"></i> Nuestros Productos</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="about.html">Acerca de nosotros</a>
+                                <a class="nav-link" href="about.html"><i class="fa fa-globe" aria-hidden="true"></i> Acerca de nosotros</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link " href="index.jsp"><i class="fa fa-user" aria-hidden="true"></i> Iniciar Sesión</a>
+                                <a class="nav-link " href="cart.jsp"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Carrito</a>
+                            </li>
+                            <li class="nav-item">
+                                <!--<a class="nav-link " href="index.jsp"><i class="fa fa-user" aria-hidden="true"></i> Iniciar Sesión</a>-->
+                                <a class="nav-link" data-toggle="modal" data-target="#Modal2"><i class="fa fa-user" aria-hidden="true"></i> Iniciar Sesión</a>
                             </li>
                         </ul>
                     </div>
@@ -113,14 +117,78 @@
                                 <p>Direccional para largas distancias y toda pocision.
                                     Nuevo diseño, apto para condiciones pavimentadas con un nivel de alta velocidad y excelente durabilidad.</p>
                                 <ul class="stars">
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
+                                    <li><a href="" class="filled-button" data-toggle="modal" data-target="#loginModal">Ver detalles</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
+                                
+                    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header border-bottom-0">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-title text-center">
+                                        <h4>Bienvenidos</h4>
+                                    </div>
+                                    <div class="d-flex flex-column text-center">
+                                        <form action="iniciar" method="post">
+                                            <div class="form-group">
+                                                <input name="usuario" type="text" class="form-control" id="email1"placeholder="Nombre de usuario...">
+                                            </div>
+                                            <div class="form-group">
+                                                <input name="pass" type="password" class="form-control" id="password1" placeholder="Escribir contraseña...">
+                                            </div>
+                                            <input type="submit" class="filled-button" value="Iniciar sesión">
+                                        </form>
+
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <div class="signup-section">No tienes cuenta? <a href="registro.jsp" class="text-info"> Registrar</a>.</div>
+                                </div>
+                            </div>
+                        </div>      
+                    </div>
+                    
+                    <div class="modal fade1" id="Modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header border-bottom-0">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-title text-center">
+                                        <h4>Inicio de Sesión</h4>
+                                    </div>
+                                    <div class="d-flex flex-column text-center">
+                                        <form action="iniciar" method="post">
+                                            <div class="form-group">
+                                                <input name="usuario" type="text" class="form-control" id="email1"placeholder="Nombre de usuario...">
+                                            </div>
+                                            <div class="form-group">
+                                                <input name="pass" type="password" class="form-control" id="password1" placeholder="Escribir contraseña...">
+                                            </div>
+                                            <input type="submit" class="filled-button" value="Iniciar sesión">
+                                        </form>
+
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <div class="signup-section">No tienes cuenta? <a href="registro.jsp" class="text-info"> Registrar</a>.</div>
+                                </div>
+                            </div>
+                        </div>      
+                    </div>
+                                    
                     <div class="col-md-4">
                         <div class="product-item">
                             <a href="#"><img src="assets/images/Pesados/18.4-38 R1.jpg" alt=""></a>
@@ -131,9 +199,7 @@
                                 <h6>$13,999</h6>
                                 <p>Ideal para uso en cultivos de suelos consistentes. Las ventajas de esta llanta son que posee unos bloques alternos separados y profundos que brindan excelente tracción</p>
                                 <ul class="stars">
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
+                                    <li><a href="" class="filled-button" data-toggle="modal" data-target="#loginModal">Ver detalles</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -148,11 +214,7 @@
                                 <h6>$52,499</h6>
                                 <p>Es un neumático de telas cruzadas de base ancha desarrollado para palas cargadoras, que minimiza el riesgo de cortes y perforaciones en las operaciones de carga más pesadas.</p>
                                 <ul class="stars">
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
+                                    <li><a href="" class="filled-button" data-toggle="modal" data-target="#loginModal">Ver detalles</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -167,11 +229,7 @@
                                 <h6>$4,999</h6>
                                 <p>El neumático todo-terreno Open Country A/T III ofrece tracción con agarre y manejo sensible y predecible en carretera. Con un fuerte enfoque en el rendimiento en mojado, la durabilidad y la vida útil de la banda de rodadura.</p>
                                 <ul class="stars">
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
+                                    <li><a href="" class="filled-button" data-toggle="modal" data-target="#loginModal">Ver detalles</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -186,11 +244,7 @@
                                 <h6>$8,199</h6>
                                 <p>Construido resistente para cualquier terreno, este poderoso neumático 4x4 ofrece una excelente tracción todoterreno, una construcción duradera y un estilo agresivo. Su capacidad para hacer frente a la tierra, la arena y las rocas</p>
                                 <ul class="stars">
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
+                                    <li><a href="" class="filled-button" data-toggle="modal" data-target="#loginModal">Ver detalles</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -205,11 +259,7 @@
                                 <h6>$5,808</h6>
                                 <p>Neumático de sesgo extremo que proporciona la máxima tracción en cualquier condición del camino. Diseñado para conquistar el terreno con facilidad</p>
                                 <ul class="stars">
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
-                                    <li><i class="fa fa-star"></i></li>
+                                    <li><a href="" class="filled-button" data-toggle="modal" data-target="#loginModal">Ver detalles</a></li>
                                 </ul>
                             </div>
                         </div>

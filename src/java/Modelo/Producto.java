@@ -15,13 +15,15 @@ public class Producto {
     private double precio;
     private int stock;
     private String descripcion;
+    private String tipo;
 
     public Producto() {
     }
 
-    public Producto(int id, String nombre, String img, double precio, int stock, String descripcion) {
+    public Producto(int id, String nombre, String tipo, String img, double precio, int stock, String descripcion) {
         this.id = id;
         this.nombre = nombre;
+        this.tipo = tipo;
         this.img = img;
         this.precio = precio;
         this.stock = stock;
@@ -77,6 +79,16 @@ public class Producto {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
+    
     
     
     

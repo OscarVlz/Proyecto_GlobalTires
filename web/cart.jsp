@@ -55,7 +55,7 @@
                             <thead>
                                 <tr class="cart_menu">
                                     <td class="image">Productos</td>
-                                    <td class="description"></td>
+                                    <td class="description">Descripción</td>
                                     <td class="price">Precio</td>
                                     <td class="quantity">Cantidad</td>
                                     <td class="total">Total</td>
