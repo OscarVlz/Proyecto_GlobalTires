@@ -1,22 +1,21 @@
 <%-- 
-    Document   : productos
-    Created on : 11/11/2023, 07:06:31 PM
+    Document   : detallesProducto
+    Created on : 11/11/2023, 08:39:53 PM
     Author     : JORGE
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     HttpSession objSesion = request.getSession(false);
     String usuario = (String) objSesion.getAttribute("usuario");
     if (usuario == null) {
         response.sendRedirect("index.jsp");
-
     }
 %>
 <%@page import="Controlador.ControladorProducto"%>
 <%@page import="Modelo.Producto"%>
 <%
-    ControladorProducto cp = new ControladorProducto();
+    int id = Integer.parseInt(request.getParameter("id"));
+    Producto producto = new ControladorProducto().getProducto(id);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,7 +76,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="products.jsp"><i class="fa fa-car" aria-hidden="true"></i> Nuestros Productos</a>
+                                <a class="nav-link active" href="products.html"><i class="fa fa-car" aria-hidden="true"></i> Nuestros Productos</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="about.html"><i class="fa fa-globe" aria-hidden="true"></i> Acerca de nosotros</a>
@@ -85,92 +84,39 @@
                             <li class="nav-item">
                                 <a class="nav-link " href="carrito.jsp"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Carrito</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="modal" data-target="#loginModal"><i class="fa fa-user" aria-hidden="true"></i> Iniciar Sesión</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
             </nav>
         </header>
 
-        <!-- Page Content -->
-        <div class="page-heading products-heading header-text">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="text-content">
-                            <h4>Nuestros productos</h4>
-                            <h2>#TODOTIPODELLANTAS</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="products">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="filters">
-                            <ul>
-                                <li class="active" data-filter="*">All Products</li>
-                                <li data-filter=".des">Automoviles</li>
-                                <li data-filter=".dev">Vehiculos Pesados</li>
-                                <li data-filter=".gra">Todoterreno</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="filters-content dev">
-                            <div class="row grid">
-                                <%=cp.getProductos()%>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <ul class="pages">
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- MODAL DE LOGIN -->
-        <div class="modal fade1" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header border-bottom-0">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+        <div class="col-sm-9 padding-right">
+            <div class="view-product">
+                <br>
+                <br>
+                <img src="assets/images/<%= producto.getTipo()%>/<%= producto.getImg()%>" alt="" width="500" height="500"/>
+                <h2><%= producto.getNombre()%></h2><br>
+                <h4><%= producto.getDescripcion()%></h4>
+                <img src="images/rating.png" alt="" />
+                <form action="agregarproducto" method="post">
+                    <span>
+                        <span>Precio $<%= producto.getPrecio()%></span><br>
+                        <label>Cantidad: </label>
+                        <input type="hidden" value="<%= producto.getId()%>" name="idproducto">
+                        <input type="text" value="1" id="txt-cantidad" name="cantidad"/><br>
+                        <button type="submit" class="btn btn-fefault cart">
+                            <i class="fa fa-shopping-cart"></i>
+                            Agregar al carrito
                         </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-title text-center">
-                            <h4>Inicio de Sesión</h4>
-                        </div>
-                        <div class="d-flex flex-column text-center">
-                            <form action="iniciar" method="post">
-                                <div class="form-group">
-                                    <input name="usuario" type="text" class="form-control" id="email1"placeholder="Nombre de usuario...">
-                                </div>
-                                <div class="form-group">
-                                    <input name="pass" type="password" class="form-control" id="password1" placeholder="Escribir contraseña...">
-                                </div>
-                                <input type="submit" class="filled-button" value="Iniciar sesión">
-                            </form>
-                        </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <div class="signup-section">No tienes cuenta? <a href="registro.jsp" class="text-info"> Registrar</a>.</div>
-                    </div>
-                </div>
-            </div>      
-        </div>                    
+                        <button class="btn btn-fefault cart">
+                            <a href="productos.jsp"> 
+                                Volver 
+                            </a>
+                        </button>
+                    </span>
+                </form>
+            </div>
+        </div> 
 
 
         <!-- Footer -->

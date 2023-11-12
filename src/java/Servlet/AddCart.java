@@ -58,7 +58,7 @@ public class AddCart extends HttpServlet {
         
         sesion.setAttribute("carrito", articulos);  
         
-        response.sendRedirect("cart.jsp");
+        response.sendRedirect("carrito.jsp");
         
         
         
