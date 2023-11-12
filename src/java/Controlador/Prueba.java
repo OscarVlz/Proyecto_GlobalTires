@@ -4,6 +4,8 @@
  */
 package Controlador;
 
+import Modelo.ModeloProducto;
+
 /**
  *
  * @author oscar
@@ -17,6 +19,9 @@ public class Prueba {
         // TODO code application logic here
         Conexion co= new Conexion();
         co.getConexion();
+        
+        ModeloProducto mp = new ModeloProducto();
+        System.out.println(mp.getAllProductos());
     }
     
 }

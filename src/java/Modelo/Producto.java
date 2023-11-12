@@ -87,12 +87,11 @@ public class Producto {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
-    
-    
-    
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "Producto{" + "id=" + id + ", nombre=" + nombre + ", img=" + img + ", precio=" + precio + ", stock=" + stock + ", descripcion=" + descripcion + ", tipo=" + tipo + '}';
+    }
+      
     
 }

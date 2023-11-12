@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * @author oscar
  */
 public class ModeloProducto extends Conexion{
+    
      public ArrayList<Producto> getAllProductos(){
         ArrayList<Producto> productos = new ArrayList<>();
         PreparedStatement pst = null;

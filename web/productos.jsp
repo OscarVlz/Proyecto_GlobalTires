@@ -1,3 +1,21 @@
+<%-- 
+    Document   : productos
+    Created on : 11/11/2023, 07:06:31 PM
+    Author     : JORGE
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    HttpSession objSesion = request.getSession(false);
+    String usuario = (String) objSesion.getAttribute("usuario");
+    if(usuario == null){
+       response.sendRedirect("index.jsp");
+    }
+%>
+<%@page import="Controlador.ControladorProducto"%>
+<%
+   ControladorProducto cp = new ControladorProducto();
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -105,93 +123,7 @@
                     <div class="col-md-12">
                         <div class="filters-content dev">
                             <div class="row grid">
-                                <div class="col-lg-4 col-md-4 all des">
-                                    <div class="product-item">
-                                        <img src="assets/images/Vehiculos/OpenCountry.jpg" alt="">
-                                        <div class="down-content">
-                                            <h4>Llanta OpenCountry</h4>
-                                            <h6>$4,999</h6>
-                                            <p>El neumático Open Country A/T III ofrece tracción con agarre y manejo sensible y predecible en carretera. Con un fuerte enfoque en el rendimiento en mojado.</p>
-                                            <ul class="stars">
-                                                <li><a href="" class="filled-button" data-toggle="modal" data-target="#loginModal">Ver detalles</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 all gra">
-                                    <div class="product-item">
-                                        <a href="#"><img src="assets/images/TodoTerreno/muf-TerrainTA.jpg" alt=""></a>
-                                        <div class="down-content">
-                                            <a href="#">
-                                                <h4>Llanta muf-TerrainTA</h4>
-                                            </a>
-                                            <h6>$5,808</h6>
-                                            <p>Neumático de sesgo extremo que proporciona la máxima tracción en cualquier condición del camino. Diseñado para conquistar el terreno con facilidad.</p>
-                                            <ul class="stars">
-                                                <li><a href="" class="filled-button" data-toggle="modal" data-target="#loginModal">Ver detalles</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 all des">
-                                    <div class="product-item">
-                                        <a href="#"><img src="assets/images/Vehiculos/11R22.5.jpg" alt=""></a>
-                                        <div class="down-content">    
-                                            <h4>Llanta 11R22.5</h4>
-                                            <h6>$1,199</h6>
-                                            <p>Direccional para largas distancias y toda pocision.
-                                                Nuevo diseño, apto para condiciones pavimentadas con un nivel de alta velocidad.</p>
-                                            <ul class="stars">
-                                                <li><a href="" class="filled-button" data-toggle="modal" data-target="#loginModal">Ver detalles</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 all dev">
-                                    <div class="product-item">
-                                        <a href="#"><img src="assets/images/Pesados/Pesado1.jpg" alt=""></a>
-                                        <div class="down-content">
-                                            <a href="#">
-                                                <h4>Llanta 29.5-25 BKT</h4>
-                                            </a>
-                                            <h6>$52,499</h6>
-                                            <p>Es un neumático de telas cruzadas de base ancha desarrollado para palas cargadoras, que minimiza el riesgo de cortes y perforaciones en las operaciones de carga más pesadas.</p>
-                                            <ul class="stars">
-                                                <li><a href="" class="filled-button" data-toggle="modal" data-target="#loginModal">Ver detalles</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 all dev">
-                                    <div class="product-item">
-                                        <a href="#"><img src="assets/images/Pesados/18.4-38 R1.jpg" alt=""></a>
-                                        <div class="down-content">
-                                            <a href="#">
-                                                <h4>Llanta 18.4-38 R1</h4>
-                                            </a>
-                                            <h6>$13,999</h6>
-                                            <p>Ideal para uso en cultivos de suelos consistentes. Las ventajas de esta llanta son que posee unos bloques alternos separados y profundos que brindan excelente tracción.</p>
-                                            <ul class="stars">
-                                                <li><a href="" class="filled-button" data-toggle="modal" data-target="#loginModal">Ver detalles</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 all gra">
-                                    <div class="product-item">
-                                        <a href="#"><img src="assets/images/TodoTerreno/35x12.50R17.jpg" alt=""></a>
-                                        <div class="down-content">
-                                            <a href="#">
-                                                <h4>Llanta 35x12.50R17</h4>
-                                            </a>
-                                            <h6>$8,199</h6>
-                                            <p>Construido resistente para cualquier terreno, este poderoso neumático 4x4 ofrece una excelente tracción todoterreno, una construcción duradera y un estilo agresivo.</p>
-                                            <ul class="stars">
-                                                <li><a href="" class="filled-button" data-toggle="modal" data-target="#loginModal">Ver detalles</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                <%=cp.getProductos () %>
                             </div>
                         </div>
                     </div>
