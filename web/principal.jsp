@@ -1,6 +1,6 @@
 <%-- 
-    Document   : productos
-    Created on : 11/11/2023, 07:06:31 PM
+    Document   : principal
+    Created on : 12/11/2023, 04:32:01 PM
     Author     : JORGE
 --%>
 
@@ -10,11 +10,9 @@
     String usuario = (String) objSesion.getAttribute("usuario");
     if (usuario == null) {
         response.sendRedirect("index.jsp");
-
     }
 %>
 <%@page import="Controlador.ControladorProducto"%>
-<%@page import="Modelo.Producto"%>
 <%
     ControladorProducto cp = new ControladorProducto();
 %>
@@ -27,18 +25,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
+              rel="stylesheet">
 
-        <title>Nuestros productos</title>
+        <title>Global Tires</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <!--
-        
-        TemplateMo 546 Sixteen Clothing
-        
-        https://templatemo.com/tm-546-sixteen-clothing
-        
+      
+      
         -->
 
         <!-- Additional CSS Files -->
@@ -57,7 +53,7 @@
                 <div></div>
                 <div></div>
             </div>
-        </div>  
+        </div>
         <!-- ***** Preloader End ***** -->
 
         <!-- Header -->
@@ -71,13 +67,13 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="principal.jsp"><i class="fa fa-home" aria-hidden="true"></i>Inicio
+                            <li class="nav-item active">
+                                <a class="nav-link" href="principal.jsp> <i class="fa fa-home" aria-hidden="true"></i> Inicio
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="products.jsp"><i class="fa fa-car" aria-hidden="true"></i> Nuestros Productos</a>
+                                <a class="nav-link" href="productos.jsp"><i class="fa fa-car" aria-hidden="true"></i> Nuestros Productos</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="sobreNosotros.jsp"><i class="fa fa-globe" aria-hidden="true"></i> Acerca de nosotros</a>
@@ -95,85 +91,72 @@
         </header>
 
         <!-- Page Content -->
-        <div class="page-heading products-heading header-text">
+        <!-- Banner Starts Here -->
+        <div class="banner header-text">
+            <div class="owl-banner owl-carousel">
+                <div class="banner-item-01">
+                    <div class="text-content">
+                        <h4>Global tires parque industrial</h4>
+                        <h2>Seguridad en tu camino</h2>
+                    </div>
+                </div>
+                <div class="banner-item-02">
+                    <div class="text-content">
+                        <h2>#TodoTipoDeLlantas</h2>
+                    </div>
+                </div>
+                <div class="banner-item-03">
+                    <div class="text-content">
+                        <h4>Servicio Profesional</h4>
+                        <h2>¡lo encuentras Aquí!</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Banner Ends Here -->
+
+        <div class="latest-products">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="text-content">
-                            <h4>Nuestros productos</h4>
-                            <h2>#TODOTIPODELLANTAS</h2>
+                        <div class="section-heading">
+                            <h2>Ultimos productos</h2>
+                            <a href="productos.jsp">Todos los productos <i class="fa fa-angle-right"></i></a>
+                        </div>
+                    </div>
+                    <%=cp.getUltimosProductos()%>
+                </div>
+            </div>
+        </div>
+
+        <div class="best-features">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section-heading">
+                            <h2>Acerca de Global Tires</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="left-content">
+                            <h4>¿En busca de las mejores llantas?</h4>
+                            <p>¡El Servicio Profesional que necesita tu Auto, lo encuentras Aquí!
+                                Venta de Neumáticos Nuevos par
+                                <br><br>  
+                                Encuentranos en Carretera a Sahuaripa Km. 3.2 Col. Parque Industrial, Hermosillo, Mexico
+                            </p>
+                            <a href="about.html" class="filled-button">Mas aqui</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="right-image">
+                            <img src="assets/images/logo3.png" alt="">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-
-        <div class="products">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="filters">
-                            <ul>
-                                <li class="active" data-filter="*">All Products</li>
-                                <li data-filter=".des">Automoviles</li>
-                                <li data-filter=".dev">Vehiculos Pesados</li>
-                                <li data-filter=".gra">Todoterreno</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="filters-content dev">
-                            <div class="row grid">
-                                <%=cp.getProductos()%>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <ul class="pages">
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- MODAL DE LOGIN -->
-        <div class="modal fade1" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header border-bottom-0">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-title text-center">
-                            <h4>Inicio de Sesión</h4>
-                        </div>
-                        <div class="d-flex flex-column text-center">
-                            <form action="iniciar" method="post">
-                                <div class="form-group">
-                                    <input name="usuario" type="text" class="form-control" id="email1"placeholder="Nombre de usuario...">
-                                </div>
-                                <div class="form-group">
-                                    <input name="pass" type="password" class="form-control" id="password1" placeholder="Escribir contraseña...">
-                                </div>
-                                <input type="submit" class="filled-button" value="Iniciar sesión">
-                            </form>
-                        </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <div class="signup-section">No tienes cuenta? <a href="registro.jsp" class="text-info"> Registrar</a>.</div>
-                    </div>
-                </div>
-            </div>      
-        </div>                    
-
-
-        <!-- Footer -->
         <footer>
             <div class="container">
                 <div class="row">
@@ -191,7 +174,6 @@
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-
         <!-- Additional Scripts -->
         <script src="assets/js/custom.js"></script>
         <script src="assets/js/owl.js"></script>
@@ -200,7 +182,7 @@
         <script src="assets/js/accordions.js"></script>
 
 
-        <script language = "text/Javascript">
+        <script language="text/Javascript">
             cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
             function clearField(t) {                   //declaring the array outside of the
                 if (!cleared[t.id]) {                      // function makes it static and global

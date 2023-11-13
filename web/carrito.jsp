@@ -64,7 +64,7 @@
     <header class="">
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" href="index.html"><img src="assets/images/logo.png" alt="" class="logoImg"></a>
+                <a class="navbar-brand" href="principal.jsp"><img src="assets/images/logo.png" alt="" class="logoImg"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -72,18 +72,21 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="index.html"><i class="fa fa-home" aria-hidden="true"></i>Inicio
+                            <a class="nav-link" href="principal.jsp"><i class="fa fa-home" aria-hidden="true"></i>Inicio
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="products.html"><i class="fa fa-car" aria-hidden="true"></i> Nuestros Productos</a>
+                            <a class="nav-link " href="products.html"><i class="fa fa-car" aria-hidden="true"></i> Nuestros Productos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="about.html"><i class="fa fa-globe" aria-hidden="true"></i> Acerca de nosotros</a>
+                            <a class="nav-link" href="sobreNosotros.jsp"><i class="fa fa-globe" aria-hidden="true"></i> Acerca de nosotros</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="carrito.jsp"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Carrito</a>
+                            <a class="nav-link active" href="carrito.jsp"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Carrito</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"><i class="fa fa-user" aria-hidden="true"></i> <% out.println(usuario);%></a>
                         </li>
                     </ul>
                 </div>
@@ -94,7 +97,7 @@
     <br>
     <br>
     <br>
-    
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
@@ -148,7 +151,7 @@
                                 </td>
                             </tr>
                             <% }
-                                    }%>
+                                }%>
                         </tbody>
                     </table>
                     <% if (articulos == null) {%>

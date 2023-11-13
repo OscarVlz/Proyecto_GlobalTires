@@ -44,6 +44,37 @@ public class Consultas extends Conexion {
         return false;
     }
     
+    public boolean autenticacionAdmin(String usuario, String clave) {
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            String consulta = "select * from administrador where usuario=? and pass=?";
+            System.out.println("Consulta es;" + consulta);
+            pst = getConexion().prepareStatement(consulta);
+            pst.setString(1, usuario);
+            pst.setString(2, clave);
+            rs=pst.executeQuery();
+            if(rs.next()){
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("Error en: " + e);
+        } finally {
+            try {
+                if(getConexion()!=null){
+                    getConexion().close();
+                }
+                if(pst!=null) pst.close();
+                if(rs!=null) rs.close();
+
+            } catch (Exception e) {
+                System.out.println("Error en: " + e);
+            }
+
+        }
+        return false;
+    }
+    
     public boolean registrar(String usuario, String clave) {
         PreparedStatement pst = null;
         

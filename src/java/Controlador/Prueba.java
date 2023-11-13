@@ -21,7 +21,7 @@ public class Prueba {
         co.getConexion();
         
         ModeloProducto mp = new ModeloProducto();
-        System.out.println(mp.getAllProductos());
+        System.out.println(mp.getAllProductosDesc());
     }
     
 }

@@ -30,6 +30,15 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
+    public Producto(String nombre, String img, double precio, int stock, String descripcion, String tipo) {
+        this.nombre = nombre;
+        this.img = img;
+        this.precio = precio;
+        this.stock = stock;
+        this.descripcion = descripcion;
+        this.tipo = tipo;
+    }
+
     
 
     public int getId() {
