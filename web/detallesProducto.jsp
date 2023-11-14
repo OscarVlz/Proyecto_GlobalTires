@@ -128,7 +128,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="inner-content">
-                            <p>Copyright &copy; 2023 Equipo 2 & Global Tires
+                            <p> &copy; 2023 Equipo 2 & Global Tires
                         </div>
                     </div>
                 </div>

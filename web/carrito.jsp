@@ -154,7 +154,7 @@
             </div>
             <div class="col-sm-6">
                 <div class="card">
-                    <div class="card-header bg-primary text-white">Carrito</div>
+                    <div class="card-header bg-dark text-white">Carrito</div>
                     <div class="card-body">
                         <table>
                             <tr>

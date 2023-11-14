@@ -127,7 +127,10 @@
         </div>
       </div>
     </div>
-
+    <br>
+        <h2 style="text-align: center;">ENCUENTRANOS AQUI </h2>
+        <br> 
+     <iframe style="margin: 0 auto; display: block;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d738.136363155391!2d-110.91292791859814!3d29.030427394821473!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ce8531cbcc020f%3A0xab85dc9a2e5d1774!2sGLOBAL%20TIRES!5e1!3m2!1ses!2smx!4v1699941825077!5m2!1ses!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" ></iframe>
     <br>
 
     <div class="services">
@@ -177,7 +180,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="inner-content">
-              <p>Copyright &copy; 2023 Equipo 2 & Global Tires
+              <p> &copy; 2023 Equipo 2 & Global Tires
             </div>
           </div>
         </div>
