@@ -87,6 +87,9 @@
                             <li class="nav-item">
                                 <a class="nav-link"><i class="fa fa-user" aria-hidden="true"></i> <% out.println(usuario);%></a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="CerrarSesion">Salir</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
