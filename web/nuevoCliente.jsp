@@ -44,8 +44,9 @@
                     <input type="password" id="pass" name="pass" class="form-control" required>
                 </div>
                 <button type="submit" name="accion" value="mostrarCreado" class="btn btn-primary">Crear</button>
-                <a href="CrudClientes?accion=consultar" class="btn btn-secondary">Regresar</a>
+                <a href="principalAdmin.jsp" class="btn btn-secondary">Regresar</a>
             </form>
+
         </div>
 
         <!-- Bootstrap core JavaScript -->
