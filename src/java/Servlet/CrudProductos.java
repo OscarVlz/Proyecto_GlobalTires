@@ -4,6 +4,8 @@
  */
 package Servlet;
 
+import Modelo.ModeloProducto;
+import Modelo.Producto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -18,8 +20,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CrudProductos extends HttpServlet {
 
-    String consultar="consultarProductos.jsp";
-    
+//    String consultar="consultarProductos.jsp";
+    String consultar = "consultarProductos.jsp";
+    String editar = "editProducto.jsp";
+    Producto producto;
+    ModeloProducto modeloProducto = new ModeloProducto();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,7 +43,7 @@ public class CrudProductos extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CrudProductos</title>");            
+            out.println("<title>Servlet CrudProductos</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CrudProductos at " + request.getContextPath() + "</h1>");
@@ -58,13 +64,36 @@ public class CrudProductos extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String acceso="";
-        String action=request.getParameter("accion");
-        if(action.equalsIgnoreCase("consultar")){
+        String acceso = "";
+        String action = request.getParameter("accion");
+        if (action.equalsIgnoreCase("consultar")) {
+            acceso = consultar;
+        } else if (action.equalsIgnoreCase("editar")) {
+            request.setAttribute("idper", request.getParameter("id"));
+            acceso = editar;
+        } else if (action.equalsIgnoreCase("Actualizar")) {
+            int id = Integer.parseInt(request.getParameter("txtid"));
+            String nombre = request.getParameter("txtNom");
+            double precio = Double.parseDouble(request.getParameter("txtPrecio"));
+            String img = request.getParameter("txtimg");
+            int stock = Integer.parseInt(request.getParameter("txtStock"));
+            String descripcion = request.getParameter("txtDescripcion");
+            String tipo = request.getParameter("txtTipo");
+            
+
+            producto = new Producto(id, nombre, tipo, img, precio, stock, descripcion);
+            modeloProducto.actualizarProducto(producto);
+            acceso = consultar;
+        }else if (action.equalsIgnoreCase("Eliminar")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            producto = new Producto(id);
+            modeloProducto.eliminarProducto(id);
             acceso=consultar;
+            
+           
         }
         RequestDispatcher vista = request.getRequestDispatcher(acceso);
-        vista.forward(request,response);
+        vista.forward(request, response);
     }
 
     /**

@@ -168,7 +168,7 @@ public class ModeloProducto extends Conexion{
         ResultSet rs = null;
         
         try {
-            String update = "update producto set nombre=?, tipo=? ,img_producto=? ,precio=? ,stock=? ,descripcion=? where id=?";
+            String update = "update producto set nombre=?, tipo=? ,img_producto=? ,precio=? ,stock=? ,descripcion=? where id_producto=?";
             System.out.println("update es;" + update);
             pst = getConexion().prepareStatement(update);
             pst.setString(1, producto.getNombre());
@@ -179,7 +179,7 @@ public class ModeloProducto extends Conexion{
             pst.setString(6, producto.getDescripcion());
             pst.setInt(7,producto.getId());
             
-            rs=pst.executeQuery();
+           
             pst.executeUpdate();
             if(rs.next()){
                 producto.setNombre(rs.getString("nombre"));
@@ -197,7 +197,7 @@ public class ModeloProducto extends Conexion{
                     getConexion().close();
                 }
                 if(pst!=null) pst.close();
-                if(rs!=null) rs.close();
+                
 
             } catch (Exception e) {
                 System.out.println("Error en: " + e);
@@ -213,12 +213,12 @@ public class ModeloProducto extends Conexion{
         ResultSet rs = null;
         
         try {
-            String delete = "delete from producto where id=?";
+            String delete = "delete from producto where id_producto=?";
             System.out.println("delete es;" + delete);
             pst = getConexion().prepareStatement(delete);
             pst.setInt(1,id);
             
-            rs=pst.executeQuery();
+            pst.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error en: " + e);
         } finally {
@@ -227,7 +227,7 @@ public class ModeloProducto extends Conexion{
                     getConexion().close();
                 }
                 if(pst!=null) pst.close();
-                if(rs!=null) rs.close();
+                
 
             } catch (Exception e) {
                 System.out.println("Error en: " + e);

@@ -1,26 +1,23 @@
 <%-- 
-    Document   : crudUsuarios
-    Created on : 12/11/2023, 07:54:07 PM
-    Author     : Equipo 2
+    Document   : eliminarCliente
+    Created on : 14/11/2023, 12:31:47 AM
+    Author     : oscar
 --%>
 
+<%@page import="Modelo.Cliente"%>
+<%@page import="Modelo.ModeloCliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     HttpSession objSesion = request.getSession(false);
     String usuario = (String) objSesion.getAttribute("usuarioAdmin");
     if (usuario == null) {
         response.sendRedirect("index.jsp");
-
     }
-%>
-<%@page import="Controlador.ControladorCliente"%>
-<%@page import="Modelo.Cliente"%>
-<%
-    ControladorCliente cc = new ControladorCliente();
 %>
 <!DOCTYPE html>
 <html>
     <head>
+       
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -48,25 +45,25 @@
     </head>
 
     <body>
-        <h1>Consulta  Clientes</h1>
-        <div>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Usuario</th>
-                        <th>Clave</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <%=cc.getClientesTabla()%>
-                    </tr>
+         <div>
+            <%
+                ModeloCliente modelC = new ModeloCliente();
+                int id = Integer.parseInt((String) request.getAttribute("idper"));
+                Cliente c=(Cliente)modelC.getCliente(id);
+            %>
+            <h1>Eliminar Cliente</h1>
+            <form action="CrudClientes?accion=consultar">
+                Usuario: <br>
+                <input type="text" name="txtNom" readonly value="<%= c.getUsuario()%>"><br>
+                Contraseña:<br> 
+                <input type="password" name="txtContrasena" readonly value="<%= c.getClave()%>"><br>
+                <input type="hidden" name="txtid"  value="<%= c.getId()%>">
+                <input type="submit" name="accion" value="Eliminar">
+                <button class="filled-button">  <a href="CrudClientes?accion=consultar">Regresar</a></button>
                 
-                </tbody>
-            </table>
-                    <br>
-                    <button class="filled-button"><a href="principalAdmin.jsp">Regresar</a></button>
+            </form>
+            
         </div>
+        
     </body>
 </html>

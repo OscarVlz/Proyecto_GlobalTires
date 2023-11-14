@@ -88,8 +88,8 @@ public class ControladorProducto {
                     + "<td>$"+producto.getPrecio()+"</td>"
                     + "<td>"+producto.getStock()+"</td>"
                     + "<td>"+producto.getDescripcion()+"</td>"
-                    + "<td>Editar</td>"
-                    + "<td>Eliminar</td>"
+                     +"<td>" + "<a href=\"CrudProductos?accion=editar&id="+producto.getId()+"\">Editar</a>" + "</td>"
+                    +"<td>" + "<a href=\"CrudProductos?accion=eliminar&id="+producto.getId()+"\">Eliminar</a>" + "</td>"
                     + "</tr>";
         }
         return htmlcode;

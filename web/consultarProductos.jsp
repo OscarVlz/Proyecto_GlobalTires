@@ -21,7 +21,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <head>
+
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -48,7 +48,7 @@
 
     </head>
 
-    </head>
+
     <body>
         <h1>Consulta</h1>
         <div>
@@ -71,6 +71,9 @@
                     </tr>
                 </tbody>
             </table>
+
+            <br>
+            <button class="filled-button"><a href="principalAdmin.jsp">Regresar</a></button>
 
         </div>
     </body>

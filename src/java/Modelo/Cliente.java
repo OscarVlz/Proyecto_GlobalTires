@@ -19,6 +19,10 @@ public class Cliente {
         this.clave = clave;
     }
 
+    public Cliente(int id) {
+        this.id = id;
+    }
+
     
     
     public Cliente(String usuario, String clave) {

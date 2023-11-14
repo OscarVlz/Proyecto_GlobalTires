@@ -173,12 +173,12 @@ public class ModeloCliente extends Conexion{
         ResultSet rs = null;
         
         try {
-            String delete = "delete from cliente where id=?";
+            String delete = "delete from cliente where id_cliente=?";
             System.out.println("delete es;" + delete);
             pst = getConexion().prepareStatement(delete);
             pst.setInt(1,id);
             
-            rs=pst.executeQuery();
+            pst.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error en: " + e);
         } finally {
@@ -187,7 +187,7 @@ public class ModeloCliente extends Conexion{
                     getConexion().close();
                 }
                 if(pst!=null) pst.close();
-                if(rs!=null) rs.close();
+                
 
             } catch (Exception e) {
                 System.out.println("Error en: " + e);

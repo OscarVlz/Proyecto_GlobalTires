@@ -72,12 +72,7 @@
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="productos.jsp"><i class="fa fa-car" aria-hidden="true"></i> Nuestros Productos</a>
-                            </li> 
-                            <li class="nav-item">
-                                <a class="nav-link " href="carrito.jsp"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Carrito</a>
-                            </li>
+                           
                             <li class="nav-item">
                                 <a class="nav-link"><i class="fa fa-user" aria-hidden="true"></i> <% out.println(usuario);%></a>
                             </li>
@@ -151,12 +146,11 @@
                         </div>
                         <div class="d-flex flex-column text-center">
                             <button class="filled-button"><a href="CrudProductos?accion=consultar">Consultar</a></button><br>
-                            <button class="filled-button">Agregar</button><br>
-                            <button class="filled-button">Eliminar</button><br>
+                            
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                        <div class="signup-section">No tienes cuenta? <a href="registro.jsp" class="text-info"> Registrar</a>.</div>
+                        
                     </div>
                 </div>
             </div>      
@@ -176,12 +170,11 @@
                         </div>
                         <div class="d-flex flex-column text-center">
                             <button class="filled-button"><a href="CrudClientes?accion=consultar">Consultar</a></button><br>
-                            <button class="filled-button">Agregar</button><br>
-                            <button class="filled-button">Eliminar</button><br>
+                            
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                        <div class="signup-section">No tienes cuenta? <a href="registro.jsp" class="text-info"> Registrar</a>.</div>
+                       
                     </div>
                 </div>
             </div>      

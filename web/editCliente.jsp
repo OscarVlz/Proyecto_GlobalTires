@@ -7,6 +7,13 @@
 <%@page import="Modelo.Cliente"%>
 <%@page import="Modelo.ModeloCliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    HttpSession objSesion = request.getSession(false);
+    String usuario = (String) objSesion.getAttribute("usuarioAdmin");
+    if (usuario == null) {
+        response.sendRedirect("index.jsp");
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,7 +35,7 @@
                 <input type="password" name="txtContrasena" value="<%= c.getClave()%>"><br>
                 <input type="hidden" name="txtid"  value="<%= c.getId()%>">
                 <input type="submit" name="accion" value="Actualizar">
-                <a href="CrudClientes?accion=consultar">Regresar</a>
+                <button class="filled-button"> <a href="CrudClientes?accion=consultar">Regresar</a> </button>
             </form>
             
         </div>

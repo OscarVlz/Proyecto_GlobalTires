@@ -20,10 +20,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CrudClientes extends HttpServlet {
 
-    String consultar="crudClientes.jsp";
-    String editar="editCliente.jsp";
+    String consultar = "crudClientes.jsp";
+    String editar = "editCliente.jsp";
     Cliente cliente;
+    String eliminar = "eliminarCliente.jsp";
     ModeloCliente modelC = new ModeloCliente();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -41,7 +43,7 @@ public class CrudClientes extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CrudClientes</title>");            
+            out.println("<title>Servlet CrudClientes</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CrudClientes at " + request.getContextPath() + "</h1>");
@@ -62,23 +64,30 @@ public class CrudClientes extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String acceso="";
-        String action=request.getParameter("accion");
-        if(action.equalsIgnoreCase("consultar")){
+        String acceso = "";
+        String action = request.getParameter("accion");
+        if (action.equalsIgnoreCase("consultar")) {
+            acceso = consultar;
+        } else if (action.equalsIgnoreCase("editar")) {
+            request.setAttribute("idper", request.getParameter("id"));
+            acceso = editar;
+        } else if (action.equalsIgnoreCase("Actualizar")) {
+            int id = Integer.parseInt(request.getParameter("txtid"));
+            String nombre = request.getParameter("txtNom");
+            String contra = request.getParameter("txtContrasena");
+            cliente = new Cliente(id, nombre, contra);
+            modelC.actualizarCliente(cliente);
+            acceso = consultar;
+        } else if (action.equalsIgnoreCase("Eliminar")) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            cliente = new Cliente(id);
+            modelC.eliminarCliente(id);
             acceso=consultar;
-        }else if(action.equalsIgnoreCase("editar")){
-           request.setAttribute("idper", request.getParameter("id"));
-           acceso=editar;
-        }else if(action.equalsIgnoreCase("Actualizar")){
-           int id = Integer.parseInt(request.getParameter("txtid"));
-           String nombre=request.getParameter("txtNom");
-           String contra=request.getParameter("txtContrasena");
-           cliente= new Cliente(id, nombre, contra);
-           modelC.actualizarCliente(cliente);
-           acceso=consultar;
+            
+           
         }
         RequestDispatcher vista = request.getRequestDispatcher(acceso);
-        vista.forward(request,response);
+        vista.forward(request, response);
     }
 
     /**
