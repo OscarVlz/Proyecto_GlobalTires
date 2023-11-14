@@ -13,57 +13,59 @@
     if (usuario == null) {
         response.sendRedirect("index.jsp");
     }
+
+    ModeloCliente modelC = new ModeloCliente();
+    int id = Integer.parseInt((String) request.getAttribute("idper"));
+    Cliente c = (Cliente) modelC.getCliente(id);
 %>
 <!DOCTYPE html>
-<html>
-    <head>
-       
+<html lang="es">
 
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Eliminar Cliente</title>
 
-        <title>Nuestros productos</title>
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- Bootstrap core CSS -->
-        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <!--
-        
-        TemplateMo 546 Sixteen Clothing
-        
-        https://templatemo.com/tm-546-sixteen-clothing
-        
-        -->
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+</head>
 
-        <!-- Additional CSS Files -->
-        <link rel="stylesheet" href="assets/css/fontawesome.css">
-        <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
-        <link rel="stylesheet" href="assets/css/owl.css">
-
-    </head>
-
-    <body>
-         <div>
-            <%
-                ModeloCliente modelC = new ModeloCliente();
-                int id = Integer.parseInt((String) request.getAttribute("idper"));
-                Cliente c=(Cliente)modelC.getCliente(id);
-            %>
-            <h1>Eliminar Cliente</h1>
-            <form action="CrudClientes?accion=consultar">
-                Usuario: <br>
-                <input type="text" name="txtNom" readonly value="<%= c.getUsuario()%>"><br>
-                Contraseña:<br> 
-                <input type="password" name="txtContrasena" readonly value="<%= c.getClave()%>"><br>
-                <input type="hidden" name="txtid"  value="<%= c.getId()%>">
-                <input type="submit" name="accion" value="Eliminar">
-                <button class="filled-button">  <a href="CrudClientes?accion=consultar">Regresar</a></button>
-                
-            </form>
-            
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        <h1 class="mb-0">Eliminar Cliente</h1>
+                    </div>
+                    <div class="card-body">
+                        <form action="CrudClientes?accion=consultar" method="post">
+                            <div class="form-group">
+                                <label for="txtNom">Usuario:</label>
+                                <input type="text" id="txtNom" name="txtNom" class="form-control" readonly value="<%= c.getUsuario()%>">
+                            </div>
+                            <div class="form-group">
+                                <label for="txtContrasena">Contraseña:</label>
+                                <input type="password" id="txtContrasena" name="txtContrasena" class="form-control" readonly value="<%= c.getClave()%>">
+                            </div>
+                            <input type="hidden" name="txtid" value="<%= c.getId()%>">
+                            <button type="submit" name="accion" value="Eliminar" class="btn btn-danger">Eliminar</button>
+                            <a href="CrudClientes?accion=consultar" class="btn btn-secondary">Regresar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-    </body>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>

@@ -15,29 +15,48 @@
     }
 %>
 <!DOCTYPE html>
-<html>
+<html lang="es">
+
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Modificar Cliente</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Additional CSS Files -->
+        <link rel="stylesheet" href="assets/css/fontawesome.css">
+        <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
+        <link rel="stylesheet" href="assets/css/owl.css">
     </head>
+
     <body>
-        <div>
+        <div class="container mt-5">
             <%
                 ModeloCliente modelC = new ModeloCliente();
                 int id = Integer.parseInt((String) request.getAttribute("idper"));
-                Cliente c=(Cliente)modelC.getCliente(id);
+                Cliente c = (Cliente) modelC.getCliente(id);
             %>
-            <h1>Modificar Persona</h1>
-            <form action="CrudClientes?accion=consultar">
-                Usuario: <br>
-                <input type="text" name="txtNom" value="<%= c.getUsuario()%>"><br>
-                Contraseña:<br> 
-                <input type="password" name="txtContrasena" value="<%= c.getClave()%>"><br>
-                <input type="hidden" name="txtid"  value="<%= c.getId()%>">
-                <input type="submit" name="accion" value="Actualizar">
-                <button class="filled-button"> <a href="CrudClientes?accion=consultar">Regresar</a> </button>
+            <h1>Modificar Cliente</h1>
+            <form action="CrudClientes?accion=consultar" method="post">
+                <div class="form-group">
+                    <label for="txtNom">Usuario:</label>
+                    <input type="text" id="txtNom" name="txtNom" class="form-control" value="<%= c.getUsuario()%>">
+                </div>
+                <div class="form-group">
+                    <label for="txtContrasena">Contraseña:</label>
+                    <input type="password" id="txtContrasena" name="txtContrasena" class="form-control" value="<%= c.getClave()%>">
+                </div>
+                <input type="hidden" name="txtid" value="<%= c.getId()%>">
+                <button type="submit" name="accion" value="Actualizar" class="btn btn-primary">Actualizar</button>
+                <a href="CrudClientes?accion=consultar" class="btn btn-secondary">Regresar</a>
             </form>
-            
         </div>
+
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     </body>
+
 </html>

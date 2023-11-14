@@ -3,14 +3,12 @@
     Created on : 12/11/2023, 07:53:56 PM
     Author     : Equipo 2
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     HttpSession objSesion = request.getSession(false);
     String usuario = (String) objSesion.getAttribute("usuarioAdmin");
     if (usuario == null) {
         response.sendRedirect("index.jsp");
-
     }
 %>
 <%@page import="Controlador.ControladorProducto"%>
@@ -19,62 +17,50 @@
     ControladorProducto cp = new ControladorProducto();
 %>
 <!DOCTYPE html>
-<html>
-    <head>
+<html lang="es">
 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Consulta de Productos</title>
 
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-        <title>Nuestros productos</title>
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+</head>
 
-        <!-- Bootstrap core CSS -->
-        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <!--
-        
-        TemplateMo 546 Sixteen Clothing
-        
-        https://templatemo.com/tm-546-sixteen-clothing
-        
-        -->
-
-        <!-- Additional CSS Files -->
-        <link rel="stylesheet" href="assets/css/fontawesome.css">
-        <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
-        <link rel="stylesheet" href="assets/css/owl.css">
-
-    </head>
-
-
-    <body>
-        <h1>Consulta</h1>
-        <div>
-            <h1>Productos</h1>
-            <table border="1">
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1 class="mb-4">Consulta de Productos</h1>
+        <div class="table-responsive">
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Id</th>
                         <th>Nombre</th>
                         <th>Tipo</th>
-                        <th>Img_producto</th>
+                        <th>Imagen</th>
                         <th>Precio</th>
                         <th>Stock</th>
-                        <th>Descripcion</th>
+                        <th>Descripción</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <%=cp.getProductosTabla()%>
-                    </tr>
+                    <%= cp.getProductosTabla() %>
                 </tbody>
             </table>
-
-            <br>
-            <button class="filled-button"><a href="principalAdmin.jsp">Regresar</a></button>
-
         </div>
-    </body>
+        <br>
+        <a href="principalAdmin.jsp" class="btn btn-primary">Regresar</a>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>

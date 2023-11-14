@@ -7,7 +7,6 @@
 <%@page import="Modelo.Producto"%>
 <%@page import="Modelo.ModeloProducto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <%
     HttpSession objSesion = request.getSession(false);
     String usuario = (String) objSesion.getAttribute("usuarioAdmin");
@@ -16,64 +15,65 @@
     }
 %>
 <!DOCTYPE html>
-<html>
-    <head>
-       
+<html lang="es">
 
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Modificar Producto</title>
 
-        <title>Nuestros productos</title>
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- Bootstrap core CSS -->
-        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <!--
-        
-        TemplateMo 546 Sixteen Clothing
-        
-        https://templatemo.com/tm-546-sixteen-clothing
-        
-        -->
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+</head>
 
-        <!-- Additional CSS Files -->
-        <link rel="stylesheet" href="assets/css/fontawesome.css">
-        <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
-        <link rel="stylesheet" href="assets/css/owl.css">
-
-    </head>
-
-    <body>
-        <div>
-            <%
+<body>
+    <div class="container mt-5">
+         <%
                 ModeloProducto modelP = new ModeloProducto();
                 int id = Integer.parseInt((String) request.getAttribute("idper"));
                 Producto c=(Producto)modelP.getProducto(id);
             %>
-            <h1>Modificar Producto</h1>
-            <form action="CrudProductos?accion=consultar">
-                Nombre <br>
-                <input type="text" name="txtNom" value="<%= c.getNombre()%>"><br>
-                Tipo<br> 
-                <input type="text" name="txtTipo" value="<%= c.getTipo()%>"><br>
-                Imagen<br> 
-                <input type="text" name="txtimg" value="<%= c.getImg()%>"><br> 
-                Precio<br> 
-                <input type="text" name="txtPrecio" value="<%= c.getPrecio()%>"><br>
-                Stock<br> 
-                <input type="text" name="txtStock" value="<%= c.getStock()%>"><br>
-                Descripcion<br> 
-                <input type="text" name="txtDescripcion" value="<%= c.getDescripcion()%>"><br>
-                
-                <input type="hidden" name="txtid"  value="<%= c.getId()%>">
-                <input type="submit" name="accion" value="Actualizar">
-                <button class="filled-button"> <a href="CrudProductos?accion=consultar">Regresar</a> </button>
-            </form>
-            
-        </div>
-        
-        
-    </body>
+        <h1>Modificar Producto</h1>
+        <form action="CrudProductos?accion=consultar" method="post">
+            <div class="form-group">
+                <label for="txtNom">Nombre:</label>
+                <input type="text" id="txtNom" name="txtNom" class="form-control" value="<%= c.getNombre()%>">
+            </div>
+            <div class="form-group">
+                <label for="txtTipo">Tipo:</label>
+                <input type="text" id="txtTipo" name="txtTipo" class="form-control" value="<%= c.getTipo()%>">
+            </div>
+            <div class="form-group">
+                <label for="txtimg">Imagen:</label>
+                <input type="text" id="txtimg" name="txtimg" class="form-control" value="<%= c.getImg()%>">
+            </div>
+            <div class="form-group">
+                <label for="txtPrecio">Precio:</label>
+                <input type="text" id="txtPrecio" name="txtPrecio" class="form-control" value="<%= c.getPrecio()%>">
+            </div>
+            <div class="form-group">
+                <label for="txtStock">Stock:</label>
+                <input type="text" id="txtStock" name="txtStock" class="form-control" value="<%= c.getStock()%>">
+            </div>
+            <div class="form-group">
+                <label for="txtDescripcion">Descripción:</label>
+                <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control" value="<%= c.getDescripcion()%>">
+            </div>
+
+            <input type="hidden" name="txtid" value="<%= c.getId()%>">
+            <button type="submit" name="accion" value="Actualizar" class="btn btn-primary">Actualizar</button>
+            <a href="CrudProductos?accion=consultar" class="btn btn-secondary">Regresar</a>
+        </form>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
 </html>
