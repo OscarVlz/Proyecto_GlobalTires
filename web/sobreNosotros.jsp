@@ -1,7 +1,7 @@
 <%-- 
     Document   : sobreNosotros
     Created on : 12/11/2023, 04:35:21 PM
-    Author     : JORGE
+    Author     : Equipo 2
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

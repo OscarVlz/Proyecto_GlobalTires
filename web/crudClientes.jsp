@@ -1,7 +1,7 @@
 <%-- 
     Document   : crudUsuarios
     Created on : 12/11/2023, 07:54:07 PM
-    Author     : JORGE
+    Author     : Equipo 2
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -48,9 +48,8 @@
     </head>
 
     <body>
-        <h1>Consulta</h1>
+        <h1>Consulta  Clientes</h1>
         <div>
-            <h1>Clientes</h1>
             <table border="1">
                 <thead>
                     <tr>
@@ -65,7 +64,6 @@
                     </tr>
                 </tbody>
             </table>
-
         </div>
     </body>
 </html>

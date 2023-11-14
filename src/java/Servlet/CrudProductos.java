@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author JORGE
+ * @author Equipo 2
  */
 public class CrudProductos extends HttpServlet {
 

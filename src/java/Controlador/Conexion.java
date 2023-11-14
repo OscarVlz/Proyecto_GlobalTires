@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 /**
  *
- * @author oscar
+ * @author Equipo 2
  */
 public class Conexion {
     private String USERNAME="root";

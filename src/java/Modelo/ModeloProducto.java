@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author oscar
+ * @author Equipo 2
  */
 public class ModeloProducto extends Conexion{
     

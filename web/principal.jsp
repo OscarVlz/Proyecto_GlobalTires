@@ -1,9 +1,11 @@
 <%-- 
     Document   : principal
     Created on : 12/11/2023, 04:32:01 PM
-    Author     : JORGE
+    Author     : Equipo 2
 --%>
 
+<%@page import="Modelo.Cliente"%>
+<%@page import="Modelo.ModeloCliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     HttpSession objSesion = request.getSession(false);
@@ -82,7 +84,7 @@
                                 <a class="nav-link " href="carrito.jsp"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Carrito</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link"><i class="fa fa-user" aria-hidden="true"></i> <% out.println(usuario);%></a>
+                                <a class="nav-link" onclick="openModal()"><i class="fa fa-user" aria-hidden="true"></i> <% out.println(usuario);%></a>
                             </li>
                         </ul>
                     </div>
@@ -191,6 +193,46 @@
                     t.style.color = '#fff';
                 }
             }
+            // Get the modal
+            var modal = document.getElementById("myModal");
+
+            // Get the button that opens the modal
+            var btn = document.querySelector("button");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks the button, open the modal
+            function openModal() {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            function closeModal() {
+               modal.style.display = "none";
+            }
+
+           // When the user clicks anywhere outside of the modal, close it
+              window.onclick = function(event) {
+                if (event.target == modal) {
+                  modal.style.display = "none";
+                }
+          };
+
+           // Handle form submission
+          document.getElementById("profileForm").addEventListener("submit", function(event) {
+          event.preventDefault();
+    
+           // Update profile information
+           var newName = document.getElementById("newName").value;
+           var newPassword = document.getElementById("newPassword").value;
+
+           document.getElementById("nombre").innerText = newName;
+           document.getElementById("pass").innerText = newPassword;
+
+         // Close the modal
+          closeModal();
+        });
         </script>
 
 

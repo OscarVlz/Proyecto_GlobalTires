@@ -9,7 +9,7 @@ import Modelo.ModeloCliente;
 
 /**
  *
- * @author JORGE
+ * @author Equipo 2
  */
 public class ControladorCliente {
 
@@ -22,8 +22,7 @@ public class ControladorCliente {
                     + "<td>" + cliente.getId() + "</td>"
                     + "<td>" + cliente.getUsuario() + "</td>"
                     + "<td>" + cliente.getClave() + "</td>"
-                    + "<td>Editar</td>"
-                    + "<td>Eliminar</td>"
+                    +"<td>" + "<a href=\"CrudClientes?accion=editar&id="+cliente.getId()+"\">Editar</a>" + "</td>"
                     + "</tr>";
         }
         return htmlcode;

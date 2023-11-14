@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author oscar
+ * @author Equipo 2
  */
 public class RegistrarUsuarios extends HttpServlet {
 

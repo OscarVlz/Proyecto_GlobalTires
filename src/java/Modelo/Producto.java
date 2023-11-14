@@ -6,7 +6,7 @@ package Modelo;
 
 /**
  *
- * @author oscar
+ * @author Equipo 2
  */
 public class Producto {
     private int id;

@@ -4,6 +4,8 @@
  */
 package Servlet;
 
+import Modelo.Cliente;
+import Modelo.ModeloCliente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -14,11 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author JORGE
+ * @author Equipo 2
  */
 public class CrudClientes extends HttpServlet {
 
     String consultar="crudClientes.jsp";
+    String editar="editCliente.jsp";
+    Cliente cliente;
+    ModeloCliente modelC = new ModeloCliente();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -61,6 +66,16 @@ public class CrudClientes extends HttpServlet {
         String action=request.getParameter("accion");
         if(action.equalsIgnoreCase("consultar")){
             acceso=consultar;
+        }else if(action.equalsIgnoreCase("editar")){
+           request.setAttribute("idper", request.getParameter("id"));
+           acceso=editar;
+        }else if(action.equalsIgnoreCase("Actualizar")){
+           int id = Integer.parseInt(request.getParameter("txtid"));
+           String nombre=request.getParameter("txtNom");
+           String contra=request.getParameter("txtContrasena");
+           cliente= new Cliente(id, nombre, contra);
+           modelC.actualizarCliente(cliente);
+           acceso=consultar;
         }
         RequestDispatcher vista = request.getRequestDispatcher(acceso);
         vista.forward(request,response);

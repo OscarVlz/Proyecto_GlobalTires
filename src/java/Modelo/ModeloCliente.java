@@ -5,13 +5,14 @@
 package Modelo;
 
 import Controlador.Conexion;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 /**
  *
- * @author JORGE
+ * @author Equipo 2
  */
 public class ModeloCliente extends Conexion{
     
@@ -49,35 +50,35 @@ public class ModeloCliente extends Conexion{
     }
 
 
-public Cliente getCliente(int id){
+    public Cliente getCliente(int id) {
         Cliente cliente = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
-        
-        try{
+
+        try {
             String sql = "call selectCliente(?)";
             pst = getConexion().prepareCall(sql);
             pst.setInt(1, id);
             rs = pst.executeQuery();
-            
+
             while (rs.next()) {
-                cliente = new Cliente(rs.getInt("id_cliente"), rs.getString("usuario"),rs.getString("clave"));
+                cliente = new Cliente(rs.getInt("id_cliente"), rs.getString("usuario"), rs.getString("pass"));
             }
-        }catch (Exception e){
-            
-        }finally{
-            try{
-                if(rs != null){
+        } catch (Exception e) {
+
+        } finally {
+            try {
+                if (rs != null) {
                     rs.close();
                 }
-                if(pst != null){
+                if (pst != null) {
                     pst.close();
                 }
-                if(getConexion() !=null){
+                if (getConexion() != null) {
                     getConexion().close();
                 }
-            }catch (Exception e){
-                
+            } catch (Exception e) {
+
             }
         }
         return cliente;
@@ -90,7 +91,7 @@ public Cliente getCliente(int id){
         ResultSet rs = null;
         
         try{
-            String insert = "insert into cliente(usuario,clave) values (?,?)";
+            String insert = "insert into cliente(usuario,pass) values (?,?)";
             System.out.println("Insert es; " + insert);
             pst = getConexion().prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, usuario);
@@ -118,42 +119,54 @@ public Cliente getCliente(int id){
         }
         return cliente;
     }
-    
-    public Cliente actualizarCliente(Cliente cliente){
-        PreparedStatement pst = null;
-        ResultSet rs = null;
-        
-        try{
-            String update = "update cliente set usuario=?, clave=? where id=?";
-            System.out.println("update es; " + update);
-            pst = getConexion().prepareStatement(update);
+    public Cliente actualizarCliente(Cliente cliente) {
+        try ( Connection conexion = getConexion();  PreparedStatement pst = conexion.prepareStatement("update cliente set usuario=?, pass=? where id_cliente=?")) {
+
             pst.setString(1, cliente.getUsuario());
             pst.setString(2, cliente.getClave());
             pst.setInt(3, cliente.getId());
-            
-            rs=pst.executeQuery();
+
             pst.executeUpdate();
-            if(rs.next()){
-                cliente.setUsuario("usuario");
-                cliente.setClave("clave");
-            }
-        }catch(Exception e){
+
+        } catch (Exception e) {
             System.out.println("Error en: " + e);
-        } finally {
-            try {
-                if(getConexion()!=null){
-                    getConexion().close();
-                }
-                if(pst!=null) pst.close();
-                if(rs!=null) rs.close();
-
-            } catch (Exception e) {
-                System.out.println("Error en: " + e);
-            }
-
         }
+
         return cliente;
     }
+
+//    public Cliente actualizarCliente(Cliente cliente){
+//        PreparedStatement pst = null;
+//        ResultSet rs = null;
+//        
+//        try{
+//            String update = "update cliente set usuario=?, pass=? where id_cliente=?";
+//            System.out.println("update es; " + update);
+//            System.out.println(cliente.getClave());
+//            System.out.println(cliente.getUsuario());
+//            pst = getConexion().prepareStatement(update);
+//            pst.setString(1, cliente.getUsuario());
+//            pst.setString(2, cliente.getClave());
+//            pst.setInt(3, cliente.getId());
+//            
+//            pst.executeUpdate();
+//
+//        }catch(Exception e){
+//            System.out.println("Error en: " + e);
+//        } finally {
+//            try {
+//                if(getConexion()!=null){
+//                    getConexion().close();
+//                }
+//                if(pst!=null) pst.close();
+//
+//            } catch (Exception e) {
+//                System.out.println("Error en: " + e);
+//            }
+//
+//        }
+//        return cliente;
+//    }
     
     public void eliminarCliente(int id){
         PreparedStatement pst = null;

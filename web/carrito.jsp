@@ -1,7 +1,7 @@
 <%-- 
     Document   : carrito
     Created on : 11/11/2023, 09:40:25 PM
-    Author     : JORGE
+    Author     : Equipo 2
 --%>
 
 <%@page import="Controlador.ControladorProducto"%>
@@ -33,13 +33,6 @@
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!--
-    
-    TemplateMo 546 Sixteen Clothing
-    
-    https://templatemo.com/tm-546-sixteen-clothing
-    
-    -->
 
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="assets/css/fontawesome.css">
@@ -190,7 +183,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="inner-content">
-                        <p>Copyright &copy; 2023 Equipo 2 & Global Tires
+                        <p> &copy; 2023 Equipo 2 & Global Tires
                     </div>
                 </div>
             </div>

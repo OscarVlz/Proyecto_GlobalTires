@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author oscar
+ * @author Equipo 2
  */
 public class Consultas extends Conexion {
 

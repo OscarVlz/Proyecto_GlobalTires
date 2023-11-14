@@ -1,7 +1,7 @@
 <%-- 
     Document   : menu
     Created on : 31/10/2023, 10:52:07 AM
-    Author     : oscar
+    Author     : Equipo 2
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

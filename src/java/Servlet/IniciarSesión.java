@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author oscar
+ * @author Equipo 2
  */
 public class IniciarSesión extends HttpServlet {
 

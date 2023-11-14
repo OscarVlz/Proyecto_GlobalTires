@@ -9,7 +9,7 @@ import Modelo.Producto;
 
 /**
  *
- * @author JORGE
+ * @author Equipo 2
  */
 public class ControladorProducto {
 

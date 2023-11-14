@@ -1,7 +1,7 @@
 <%-- 
     Document   : detallesProducto
     Created on : 11/11/2023, 08:39:53 PM
-    Author     : JORGE
+    Author     : Equipo 2
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
