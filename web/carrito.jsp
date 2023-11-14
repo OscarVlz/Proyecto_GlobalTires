@@ -70,7 +70,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="products.html"><i class="fa fa-car" aria-hidden="true"></i> Nuestros Productos</a>
+                            <a class="nav-link " href="productos.jsp"><i class="fa fa-car" aria-hidden="true"></i> Nuestros Productos</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="sobreNosotros.jsp"><i class="fa fa-globe" aria-hidden="true"></i> Acerca de nosotros</a>
@@ -169,7 +169,7 @@
                     </div>
                     <div class="card-footer">
                         <a class="btn btn-default update" href=""><i class="fa fa-shopping-cart"></i> Update</a>
-                        <a class="btn btn-default check_out" href=""><i class="fa fa-shopping-cart"></i> Check Out</a>
+                        <a class="btn btn-default check_out" href="" data-toggle="modal" data-target="#modalPago"><i class="fa fa-shopping-cart"></i> Check Out</a>
                     </div>
                 </div>
             </div>
@@ -215,7 +215,33 @@
         }
     </script>
 
+    <div class="modal fade" id="modalPago" tabindex="-1" role="dialog" aria-labelledby="modalPagoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPagoLabel">Realizar Pago</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBodyPago">
+                    <form id="formularioPago">
+                        <div class="form-group">
+                            <label for="numeroTarjeta">Número de Tarjeta</label>
+                            <input type="text" class="form-control" id="numeroTarjeta" placeholder="Ingresa el número de tarjeta">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="realizarPago()">Realizar Pago</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        function realizarPago() {
+            document.getElementById('modalBodyPago').innerHTML = '<h4>Pago Exitoso</h4><p>¡Gracias por tu compra!</p>';
+        }
+    </script>
 </body>
 
 </html>

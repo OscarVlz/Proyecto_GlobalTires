@@ -4,28 +4,21 @@
  */
 package Servlet;
 
-import Modelo.Cliente;
-import Modelo.ModeloCliente;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Equipo 2
+ * @author Elkur
  */
-public class CrudClientes extends HttpServlet {
-
-    String consultar = "crudClientes.jsp";
-    String editar = "editCliente.jsp";
-    String nuevo = "nuevoCliente.jsp";
-    Cliente cliente;
-    String eliminar = "eliminarCliente.jsp";
-    ModeloCliente modelC = new ModeloCliente();
+@WebServlet(name = "CerrarSesion", urlPatterns = {"/CerrarSesion"})
+public class CerrarSesion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +37,10 @@ public class CrudClientes extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CrudClientes</title>");
+            out.println("<title>Servlet CerrarSesion</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CrudClientes at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CerrarSesion at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,46 +55,12 @@ public class CrudClientes extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String acceso = "";
-        String action = request.getParameter("accion");
-        if (action.equalsIgnoreCase("consultar")) {
-            modelC.reconect();
-            acceso = consultar;
-        } else if (action.equalsIgnoreCase("editar")) {
-            modelC.reconect();
-            request.setAttribute("idper", request.getParameter("id"));
-            acceso = editar;
-        } else if (action.equalsIgnoreCase("Actualizar")) {
-            modelC.reconect();
-            int id = Integer.parseInt(request.getParameter("txtid"));
-            String nombre = request.getParameter("txtNom");
-            String contra = request.getParameter("txtContrasena");
-            cliente = new Cliente(id, nombre, contra);
-            modelC.actualizarCliente(cliente);
-            acceso = consultar;
-        } else if (action.equalsIgnoreCase("Eliminar")) {
-            modelC.reconect();
-            int id = Integer.parseInt(request.getParameter("id"));
-            cliente = new Cliente(id);
-            modelC.eliminarCliente(id);
-            acceso = consultar;
-        } else if (action.equalsIgnoreCase("mostrarcreado")) {
-            modelC.reconect();
-            String usuario = request.getParameter("usuario");
-            String pass = request.getParameter("pass");
-
-            cliente = new Cliente(usuario, pass);
-            modelC.insertarCliente(usuario, pass);
-
-            acceso = consultar;
-        } else if (action.equalsIgnoreCase("crear")) {
-            acceso = nuevo;
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); // Cierra la sesión
         }
-        RequestDispatcher vista = request.getRequestDispatcher(acceso);
-        vista.forward(request, response);
+        response.sendRedirect("index.jsp"); // Redirige a la página de inicio de sesión
     }
 
     /**

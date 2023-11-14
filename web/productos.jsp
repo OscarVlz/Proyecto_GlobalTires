@@ -77,7 +77,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="products.jsp"><i class="fa fa-car" aria-hidden="true"></i> Nuestros Productos</a>
+                                <a class="nav-link active" href="productos.jsp"><i class="fa fa-car" aria-hidden="true"></i> Nuestros Productos</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="sobreNosotros.jsp"><i class="fa fa-globe" aria-hidden="true"></i> Acerca de nosotros</a>

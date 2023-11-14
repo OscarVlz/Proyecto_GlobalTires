@@ -72,12 +72,15 @@
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
-                           
+
                             <li class="nav-item">
                                 <a class="nav-link"><i class="fa fa-user" aria-hidden="true"></i> <% out.println(usuario);%></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="" data-toggle="modal" data-target="#ModalCRUD"><i class="fa fa-database" aria-hidden="true"></i> CRUD</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="CerrarSesion">Cerrar Sesión</a>
                             </li>
                         </ul>
                     </div>
@@ -131,7 +134,7 @@
                 </div>
             </div>      
         </div>
-        
+
         <div class="modal fade1" id="ModalProductos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -146,16 +149,17 @@
                         </div>
                         <div class="d-flex flex-column text-center">
                             <button class="filled-button"><a href="CrudProductos?accion=consultar">Consultar</a></button><br>
-                            
+                            <button class="filled-button"><a href="CrudProductos?accion=crear">Crear</a></button><br>
+
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                        
+
                     </div>
                 </div>
             </div>      
         </div>
-        
+
         <div class="modal fade1" id="ModalClientes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -170,11 +174,11 @@
                         </div>
                         <div class="d-flex flex-column text-center">
                             <button class="filled-button"><a href="CrudClientes?accion=consultar">Consultar</a></button><br>
-                            
+                            <button class="filled-button"><a href="CrudClientes?accion=crear">Crear</a></button><br>
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
-                       
+
                     </div>
                 </div>
             </div>      
@@ -187,7 +191,7 @@
                     <div class="col-md-12">
                         <div class="section-heading">
                             <h2>Ultimos productos</h2>
-                            <a href="productss.jsp">Todos los productos <i class="fa fa-angle-right"></i></a>
+                            <a href="productos.jsp">Todos los productos <i class="fa fa-angle-right"></i></a>
                         </div>
                     </div>
                     <%=cp.getUltimosProductos()%>

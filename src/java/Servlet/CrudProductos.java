@@ -23,6 +23,7 @@ public class CrudProductos extends HttpServlet {
 //    String consultar="consultarProductos.jsp";
     String consultar = "consultarProductos.jsp";
     String editar = "editProducto.jsp";
+    String crear = "nuevoProducto.jsp";
     Producto producto;
     ModeloProducto modeloProducto = new ModeloProducto();
 
@@ -38,7 +39,7 @@ public class CrudProductos extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -66,6 +67,7 @@ public class CrudProductos extends HttpServlet {
             throws ServletException, IOException {
         String acceso = "";
         String action = request.getParameter("accion");
+        modeloProducto.reconect();
         if (action.equalsIgnoreCase("consultar")) {
             acceso = consultar;
         } else if (action.equalsIgnoreCase("editar")) {
@@ -80,17 +82,28 @@ public class CrudProductos extends HttpServlet {
             String descripcion = request.getParameter("txtDescripcion");
             String tipo = request.getParameter("txtTipo");
             
-
             producto = new Producto(id, nombre, tipo, img, precio, stock, descripcion);
             modeloProducto.actualizarProducto(producto);
             acceso = consultar;
-        }else if (action.equalsIgnoreCase("Eliminar")) {
+        } else if (action.equalsIgnoreCase("Eliminar")) {
             int id = Integer.parseInt(request.getParameter("id"));
             producto = new Producto(id);
             modeloProducto.eliminarProducto(id);
-            acceso=consultar;
+            acceso = consultar;
             
-           
+        } else if (action.equalsIgnoreCase("mostrarCreado")) {
+            String nombre = request.getParameter("txtNom");
+            double precio = Double.parseDouble(request.getParameter("txtPrecio"));
+            String img = request.getParameter("txtimg");
+            int stock = Integer.parseInt(request.getParameter("txtStock"));
+            String descripcion = request.getParameter("txtDescripcion");
+            String tipo = request.getParameter("txtTipo");
+            
+            producto = new Producto(nombre, img, precio, stock, descripcion, tipo);
+            modeloProducto.insertarProducto(nombre, tipo, img, precio, stock, descripcion);
+            acceso = consultar;
+        } else if (action.equalsIgnoreCase("crear")) {
+            acceso = crear;
         }
         RequestDispatcher vista = request.getRequestDispatcher(acceso);
         vista.forward(request, response);

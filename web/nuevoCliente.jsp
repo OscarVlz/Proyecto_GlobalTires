@@ -33,23 +33,17 @@
 
     <body>
         <div class="container mt-5">
-            <%
-                ModeloCliente modelC = new ModeloCliente();
-                int id = Integer.parseInt((String) request.getAttribute("idper"));
-                Cliente c = (Cliente) modelC.getCliente(id);
-            %>
-            <h1>Modificar Cliente</h1>
-            <form action="CrudClientes?accion=consultar" method="get">
+            <h1>Nuevo Cliente</h1>
+            <form action="CrudClientes?accion=mostrarCreado" method="get">
                 <div class="form-group">
-                    <label for="txtNom">Usuario:</label>
-                    <input type="text" id="txtNom" name="txtNom" class="form-control" value="<%= c.getUsuario()%>">
+                    <label for="usuario">Nombre de Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Nombre de Usuario" required>
                 </div>
                 <div class="form-group">
-                    <label for="txtContrasena">Contraseña:</label>
-                    <input type="password" id="txtContrasena" name="txtContrasena" class="form-control" value="<%= c.getClave()%>">
+                    <label for="pass">Contraseña:</label>
+                    <input type="password" id="pass" name="pass" class="form-control" required>
                 </div>
-                <input type="hidden" name="txtid" value="<%= c.getId()%>">
-                <button type="submit" name="accion" value="Actualizar" class="btn btn-primary">Actualizar</button>
+                <button type="submit" name="accion" value="mostrarCreado" class="btn btn-primary">Crear</button>
                 <a href="CrudClientes?accion=consultar" class="btn btn-secondary">Regresar</a>
             </form>
         </div>

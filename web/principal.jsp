@@ -86,6 +86,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" onclick="openModal()"><i class="fa fa-user" aria-hidden="true"></i> <% out.println(usuario);%></a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="CerrarSesion">Salir</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -185,54 +188,54 @@
 
 
         <script language="text/Javascript">
-            cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-            function clearField(t) {                   //declaring the array outside of the
-                if (!cleared[t.id]) {                      // function makes it static and global
-                    cleared[t.id] = 1;  // you could use true and false, but that's more typing
-                    t.value = '';         // with more chance of typos
-                    t.style.color = '#fff';
-                }
-            }
-            // Get the modal
-            var modal = document.getElementById("myModal");
+                                    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+                                    function clearField(t) {                   //declaring the array outside of the
+                                        if (!cleared[t.id]) {                      // function makes it static and global
+                                            cleared[t.id] = 1;  // you could use true and false, but that's more typing
+                                            t.value = '';         // with more chance of typos
+                                            t.style.color = '#fff';
+                                        }
+                                    }
+                                    // Get the modal
+                                    var modal = document.getElementById("myModal");
 
-            // Get the button that opens the modal
-            var btn = document.querySelector("button");
+                                    // Get the button that opens the modal
+                                    var btn = document.querySelector("button");
 
-            // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("close")[0];
+                                    // Get the <span> element that closes the modal
+                                    var span = document.getElementsByClassName("close")[0];
 
-            // When the user clicks the button, open the modal
-            function openModal() {
-                modal.style.display = "block";
-            }
+                                    // When the user clicks the button, open the modal
+                                    function openModal() {
+                                        modal.style.display = "block";
+                                    }
 
-            // When the user clicks on <span> (x), close the modal
-            function closeModal() {
-               modal.style.display = "none";
-            }
+                                    // When the user clicks on <span> (x), close the modal
+                                    function closeModal() {
+                                        modal.style.display = "none";
+                                    }
 
-           // When the user clicks anywhere outside of the modal, close it
-              window.onclick = function(event) {
-                if (event.target == modal) {
-                  modal.style.display = "none";
-                }
-          };
+                                    // When the user clicks anywhere outside of the modal, close it
+                                    window.onclick = function (event) {
+                                        if (event.target == modal) {
+                                            modal.style.display = "none";
+                                        }
+                                    };
 
-           // Handle form submission
-          document.getElementById("profileForm").addEventListener("submit", function(event) {
-          event.preventDefault();
-    
-           // Update profile information
-           var newName = document.getElementById("newName").value;
-           var newPassword = document.getElementById("newPassword").value;
+                                    // Handle form submission
+                                    document.getElementById("profileForm").addEventListener("submit", function (event) {
+                                        event.preventDefault();
 
-           document.getElementById("nombre").innerText = newName;
-           document.getElementById("pass").innerText = newPassword;
+                                        // Update profile information
+                                        var newName = document.getElementById("newName").value;
+                                        var newPassword = document.getElementById("newPassword").value;
 
-         // Close the modal
-          closeModal();
-        });
+                                        document.getElementById("nombre").innerText = newName;
+                                        document.getElementById("pass").innerText = newPassword;
+
+                                        // Close the modal
+                                        closeModal();
+                                    });
         </script>
 
 
