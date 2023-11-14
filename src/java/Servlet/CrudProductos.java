@@ -19,9 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CrudProductos extends HttpServlet {
 
     String consultar="consultarProductos.jsp";
-    String agregar="agregarProducto.jsp";
-    String eliminar="eliminarProducto.jsp";
-    String actualizar="actualizarProducto.jsp";
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

@@ -12,6 +12,10 @@
         <servlet-name>CrudProductos</servlet-name>
         <servlet-class>Servlet.CrudProductos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CrudClientes</servlet-name>
+        <servlet-class>Servlet.CrudClientes</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IniciarSesión</servlet-name>
         <url-pattern>/iniciar</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>CrudProductos</servlet-name>
         <url-pattern>/CrudProductos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CrudClientes</servlet-name>
+        <url-pattern>/CrudClientes</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

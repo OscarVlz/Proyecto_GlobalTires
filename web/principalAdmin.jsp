@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     HttpSession objSesion = request.getSession(false);
-    String usuario = (String) objSesion.getAttribute("usuario");
+    String usuario = (String) objSesion.getAttribute("usuarioAdmin");
     if (usuario == null) {
         response.sendRedirect("index.jsp");
     }
@@ -130,7 +130,7 @@
                         </div>
                         <div class="d-flex flex-column text-center">
                             <button class="filled-button"><a href="" data-toggle="modal" data-target="#ModalProductos">Productos</a></button><br>
-                            <button class="filled-button"><a href="" data-toggle="modal" data-target="#ModalUsuarios">Usuarios</a></button><br>
+                            <button class="filled-button"><a href="" data-toggle="modal" data-target="#ModalClientes">Usuarios</a></button><br>
                         </div>
                     </div>
                 </div>
@@ -162,7 +162,7 @@
             </div>      
         </div>
         
-        <div class="modal fade1" id="ModalUsuarios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade1" id="ModalClientes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header border-bottom-0">
@@ -175,7 +175,7 @@
                             <h4>CRUD Usuarios</h4><br>
                         </div>
                         <div class="d-flex flex-column text-center">
-                            <button class="filled-button"><a href="CrudProductos?accion=consultar">Consultar</a></button><br>
+                            <button class="filled-button"><a href="CrudClientes?accion=consultar">Consultar</a></button><br>
                             <button class="filled-button">Agregar</button><br>
                             <button class="filled-button">Eliminar</button><br>
                         </div>

@@ -7,16 +7,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     HttpSession objSesion = request.getSession(false);
-    String usuario = (String) objSesion.getAttribute("usuario");
+    String usuario = (String) objSesion.getAttribute("usuarioAdmin");
     if (usuario == null) {
         response.sendRedirect("index.jsp");
 
     }
 %>
-<%@page import="Controlador.ControladorProducto"%>
-<%@page import="Modelo.Producto"%>
+<%@page import="Controlador.ControladorCliente"%>
+<%@page import="Modelo.Cliente"%>
 <%
-    ControladorProducto cp = new ControladorProducto();
+    ControladorCliente cc = new ControladorCliente();
 %>
 <!DOCTYPE html>
 <html>
@@ -48,6 +48,24 @@
     </head>
 
     <body>
-        <h1>Hello World!</h1>
+        <h1>Consulta</h1>
+        <div>
+            <h1>Clientes</h1>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Usuario</th>
+                        <th>Clave</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <%=cc.getClientesTabla()%>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
     </body>
 </html>

@@ -19,15 +19,14 @@ public class ModeloCliente extends Conexion{
         ArrayList<Cliente> clientes = new ArrayList<>();
         PreparedStatement pst = null;
         ResultSet rs = null;
-        
-        
+
         try {
             String sql = "call selectClientes()";
             pst = getConexion().prepareCall(sql);
             rs = pst.executeQuery();
             
             while (rs.next()) {
-                clientes.add(new Cliente(rs.getInt("id_cliente"), rs.getString("usuario"),rs.getString("clave")));
+                clientes.add(new Cliente(rs.getInt("id_cliente"), rs.getString("usuario"),rs.getString("pass")));
             }
         } catch (Exception e){
             

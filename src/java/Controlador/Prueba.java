@@ -4,6 +4,7 @@
  */
 package Controlador;
 
+import Modelo.ModeloCliente;
 import Modelo.ModeloProducto;
 
 /**
@@ -20,8 +21,11 @@ public class Prueba {
         Conexion co= new Conexion();
         co.getConexion();
         
-        ModeloProducto mp = new ModeloProducto();
-        System.out.println(mp.getAllProductosDesc());
+//        ModeloProducto mp = new ModeloProducto();
+//        System.out.println(mp.getAllProductosDesc());
+        
+        ModeloCliente mc = new ModeloCliente();
+        System.out.println(mc.getAllClientes());
     }
     
 }

@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     HttpSession objSesion = request.getSession(false);
-    String usuario = (String) objSesion.getAttribute("usuario");
+    String usuario = (String) objSesion.getAttribute("usuarioAdmin");
     if (usuario == null) {
         response.sendRedirect("index.jsp");
 
