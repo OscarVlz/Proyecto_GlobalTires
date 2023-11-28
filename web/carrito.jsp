@@ -17,8 +17,22 @@
     }
 %>
 <%
+    Boolean compraExitosa = (Boolean) session.getAttribute("compraExitosa");
+    if (compraExitosa != null && compraExitosa) {
+%>
+<script>
+    $(document).ready(function () {
+        $('#modalMensaje').modal('show');
+    });
+</script>
+<%
+        session.removeAttribute("compraExitosa");
+    }
+%>
+<%
     HttpSession sesion = request.getSession(true);
     ArrayList<Articulo> articulos = sesion.getAttribute("carrito") == null ? null : (ArrayList) sesion.getAttribute("carrito");
+    sesion.setAttribute("compra", articulos);
 %>
 <!DOCTYPE html>
 <head>
@@ -79,8 +93,8 @@
                             <a class="nav-link active" href="carrito.jsp"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Carrito</a>
                         </li>
                         <li class="nav-item">
-                                <a class="nav-link " href="compras.jsp"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Mis compras</a>
-                            </li>
+                            <a class="nav-link " href="compras.jsp"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Mis compras</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link"><i class="fa fa-user" aria-hidden="true"></i> <% out.println(usuario);%></a>
                         </li>
@@ -155,7 +169,8 @@
                     </table>
                     <% if (articulos == null) {%>
                     <h4> No hay Articulos en el carro  </h4>
-                    <% }%>
+                    <% }
+                    %>
                 </div><a href="javascript:window.history.go(-2);">Seguir Comprando</a>
             </div>
             <div class="col-sm-6">
@@ -211,14 +226,14 @@
 
 
     <script language = "text/Javascript">
-        cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-        function clearField(t) {                   //declaring the array outside of the
-            if (!cleared[t.id]) {                      // function makes it static and global
-                cleared[t.id] = 1;  // you could use true and false, but that's more typing
-                t.value = '';         // with more chance of typos
-                t.style.color = '#fff';
-            }
+    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+    function clearField(t) {                   //declaring the array outside of the
+        if (!cleared[t.id]) {                      // function makes it static and global
+            cleared[t.id] = 1;  // you could use true and false, but that's more typing
+            t.value = '';         // with more chance of typos
+            t.style.color = '#fff';
         }
+    }
     </script>
 
     <div class="modal fade" id="modalPago" tabindex="-1" role="dialog" aria-labelledby="modalPagoLabel" aria-hidden="true">
@@ -231,23 +246,42 @@
                     </button>
                 </div>
                 <div class="modal-body" id="modalBodyPago">
-                    <form id="formularioPago">
+                    <form id="formularioPago" action="RealizarCompra" method="post">
                         <div class="form-group">
                             <label for="numeroTarjeta">Número de Tarjeta</label>
                             <input type="text" class="form-control" id="numeroTarjeta" placeholder="Ingresa el número de tarjeta">
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="realizarPago()">Realizar Pago</button>
+                        <div class="form-group">
+                            <label for="fechaVencimiento">Fecha de vencimiento</label>
+                            <input type="date" class="form-control" id="fechaVencimiento">
+                        </div>
+                        <div class="form-group">
+                            <label for="numSeguridad">Numero de seguridad</label>
+                            <input type="number" class="form-control" id="numSeguridad">
+                        </div>
+
+                        <input type="hidden" value="<%= objSesion.getAttribute("id")%>" name="id">
+
+                        <button type="submit" class="btn btn-primary">Realizar Pago</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        function realizarPago() {
-            document.getElementById('modalBodyPago').innerHTML = '<h4>Pago Exitoso</h4><p>¡Gracias por tu compra!</p>';
-        }
-    </script>
+    <div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-labelledby="modalMensajeLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalMensajeLabel">Mensaje Importante</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>¡Pago procesado con éxito!</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
-
 </html>

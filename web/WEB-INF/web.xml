@@ -16,6 +16,10 @@
         <servlet-name>CrudClientes</servlet-name>
         <servlet-class>Servlet.CrudClientes</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RealizarCompra</servlet-name>
+        <servlet-class>Servlet.RealizarCompra</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>IniciarSesión</servlet-name>
         <url-pattern>/iniciar</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>CrudClientes</servlet-name>
         <url-pattern>/CrudClientes</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RealizarCompra</servlet-name>
+        <url-pattern>/RealizarCompra</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
