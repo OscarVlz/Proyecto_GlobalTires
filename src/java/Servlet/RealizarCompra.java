@@ -5,22 +5,22 @@
 package Servlet;
 
 import Modelo.Articulo;
+import Modelo.ModeloCompra;
+import Modelo.ModeloProducto;
+import Modelo.Producto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Equipo 2
+ * @author Elkur
  */
-@WebServlet(name = "AddCart", urlPatterns = {"/agregarproducto"})
-public class AddCart extends HttpServlet {
+public class RealizarCompra extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,32 +35,25 @@ public class AddCart extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        int cantidad = Integer.parseInt(request.getParameter("cantidad"));
-        int idproducto = Integer.parseInt(request.getParameter("idproducto"));
-        double precio = Double.parseDouble(request.getParameter("precio"));
+        ArrayList<Articulo> articulos = (ArrayList<Articulo>) request.getSession().getAttribute("compra");
+        ModeloCompra modelo = new ModeloCompra();
+        ModeloProducto modeloP = new ModeloProducto();
+        int id = Integer.parseInt(request.getParameter("id"));
 
-        HttpSession sesion = request.getSession(true);
-        ArrayList<Articulo> articulos = sesion.getAttribute("carrito") == null ? new ArrayList<>() : (ArrayList) sesion.getAttribute("carrito");
-
-        boolean flag = false;
-        if (articulos.size() > 0) {
-            for (Articulo a : articulos) {
-                if (idproducto == a.getIdProducto()) {
-                    a.setCantidad(a.getCantidad() + cantidad);
-                    flag = true;
-                    break;
-                }
+        for (Articulo art : articulos) {
+            Producto aux = modeloP.getProducto(art.getIdProducto());
+            if (aux.getStock() >= art.getCantidad()) {
+                modelo.reconect();
+                modelo.insertarCompra(id, art.getCosto(), art.getCantidad(), art.getIdProducto());
+                aux.setStock(aux.getStock() - art.getCantidad());
+                modeloP.reconect();
+                modeloP.actualizarProducto(aux);
             }
+            modeloP.reconect();
+
         }
-
-        if (!flag) {
-            articulos.add(new Articulo(idproducto, cantidad, precio));
-        }
-
-        sesion.setAttribute("carrito", articulos);
-
-        response.sendRedirect("carrito.jsp");
-
+        request.setAttribute("compraExitosa", true);
+        request.getRequestDispatcher("carrito.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -90,6 +83,7 @@ public class AddCart extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
     }
 
     /**

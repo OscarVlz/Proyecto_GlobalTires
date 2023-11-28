@@ -32,24 +32,25 @@ public class IniciarSesión extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String usuario=request.getParameter("usuario");
-         String clave=request.getParameter("pass");
-        
-         Consultas sql= new Consultas();
-         Consultas sql2= new Consultas();
-         
-         if(sql.autenticacion(usuario, clave)){
-             HttpSession objSesion=request.getSession(true);
-             objSesion.setAttribute("usuario", usuario);
-             response.sendRedirect("principal.jsp");    
-         }else if(sql2.autenticacionAdmin(usuario, clave)){
-             HttpSession objSesion=request.getSession(true);
-             objSesion.setAttribute("usuarioAdmin", usuario);
-             response.sendRedirect("principalAdmin.jsp");
-         }else{
-             response.sendRedirect("index.jsp");
-         }
-        
+        String usuario = request.getParameter("usuario");
+        String clave = request.getParameter("pass");
+
+        Consultas sql = new Consultas();
+        Consultas sql2 = new Consultas();
+        int id = sql.autenticacionId(usuario, clave);
+        if (id != -1) {
+            HttpSession objSesion = request.getSession(true);
+            objSesion.setAttribute("usuario", usuario);
+            objSesion.setAttribute("id",id);
+            response.sendRedirect("principal.jsp");
+        } else if (sql2.autenticacionAdmin(usuario, clave)) {
+            HttpSession objSesion = request.getSession(true);
+            objSesion.setAttribute("usuarioAdmin", usuario);
+            response.sendRedirect("principalAdmin.jsp");
+        } else {
+            response.sendRedirect("index.jsp");
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
