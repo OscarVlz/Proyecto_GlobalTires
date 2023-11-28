@@ -68,7 +68,7 @@
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="principal.jsp> <i class="fa fa-home" aria-hidden="true"></i> Inicio
+                                <a class="nav-link" href="principalAdmin.jsp> <i class="fa fa-home" aria-hidden="true"></i> Inicio
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
@@ -77,7 +77,7 @@
                                 <a class="nav-link"><i class="fa fa-user" aria-hidden="true"></i> <% out.println(usuario);%></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="" data-toggle="modal" data-target="#ModalCRUD"><i class="fa fa-database" aria-hidden="true"></i> CRUD</a>
+                                <a class="nav-link" href="" data-toggle="modal" data-target="#ModalCRUD"><i class="fa fa-database" aria-hidden="true"></i> Administrar</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="CerrarSesion">Cerrar Sesión</a>
@@ -124,7 +124,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-title text-center">
-                            <h4>CRUDs</h4><br>
+                            <h4>Administrar</h4><br>
                         </div>
                         <div class="d-flex flex-column text-center">
                             <button class="filled-button"><a href="" data-toggle="modal" data-target="#ModalProductos">Productos</a></button><br>
@@ -145,7 +145,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-title text-center">
-                            <h4>CRUD Productos</h4><br>
+                            <h4>Administrar Productos</h4><br>
                         </div>
                         <div class="d-flex flex-column text-center">
                             <button class="filled-button"><a href="CrudProductos?accion=consultar">Consultar</a></button><br>
@@ -170,7 +170,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-title text-center">
-                            <h4>CRUD Usuarios</h4><br>
+                            <h4>Administrar Usuarios</h4><br>
                         </div>
                         <div class="d-flex flex-column text-center">
                             <button class="filled-button"><a href="CrudClientes?accion=consultar">Consultar</a></button><br>
@@ -232,7 +232,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="inner-content">
-                            <p>Copyright &copy; 2023 Equipo 2 & Global Tires
+                            <p> &copy; 2023 Equipo 2 & Global Tires
                         </div>
                     </div>
                 </div>

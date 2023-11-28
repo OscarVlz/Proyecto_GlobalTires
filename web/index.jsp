@@ -30,11 +30,11 @@
             <form action="iniciar" method="post">
                 <div class="form-group">
                     <label for="usuario">Nombre de Usuario:</label>
-                    <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Nombre de Usuario" required>
+                    <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Ingrese el Nombre de Usuario" required>
                 </div>
                 <div class="form-group">
                     <label for="pass">Contraseña:</label>
-                    <input type="password" id="pass" name="pass" class="form-control" required>
+                    <input type="password" id="pass" name="pass" class="form-control" placeholder="Ingrese su Contraseña" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
             </form>

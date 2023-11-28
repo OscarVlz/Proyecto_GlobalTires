@@ -70,14 +70,17 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="productos.jsp"><i class="fa fa-car" aria-hidden="true"></i> Nuestros Productos</a>
+                            <a class="nav-link " href="productos.jsp"><i class="fa fa-car" aria-hidden="true"></i> Productos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="sobreNosotros.jsp"><i class="fa fa-globe" aria-hidden="true"></i> Acerca de nosotros</a>
+                            <a class="nav-link" href="sobreNosotros.jsp"><i class="fa fa-globe" aria-hidden="true"></i> Nosotros</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="carrito.jsp"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Carrito</a>
                         </li>
+                        <li class="nav-item">
+                                <a class="nav-link " href="compras.jsp"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Mis compras</a>
+                            </li>
                         <li class="nav-item">
                             <a class="nav-link"><i class="fa fa-user" aria-hidden="true"></i> <% out.println(usuario);%></a>
                         </li>
