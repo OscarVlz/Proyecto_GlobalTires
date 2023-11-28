@@ -25,7 +25,18 @@
     </head>
 
     <body class="bg-light">
-        <div class="container mt-5">
+        <header class="">
+            <nav class="navbar">
+                <div class="container">
+                    <a class="navbar-brand" href="index.jsp"><img src="assets/images/logo.png" alt="" class="logoImg"></a>
+                </div>
+            </nav>
+        </header>   
+        <div class="banner header-text">
+
+        </div>
+
+        <div class="container mt-5" style="background-color: #898c84; border-radius: 3px; padding: 40px">
             <h1>Iniciar Sesión</h1>
             <form action="iniciar" method="post">
                 <div class="form-group">
@@ -36,7 +47,7 @@
                     <label for="pass">Contraseña:</label>
                     <input type="password" id="pass" name="pass" class="form-control" placeholder="Ingrese su Contraseña" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                <button type="submit" class="btn btn-primary" style="background-color: #324c69;">Iniciar Sesión</button>
             </form>
             <br>
             <p class="mt-3">¿No tienes cuenta? <a href="registro.jsp">Registrar</a></p>

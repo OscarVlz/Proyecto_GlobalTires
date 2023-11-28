@@ -112,6 +112,8 @@
                         <span>Precio $<%= producto.getPrecio()%></span><br>
                         <label>Cantidad: </label>
                         <input type="hidden" value="<%= producto.getId()%>" name="idproducto">
+                        <input type="hidden" value="<%= producto.getPrecio()%>" name="precio">
+
                         <input type="text" value="1" id="txt-cantidad" name="cantidad"/><br>
                         <button type="submit" class="btn btn-fefault cart">
                             <i class="fa fa-shopping-cart"></i>
