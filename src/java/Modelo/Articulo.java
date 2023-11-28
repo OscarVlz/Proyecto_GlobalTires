@@ -4,17 +4,23 @@
  */
 package Modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Equipo 2
  */
-public class Articulo {
+public class Articulo implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     private int idProducto;
     private int cantidad;
+    private double costo;
 
-    public Articulo(int idProducto, int cantidad) {
+    public Articulo(int idProducto, int cantidad, double costo) {
         this.idProducto = idProducto;
         this.cantidad = cantidad;
+        this.costo = costo;
     }
 
     public int getIdProducto() {
@@ -32,7 +38,13 @@ public class Articulo {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-    
-    
-    
+
+    public double getCosto() {
+        return costo;
+    }
+
+    public void setCosto(double costo) {
+        this.costo = costo;
+    }
+
 }

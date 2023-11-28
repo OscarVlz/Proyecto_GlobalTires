@@ -163,10 +163,9 @@ public class ModeloProducto extends Conexion{
     }
     
     
-    public Producto actualizarProducto(Producto producto){
+    public int actualizarProducto(Producto producto){
         PreparedStatement pst = null;
-        ResultSet rs = null;
-        
+        int result = -1;
         try {
             String update = "update producto set nombre=?, tipo=? ,img_producto=? ,precio=? ,stock=? ,descripcion=? where id_producto=?";
             System.out.println("update es;" + update);
@@ -179,16 +178,7 @@ public class ModeloProducto extends Conexion{
             pst.setString(6, producto.getDescripcion());
             pst.setInt(7,producto.getId());
             
-           
-            pst.executeUpdate();
-            if(rs.next()){
-                producto.setNombre(rs.getString("nombre"));
-                producto.setTipo(rs.getString("tipo"));
-                producto.setImg(rs.getString("img_producto"));
-                producto.setPrecio(rs.getDouble("precio"));
-                producto.setStock(rs.getInt("stock"));
-                producto.setDescripcion(rs.getString("descripcion"));
-            }
+            result = pst.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error en: " + e);
         } finally {
@@ -204,7 +194,7 @@ public class ModeloProducto extends Conexion{
             }
 
         }
-        return producto;
+        return result;
         
     }
 

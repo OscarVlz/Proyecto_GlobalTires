@@ -54,6 +54,7 @@ public class Consultas extends Conexion {
             pst.setString(1, usuario);
             pst.setString(2, clave);
             rs=pst.executeQuery();
+            
             if(rs.next()){
                 return true;
             }
@@ -105,4 +106,34 @@ public class Consultas extends Conexion {
         return false;
     }
 
+        public int autenticacionId(String usuario, String clave) {
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try {
+            String consulta = "select * from cliente where usuario=? and pass=?";
+            System.out.println("Consulta es;" + consulta);
+            pst = getConexion().prepareStatement(consulta);
+            pst.setString(1, usuario);
+            pst.setString(2, clave);
+            rs=pst.executeQuery();
+            if(rs.next()){
+                return rs.getInt("id_cliente");
+            }
+        } catch (Exception e) {
+            System.out.println("Error en: " + e);
+        } finally {
+            try {
+                if(getConexion()!=null){
+                    getConexion().close();
+                }
+                if(pst!=null) pst.close();
+                if(rs!=null) rs.close();
+
+            } catch (Exception e) {
+                System.out.println("Error en: " + e);
+            }
+
+        }
+        return -1;
+    }
 }
