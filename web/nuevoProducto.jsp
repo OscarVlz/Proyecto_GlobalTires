@@ -37,7 +37,7 @@
             <form action="CrudProductos?accion = mostrarCreado" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="txtNom">Nombre:</label>
-                    <input type="text" id="txtNom" name="txtNom" class="form-control" required>
+                    <input type="text" id="txtNom" pattern=".{5,25}" minlength="5" maxlength="25" name="txtNom"  class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="txtTipo">Tipo:</label>
@@ -45,19 +45,19 @@
                 </div>
                 <div class="form-group">
                     <label for="txtimg">Imagen:</label>
-                    <input type="file" id="txtimg" name="txtimg" class="form-control" required>
+                    <input type="file" id="txtimg" name="txtimg" accept=".jpg, .png, .jpeg" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="txtPrecio">Precio:</label>
-                    <input type="number" id="txtPrecio" name="txtPrecio" class="form-control"required>
+                    <input type="number" id="txtPrecio" pattern="^(?:[1-9]\d{2,6}|100)$" name="txtPrecio" class="form-control"required>
                 </div>
                 <div class="form-group">
                     <label for="txtStock">Stock:</label>
-                    <input type="number" id="txtStock" name="txtStock" class="form-control"required>
+                    <input type="number" id="txtStock" name="txtStock" pattern="^(?:[1-9]|[1-9]\d|999)$" class="form-control"required>
                 </div>
                 <div class="form-group">
                     <label for="txtDescripcion">Descripción:</label>
-                    <input type="text" id="txtDescripcion" name="txtDescripcion" class="form-control"required>
+                    <input type="text" id="txtDescripcion" name="txtDescripcion" pattern="^[A-Za-z0-9,.;:]{20,175}$" minlength="20" maxlength="175" class="form-control"required>
                 </div>
 
                 <button type="submit" name="accion" value="mostrarCreado" class="btn btn-primary">Crear</button>

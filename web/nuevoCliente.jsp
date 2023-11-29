@@ -37,11 +37,11 @@
             <form action="CrudClientes?accion=mostrarCreado" method="get">
                 <div class="form-group">
                     <label for="usuario">Nombre de Usuario:</label>
-                    <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Nombre de Usuario" required>
+                    <input type="text" id="usuario" name="usuario" class="form-control" pattern="[A-Za-z0-9.\-_]{3,16}" minlength="3" maxlength="16" placeholder="Nombre de Usuario" required>
                 </div>
                 <div class="form-group">
                     <label for="pass">Contraseña:</label>
-                    <input type="password" id="pass" name="pass" class="form-control" required>
+                    <input type="password" id="pass" name="pass" pattern="[A-Za-z0-9~@#_^*%/.+:;=]{8,30}" minlength="8" maxlength="30" class="form-control" required>
                 </div>
                 <button type="submit" name="accion" value="mostrarCreado" class="btn btn-primary">Crear</button>
                 <a href="principalAdmin.jsp" class="btn btn-secondary">Regresar</a>
@@ -62,6 +62,7 @@
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+       
     </body>
 
 </html>
