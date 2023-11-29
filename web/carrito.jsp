@@ -246,7 +246,7 @@
                     </button>
                 </div>
                 <div class="modal-body" id="modalBodyPago">
-                    <form id="formularioPago" action="RealizarCompra" method="post">
+                    <form id="formularioPago">
                         <div class="form-group">
                             <label for="numeroTarjeta">Número de Tarjeta</label>
                             <input type="text" class="form-control" id="numeroTarjeta" placeholder="Ingresa el número de tarjeta">
@@ -262,12 +262,42 @@
 
                         <input type="hidden" value="<%= objSesion.getAttribute("id")%>" name="id">
 
-                        <button type="submit" class="btn btn-primary">Realizar Pago</button>
+                        <button type="button" id="botonPagar" class="btn btn-primary">Realizar Pago</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        const botonPagar = document.getElementById("botonPagar");
+        const numTarjetaTxt = document.getElementById("numeroTarjeta");
+        const fechaVencimientoTxt = document.getElementById("fechaVencimiento");
+        const numSeguridadTxt = document.getElementById("numSeguridad");   
+        const tablaProductos = document.getElementById("shop-table");
+
+        botonPagar.addEventListener("click", ()=>{
+            const numTarjeta = numSeguridadTxt.value;
+            const fechaVencimiento = fechaVencimientoTxt.value;
+            const numSeguridad = numSeguridadTxt.value;
+            filas = tablaProductos.rows;
+            
+            filas.forEach(element => {
+                objCelda = element.cells;
+            });
+
+            const infoCompra = {
+                pago:{
+                    numTarjeta,
+                    fechaVencimiento,
+                    numSeguridad
+                }
+            };
+
+            console.log(infoCompra);
+        });
+
+    </script>                  
     <div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-labelledby="modalMensajeLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
