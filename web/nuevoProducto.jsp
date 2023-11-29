@@ -34,7 +34,7 @@
     <body>
         <div class="container mt-5">
             <h1>Crear Producto</h1>
-            <form action="CrudProductos?accion = mostrarCreado" method="get">
+            <form action="CrudProductos?accion = mostrarCreado" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="txtNom">Nombre:</label>
                     <input type="text" id="txtNom" name="txtNom" class="form-control" required>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="form-group">
                     <label for="txtimg">Imagen:</label>
-                    <input type="text" id="txtimg" name="txtimg" class="form-control" required>
+                    <input type="file" id="txtimg" name="txtimg" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="txtPrecio">Precio:</label>

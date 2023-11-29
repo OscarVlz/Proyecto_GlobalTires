@@ -6,18 +6,23 @@ package Servlet;
 
 import Modelo.ModeloProducto;
 import Modelo.Producto;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Equipo 2
  */
+@MultipartConfig
 public class CrudProductos extends HttpServlet {
 
 //    String consultar="consultarProductos.jsp";
@@ -65,7 +70,21 @@ public class CrudProductos extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String acceso = "";
+       
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+         String acceso = "";
         String action = request.getParameter("accion");
         modeloProducto.reconect();
         if (action.equalsIgnoreCase("consultar")) {
@@ -94,33 +113,32 @@ public class CrudProductos extends HttpServlet {
         } else if (action.equalsIgnoreCase("mostrarCreado")) {
             String nombre = request.getParameter("txtNom");
             double precio = Double.parseDouble(request.getParameter("txtPrecio"));
-            String img = request.getParameter("txtimg");
+
+            // Obtenemos la imagen
+            Part filePart = request.getPart("txtimg");
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+
+            // Directorio uploads
+            String uploadsFolder = "assets/images/Pesados";
+            String fullPath = getServletContext().getRealPath(uploadsFolder);
+            String filePath = Paths.get(fullPath, fileName).toString();
+
+            File outputFile = new File(filePath);
+            filePart.write(outputFile.getAbsolutePath());
+
             int stock = Integer.parseInt(request.getParameter("txtStock"));
             String descripcion = request.getParameter("txtDescripcion");
             String tipo = request.getParameter("txtTipo");
-            
-            producto = new Producto(nombre, img, precio, stock, descripcion, tipo);
-            modeloProducto.insertarProducto(nombre, tipo, img, precio, stock, descripcion);
-            acceso = consultar;
+
+            producto = new Producto(nombre, fileName, precio, stock, descripcion, tipo);
+            modeloProducto.insertarProducto(nombre, tipo, fileName, precio, stock, descripcion);
+
+            response.sendRedirect("consultarProductos.jsp");
         } else if (action.equalsIgnoreCase("crear")) {
             acceso = crear;
         }
         RequestDispatcher vista = request.getRequestDispatcher(acceso);
         vista.forward(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**
