@@ -22,19 +22,23 @@ public class Consultas extends Conexion {
             pst = getConexion().prepareStatement(consulta);
             pst.setString(1, usuario);
             pst.setString(2, clave);
-            rs=pst.executeQuery();
-            if(rs.next()){
+            rs = pst.executeQuery();
+            if (rs.next()) {
                 return true;
             }
         } catch (Exception e) {
             System.out.println("Error en: " + e);
         } finally {
             try {
-                if(getConexion()!=null){
+                if (getConexion() != null) {
                     getConexion().close();
                 }
-                if(pst!=null) pst.close();
-                if(rs!=null) rs.close();
+                if (pst != null) {
+                    pst.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
 
             } catch (Exception e) {
                 System.out.println("Error en: " + e);
@@ -43,7 +47,7 @@ public class Consultas extends Conexion {
         }
         return false;
     }
-    
+
     public boolean autenticacionAdmin(String usuario, String clave) {
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -53,20 +57,24 @@ public class Consultas extends Conexion {
             pst = getConexion().prepareStatement(consulta);
             pst.setString(1, usuario);
             pst.setString(2, clave);
-            rs=pst.executeQuery();
-            
-            if(rs.next()){
+            rs = pst.executeQuery();
+
+            if (rs.next()) {
                 return true;
             }
         } catch (Exception e) {
             System.out.println("Error en: " + e);
         } finally {
             try {
-                if(getConexion()!=null){
+                if (getConexion() != null) {
                     getConexion().close();
                 }
-                if(pst!=null) pst.close();
-                if(rs!=null) rs.close();
+                if (pst != null) {
+                    pst.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
 
             } catch (Exception e) {
                 System.out.println("Error en: " + e);
@@ -75,28 +83,34 @@ public class Consultas extends Conexion {
         }
         return false;
     }
-    
-    public boolean registrar(String usuario, String clave) {
+
+    public boolean registrar(String usuario, String clave, String nombres, String apellidoP, String apellidoM, String correo) {
         PreparedStatement pst = null;
-        
+
         try {
-            String consulta = "insert into cliente (usuario, pass) values(?,?)";
+            String consulta = "insert into cliente (usuario, pass, correo, nombres,apellido_paterno,apellido_materno) values(?,?,?,?,?,?)";
             System.out.println("Consulta es;" + consulta);
             pst = getConexion().prepareStatement(consulta);
             pst.setString(1, usuario);
             pst.setString(2, clave);
-            if(pst.executeUpdate()==1){
+            pst.setString(3, nombres);
+            pst.setString(4, apellidoP);
+            pst.setString(5, apellidoM);
+            pst.setString(6, correo);
+            
+            if (pst.executeUpdate() == 1) {
                 return true;
             }
         } catch (Exception e) {
             System.out.println("Error en: " + e);
         } finally {
             try {
-                if(getConexion()!=null){
+                if (getConexion() != null) {
                     getConexion().close();
                 }
-                if(pst!=null) pst.close();
-                
+                if (pst != null) {
+                    pst.close();
+                }
 
             } catch (Exception e) {
                 System.out.println("Error en: " + e);
@@ -106,7 +120,7 @@ public class Consultas extends Conexion {
         return false;
     }
 
-        public int autenticacionId(String usuario, String clave) {
+    public int autenticacionId(String usuario, String clave) {
         PreparedStatement pst = null;
         ResultSet rs = null;
         try {
@@ -115,19 +129,23 @@ public class Consultas extends Conexion {
             pst = getConexion().prepareStatement(consulta);
             pst.setString(1, usuario);
             pst.setString(2, clave);
-            rs=pst.executeQuery();
-            if(rs.next()){
+            rs = pst.executeQuery();
+            if (rs.next()) {
                 return rs.getInt("id_cliente");
             }
         } catch (Exception e) {
             System.out.println("Error en: " + e);
         } finally {
             try {
-                if(getConexion()!=null){
+                if (getConexion() != null) {
                     getConexion().close();
                 }
-                if(pst!=null) pst.close();
-                if(rs!=null) rs.close();
+                if (pst != null) {
+                    pst.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
 
             } catch (Exception e) {
                 System.out.println("Error en: " + e);

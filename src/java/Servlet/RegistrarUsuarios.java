@@ -30,21 +30,25 @@ public class RegistrarUsuarios extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-      PrintWriter out = response.getWriter();
-      
-       String usuario=request.getParameter("usuario");
-         String clave=request.getParameter("pass");
+        PrintWriter out = response.getWriter();
+
+        String usuario = request.getParameter("usuario");
+        String clave = request.getParameter("pass");
+        String nombres = request.getParameter("nombres");
+        String apellidoP = request.getParameter("apellidoP");
+        String apellidoM = request.getParameter("apellidoM");
+        String correo = request.getParameter("correo");
         
-         Consultas sql= new Consultas();
-         
-         if(sql.registrar(usuario, clave)){
-             response.sendRedirect("index.jsp");
-             
-         }else{
-             response.sendRedirect("registro.jsp");
-             
-         }
-            
+        Consultas sql = new Consultas();
+
+        if (sql.registrar(usuario, clave,nombres, apellidoP,apellidoM,correo)) {
+            response.sendRedirect("index.jsp");
+
+        } else {
+            response.sendRedirect("registro.jsp");
+
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
