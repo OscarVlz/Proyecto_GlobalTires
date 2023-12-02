@@ -63,10 +63,16 @@ public class ModeloCliente extends Conexion {
             rs = pst.executeQuery();
 
             while (rs.next()) {
-                cliente = new Cliente(rs.getInt("id_cliente"), rs.getString("usuario"), rs.getString("pass"));
+                cliente = new Cliente(rs.getInt("id"),
+                        rs.getString("usuario"),
+                        rs.getString("pass"),
+                        rs.getString("correo"),
+                        rs.getString("apellido_p"),
+                        rs.getString("apellido_m"),
+                        rs.getString("nombres"));
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         } finally {
             try {
                 if (rs != null) {
@@ -91,7 +97,7 @@ public class ModeloCliente extends Conexion {
         ResultSet rs = null;
 
         try {
-            String insert = "insert into cliente(usuario,pass,correo,nombres,apellido_p,apellido_m) values (?,?,?,?,?,?)";
+            String insert = "insert into clientes(usuario,pass,correo,nombres,apellido_p,apellido_m) values (?,?,?,?,?,?)";
             System.out.println("Insert es; " + insert);
             pst = getConexion().prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, usuario);
@@ -129,12 +135,16 @@ public class ModeloCliente extends Conexion {
     }
 
     public Cliente actualizarCliente(Cliente cliente) {
-        try (Connection conexion = getConexion(); PreparedStatement pst = conexion.prepareStatement("update cliente set usuario=?, pass=? where id=?")) {
+        this.reconect();
+        try (Connection conexion = getConexion(); PreparedStatement pst = conexion.prepareStatement("update clientes set usuario=?, pass=?, correo=?, nombres=?, apellido_p = ?, apellido_m = ? where id=?")) {
 
             pst.setString(1, cliente.getUsuario());
-            pst.setString(2, cliente.getClave());
-            pst.setInt(3, cliente.getId());
-
+            pst.setString(2, cliente.getPass());
+            pst.setString(3, cliente.getCorreo());
+            pst.setString(4, cliente.getNombres());
+            pst.setString(5, cliente.getApellidoP());
+            pst.setString(6, cliente.getApellidoM());
+            pst.setInt(7, cliente.getId());
             pst.executeUpdate();
 
         } catch (Exception e) {
@@ -181,7 +191,7 @@ public class ModeloCliente extends Conexion {
         ResultSet rs = null;
 
         try {
-            String delete = "delete from cliente where id=?";
+            String delete = "delete from clientes where id=?";
             System.out.println("delete es;" + delete);
             pst = getConexion().prepareStatement(delete);
             pst.setInt(1, id);

@@ -4,8 +4,13 @@
  */
 package Servlet;
 
+import Modelo.DTO.ClienteDTO;
+import Modelo.DTO.CompraDTO;
+import Modelo.DTO.ComprasDTO;
 import Modelo.dominio.Cliente;
 import Modelo.ModeloCliente;
+import Modelo.ModeloCompra;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.RequestDispatcher;
@@ -13,6 +18,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 
 /**
  *
@@ -53,7 +59,8 @@ public class CrudClientes extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -96,7 +103,7 @@ public class CrudClientes extends HttpServlet {
             String apellidoP = request.getParameter("apellidoP");
             String apellidoM = request.getParameter("apellidoM");
             String correo = request.getParameter("correo");
-            
+
             cliente = new Cliente(usuario, pass);
             modelC.insertarCliente(usuario, pass, correo, nombres, apellidoP, apellidoM);
 
@@ -119,7 +126,28 @@ public class CrudClientes extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("application/json");
+
+        BufferedReader reader = request.getReader();
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+        String json = sb.toString();
+
+        Gson gson = new Gson();
+        ClienteDTO data = gson.fromJson(json, ClienteDTO.class);
+
+        ModeloCliente modelo = new ModeloCliente();
+
+        modelC.actualizarCliente(data.getCliente());
+
+        String respuesta = gson.toJson(new Respuesta("Valores actualizados").addValueRespuesta("usuario", data.getCliente().getUsuario()));
+        System.out.println(respuesta);
+        PrintWriter out = response.getWriter();
+        out.print(respuesta);
+        out.flush();
     }
 
     /**

@@ -93,10 +93,10 @@ public class Consultas extends Conexion {
             pst = getConexion().prepareStatement(consulta);
             pst.setString(1, usuario);
             pst.setString(2, clave);
-            pst.setString(3, nombres);
-            pst.setString(4, apellidoP);
-            pst.setString(5, apellidoM);
-            pst.setString(6, correo);
+            pst.setString(3, correo);
+            pst.setString(4, nombres);
+            pst.setString(5, apellidoP);
+            pst.setString(6,apellidoM);
             
             if (pst.executeUpdate() == 1) {
                 return true;

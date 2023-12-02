@@ -95,7 +95,7 @@ public class RealizarCompra extends HttpServlet {
             
             modelo.insertarCompra(id,compra);
             
-            String respuesta = gson.toJson(new respuesta("Al 100"));
+            String respuesta = gson.toJson(new Respuesta("Al 100"));
             System.out.println(respuesta);
             PrintWriter out = response.getWriter();
             out.print(respuesta);
@@ -114,24 +114,5 @@ public class RealizarCompra extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public class respuesta {
 
-        private String respueta;
-
-        public respuesta(String respueta) {
-            this.respueta = respueta;
-        }
-
-        public respuesta() {
-        }
-
-        public String getRespueta() {
-            return respueta;
-        }
-
-        public void setRespueta(String respueta) {
-            this.respueta = respueta;
-        }
-
-    }
 }

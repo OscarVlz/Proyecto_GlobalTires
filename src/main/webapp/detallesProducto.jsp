@@ -4,13 +4,9 @@
     Author     : Equipo 2
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    HttpSession objSesion = request.getSession(false);
-    String usuario = (String) objSesion.getAttribute("usuario");
-    if (usuario == null) {
-        response.sendRedirect("index.jsp");
-    }
-%>
+<% HttpSession objSesion=request.getSession(false);
+String usuario=(String) new ModeloCliente().getCliente(Integer.parseInt(session.getAttribute("id").toString())).getUsuario(); 
+if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 <%@page import="Controlador.ControladorProducto"%>
 <%@page import="Modelo.dominio.Producto"%>
 <%
