@@ -1,10 +1,11 @@
 Modelo\dominio\Producto.class
+Modelo\DTO\ClienteDTO.class
 Servlet\IniciarSesión.class
 Servlet\CerrarSesion.class
 Servlet\RegistrarUsuarios.class
-Servlet\RealizarCompra$respuesta.class
 Modelo\dominio\Articulo.class
 Servlet\CrudProductos.class
+Servlet\Respuesta.class
 Modelo\DTO\CompraDTO.class
 Modelo\DTO\ProductoDTO.class
 Servlet\AddCart.class
@@ -17,6 +18,7 @@ Modelo\dominio\Compra.class
 Modelo\ModeloProducto.class
 Controlador\Conexion.class
 Modelo\dominio\Cliente.class
+Modelo\DTO\ConsultaDTO.class
 Controlador\Prueba.class
 Controlador\ControladorCompras.class
 Controlador\ControladorProducto.class
