@@ -39,7 +39,7 @@
                 Producto c=(Producto)modelP.getProducto(id);
             %>
         <h1>Modificar Producto</h1>
-        <form action="CrudProductos?accion=consultar" method="post">
+        <form action="CrudProductos?accion=Actualizar" method="post">
             <div class="form-group">
                 <label for="txtNom">Nombre:</label>
                 <input type="text" id="txtNom" name="txtNom" class="form-control" value="<%= c.getNombre()%>">

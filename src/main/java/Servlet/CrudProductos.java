@@ -28,7 +28,7 @@ import jakarta.servlet.http.Part;
 @MultipartConfig
 public class CrudProductos extends HttpServlet {
 
-//    String consultar="consultarProductos.jsp";
+    // String consultar="consultarProductos.jsp";
     String consultar = "consultarProductos.jsp";
     String editar = "editProducto.jsp";
     String crear = "nuevoProducto.jsp";
@@ -39,24 +39,25 @@ public class CrudProductos extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
+    // + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -89,10 +90,10 @@ public class CrudProductos extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -108,7 +109,6 @@ public class CrudProductos extends HttpServlet {
             int stock = Integer.parseInt(request.getParameter("txtStock"));
             String descripcion = request.getParameter("txtDescripcion");
             String tipo = request.getParameter("txtTipo");
-
             producto = new Producto(id, nombre, tipo, img, precio, stock, descripcion);
             modeloProducto.actualizarProducto(producto);
             acceso = consultar;
@@ -116,7 +116,8 @@ public class CrudProductos extends HttpServlet {
             String nombre = request.getParameter("txtNom");
             double precio = Double.parseDouble(request.getParameter("txtPrecio"));
 
-            String uploadDirectory = getServletContext().getRealPath("") + "assets" + File.separator + "images" + File.separator + "Pesados";
+            String uploadDirectory = getServletContext().getRealPath("") + "assets" + File.separator + "images"
+                    + File.separator + "Pesados";
 
             // Obtenemos el archivo enviado desde el formulario
             Part filePart = request.getPart("txtimg");
