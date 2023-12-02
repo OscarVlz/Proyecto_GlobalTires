@@ -8,13 +8,9 @@
 <%@page import="Modelo.dominio.Cliente"%>
 <%@page import="Modelo.ModeloCliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    HttpSession objSesion = request.getSession(false);
-    String usuario = (String) objSesion.getAttribute("usuario");
-    if (usuario == null) {
-        response.sendRedirect("index.jsp");
-    }
-%>
+<% HttpSession objSesion=request.getSession(false);
+String usuario=(String) new ModeloCliente().getCliente(Integer.parseInt(session.getAttribute("id").toString())).getUsuario(); 
+if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 <%@page import="Controlador.ControladorProducto"%>
 <%
     ControladorCompras cc = new ControladorCompras();
@@ -70,8 +66,8 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="principal.jsp> <i class="fa fa-home" aria-hidden="true"></i> Inicio
+                            <li class="nav-item ">
+                                <a class="nav-link" href="principal.jsp"></a> <i class="fa fa-home" aria-hidden="true"></i> Inicio
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
@@ -84,7 +80,7 @@
                             <li class="nav-item">
                                 <a class="nav-link " href="carrito.jsp"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Carrito</a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item active">
                                 <a class="nav-link " href="compras.jsp"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Mis compras</a>
                             </li>
                             <li class="nav-item">

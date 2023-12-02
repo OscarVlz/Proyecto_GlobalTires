@@ -3,18 +3,15 @@
     Created on : 11/11/2023, 07:06:31 PM
     Author     : Equipo 2
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    HttpSession objSesion = request.getSession(false);
-    String usuario = (String) objSesion.getAttribute("usuario");
-    if (usuario == null) {
-        response.sendRedirect("index.jsp");
-
-    }
-%>
 <%@page import="Controlador.ControladorProducto"%>
 <%@page import="Modelo.dominio.Producto"%>
+<%@page import="Modelo.ModeloCliente"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<% HttpSession objSesion=request.getSession(false);
+String usuario=(String) new ModeloCliente().getCliente(Integer.parseInt(session.getAttribute("id").toString())).getUsuario(); 
+if (usuario==null) { response.sendRedirect("index.jsp"); } %>
+
+
 <%
     ControladorProducto cp = new ControladorProducto();
 %>

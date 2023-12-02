@@ -8,14 +8,11 @@
 <%@page import="Modelo.dominio.Producto"%>
 <%@page import="Modelo.dominio.Articulo"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="Modelo.ModeloCliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    HttpSession objSesion = request.getSession(false);
-    String usuario = (String) objSesion.getAttribute("usuario");
-    if (usuario == null) {
-        response.sendRedirect("index.jsp");
-    }
-%>
+<% HttpSession objSesion=request.getSession(false);
+String usuario=(String) new ModeloCliente().getCliente(Integer.parseInt(session.getAttribute("id").toString())).getUsuario(); 
+if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 <%
     Boolean compraExitosa = (Boolean) session.getAttribute("compraExitosa");
     if (compraExitosa != null && compraExitosa) {

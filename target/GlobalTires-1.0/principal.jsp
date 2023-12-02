@@ -3,10 +3,13 @@
 <%@page import="Modelo.dominio.Cliente" %>
 <%@page import="Modelo.ModeloCliente" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<% HttpSession objSesion=request.getSession(false); String usuario=(String)
-                    objSesion.getAttribute("usuario"); if (usuario==null) { response.sendRedirect("index.jsp"); } %>
+<% HttpSession objSesion=request.getSession(false);
+String usuario=(String) new ModeloCliente().getCliente(Integer.parseInt(session.getAttribute("id").toString())).getUsuario(); 
+if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 <%@page import="Controlador.ControladorProducto" %>
-<% ControladorProducto cp=new ControladorProducto(); %>
+
+<% ControladorProducto cp=new ControladorProducto(); 
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -62,8 +65,7 @@
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="principal.jsp> <i class=" fa fa-home"
-                                   aria-hidden="true"></i> Inicio
+                                <a class="nav-link" href="principal.jsp"> <i class="fa fa-home" aria-hidden="true"></i> Inicio
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
@@ -86,9 +88,8 @@
                                     compras</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" onclick="openModal()"><i class="fa fa-user"
-                                                                             aria-hidden="true"></i>
-                                    <% out.println(usuario);%>
+                                <a class="nav-link" href="#" data-toggle="modal" data-target="#updateUserModal">
+                                    <i class="fa fa-user"  aria-hidden="true"> </i> <span id="nombreUsuario"><% out.println(usuario);%></span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -170,6 +171,70 @@
             </div>
         </div>
 
+        <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="updateUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateUserModalLabel">Actualizar Usuario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mt-3">
+                        <%
+      ModeloCliente modelC = new ModeloCliente();
+      int id = Integer.parseInt(session.getAttribute("id").toString());
+      Cliente c = (Cliente) modelC.getCliente(id);
+                        %>
+                        <form id="updateUserForm">
+                            <h2>Actualizar Informacion</h2>
+                            <input type="number" class="form-control" id="id" name="id" value="<%= c.getId()%>" hidden>
+                            <div class="form-group">
+                                <label for="usuario">Nombre de usuario:</label>
+                                <input type="text" class="form-control" id="usuario" name="usuario" value="<%= c.getUsuario()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass">Password:</label>
+                                <input type="password" class="form-control" id="pass" name="pass" value="<%= c.getPass()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="correo">Correo electrónico:</label>
+                                <input type="email" class="form-control" id="correo" name="correo" value="<%= c.getCorreo()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="nombres">Nombres:</label>
+                                <input type="text" class="form-control" id="nombres" name="nombres" value="<%= c.getNombres()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="apellidoP">Apellido Paterno:</label>
+                                <input type="text" class="form-control" id="apellidoP" name="apellidoP" value="<%= c.getApellidoP()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="apellidoM">Apellido Materno:</label>
+                                <input type="text" class="form-control" id="apellidoM" name="apellidoM" value="<%= c.getApellidoM()%>" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-labelledby="modalMensajeLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalMensajeLabel">Mensaje Importante</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="textoModal"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <footer>
             <div class="container">
                 <div class="row">
@@ -196,54 +261,89 @@
 
 
         <script language="text/Javascript">
-                                    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-                                    function clearField(t) {                   //declaring the array outside of the
-                                        if (!cleared[t.id]) {                      // function makes it static and global
-                                            cleared[t.id] = 1;  // you could use true and false, but that's more typing
-                                            t.value = '';         // with more chance of typos
-                                            t.style.color = '#fff';
-                                        }
-                                    }
-                                    // Get the modal
-                                    var modal = document.getElementById("myModal");
+            cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+            function clearField(t) {                   //declaring the array outside of the
+                if (!cleared[t.id]) {                      // function makes it static and global
+                    cleared[t.id] = 1;  // you could use true and false, but that's more typing
+                    t.value = '';         // with more chance of typos
+                    t.style.color = '#fff';
+                }
+            }
+            // Get the modal
+            var modal = document.getElementById("myModal");
 
-                                    // Get the button that opens the modal
-                                    var btn = document.querySelector("button");
+            // Get the button that opens the modal
+            var btn = document.querySelector("button");
 
-                                    // Get the <span> element that closes the modal
-                                    var span = document.getElementsByClassName("close")[0];
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
 
-                                    // When the user clicks the button, open the modal
-                                    function openModal() {
-                                        modal.style.display = "block";
-                                    }
+            // When the user clicks the button, open the modal
+            function openModal() {
+                modal.style.display = "block";
+            }
 
-                                    // When the user clicks on <span> (x), close the modal
-                                    function closeModal() {
-                                        modal.style.display = "none";
-                                    }
+            // When the user clicks on <span> (x), close the modal
+            function closeModal() {
+                modal.style.display = "none";
+            }
 
-                                    // When the user clicks anywhere outside of the modal, close it
-                                    window.onclick = function (event) {
-                                        if (event.target == modal) {
-                                            modal.style.display = "none";
-                                        }
-                                    };
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            };
 
-                                    // Handle form submission
-                                    document.getElementById("profileForm").addEventListener("submit", function (event) {
-                                        event.preventDefault();
+            // Handle form submission
+            document.getElementById("profileForm").addEventListener("submit", function (event) {
+                event.preventDefault();
 
-                                        // Update profile information
-                                        var newName = document.getElementById("newName").value;
-                                        var newPassword = document.getElementById("newPassword").value;
+                // Update profile information
+                var newName = document.getElementById("newName").value;
+                var newPassword = document.getElementById("newPassword").value;
 
-                                        document.getElementById("nombre").innerText = newName;
-                                        document.getElementById("pass").innerText = newPassword;
+                document.getElementById("nombre").innerText = newName;
+                document.getElementById("pass").innerText = newPassword;
 
-                                        // Close the modal
-                                        closeModal();
-                                    });
+                // Close the modal
+                closeModal();
+            });
+        </script>
+        <script>
+            function abrirModal(mensaje) {
+                const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
+                $('#modalMensaje').modal('show');
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const updateUserForm = document.getElementById("updateUserForm");
+
+                updateUserForm.addEventListener("submit", function (event) {
+                    event.preventDefault();
+
+                    const formData = new FormData(updateUserForm);
+                    const userData = {ClienteDTO: {}};
+
+                    formData.forEach((value, key) => {
+                        userData.ClienteDTO[key] = value;
+                    });
+
+                    fetch("/GlobalTires/CrudClientes", {
+                        method: "POST",
+                        body: JSON.stringify(userData)
+                    })
+                            .then(response => response.json())
+                            .then(data => {
+                                $("#updateUserModal").modal("hide");
+                                abrirModal(JSON.stringify(data.respuesta).replaceAll('"', ''));
+                                document.getElementById("nombreUsuario").innerHTML = JSON.stringify(data.valores.usuario).replaceAll('"','');
+                            })
+                            .catch(error => {
+                                console.error("Error al actualizar usuario:", error);
+                            });
+                });
+            });
         </script>
 
 
