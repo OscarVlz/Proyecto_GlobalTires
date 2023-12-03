@@ -40,7 +40,7 @@
 
         <div class="container mt-5" style="background-color: #898c84; border-radius: 3px; padding: 40px">
             <h1>Registrar Usuario</h1>
-            <form action="nuevousuario" method="post">
+            <form>
                 <div class="form-group">
                     <label for="usuario">Nombre de Usuario:</label>
                     <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Nombre de Usuario" required>
@@ -65,15 +65,29 @@
                     <label for="pass">Correo:</label>
                     <input type="email" id="correo" name="correo" class="form-control" placeholder="correo@mail.com" required>
                 </div>
-                <button type="submit" class="btn btn-primary" style="background-color: #324c69;">Registrar Usuario</button>
+                <button id="botonRegistrar" type="button" class="btn btn-primary" style="background-color: #324c69;">Registrar Usuario</button>
             </form>
 
             <hr class="my-4"> 
 
             <a href="index.jsp" class="btn btn-primary" style="background-color: #324c69;">Regresar</a>
+        </div>        
+        <div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-labelledby="modalMensajeLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalMensajeLabel">Mensaje Importante</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="textoModal"></p>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     </body>
@@ -89,5 +103,65 @@
             </div>
         </div>
     </footer>
+    <script>
+        const botonRegistrar = document.getElementById("botonRegistrar");
+        const inputUsuario = document.getElementById("usuario");
+        const inputPass = document.getElementById("pass");
+        const inputNombres = document.getElementById("nombres");
+        const inputApellidoP = document.getElementById("apellidoP");
+        const inputApellidoM = document.getElementById("apellidoM");
+        const inputCorreo = document.getElementById("correo");
 
+        botonRegistrar.addEventListener("click",(e)=>{
+            let usuario = inputUsuario.value;
+            let pass = inputPass.value;
+            let nombres = inputNombres.value;
+            let apellidoP = inputApellidoP.value;
+            let apellidoM = inputApellidoM.value;
+            let correo = inputCorreo.value;
+
+            const datos = {
+                ClienteDTO:{
+                    usuario,
+                    pass,
+                    nombres,
+                    apellidoP,
+                    apellidoM,
+                    correo
+                }
+            };
+            let json = JSON.stringify(datos);
+            fetch("/Proyecto_GlobalTires/nuevousuario",{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: json
+        }).then(response => {
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
+        }).then(data => {
+                console.log(data);
+                    if (data.respuesta === "exito") {
+                        abrirModal(JSON.stringify(data.valores.mensaje).replaceAll('"', ''));
+                        $('#modalMensaje').on('hidden.bs.modal', function () {
+                            window.location.href = "index.jsp";
+                        });
+                    } else {
+                        abrirModal(JSON.stringify(data.valores.mensaje).replaceAll('"', ''));
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+        });
+
+        function abrirModal(mensaje) {
+        const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
+        $('#modalMensaje').modal('show');
+    }
+    </script>
 </html>
