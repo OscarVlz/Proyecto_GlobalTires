@@ -243,7 +243,7 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                             <label for="apellidoM">Apellido Materno:</label>
                             <input type="text" class="form-control" id="apellidoM" name="apellidoM" value="<%= c.getApellidoM()%>" required>
                         </div>
-                        <button type="button" class="btn btn-primary">Actualizar Usuario</button>
+                        <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
                         <button type="button" class="btn btn-secondary" id="btnRestaurar">Restaurar</button>
 
                     </form>
