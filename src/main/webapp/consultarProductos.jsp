@@ -182,6 +182,23 @@
                 </div>
             </div>
         </div>
+        <div id="confirmModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Confirmar Eliminación</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <p>¿Estás seguro de que quieres eliminar este producto?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                  <button type="button" id="confirmDelete" class="btn btn-danger">Eliminar</button>
+                </div>
+              </div>
+            </div>
+          </div>
         <footer>
             <div class="container">
                 <div class="row">
@@ -193,10 +210,12 @@
                 </div>
             </div>
         </footer>
-        <!-- Bootstrap core JavaScript -->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
     </body>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/js/custom.js"></script>
     <script>
                             function mostrarSeccion(idSeccion, idSeccionNav) {
                                 const secciones = document.querySelectorAll('.seccion');
@@ -211,14 +230,27 @@
                                 });
 
                                 const seccionSeleccionada = document.getElementById(idSeccion);
-                                const seccionASombrear = document.getElementById(idSeccionNav)
+                                const seccionASombrear = document.getElementById(idSeccionNav);
                                 seccionSeleccionada.classList.add('seccion-activa');
                                 seccionASombrear.classList.add('active');
                             }
-    </script>
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                            
+                            function showConfirmModal(productId) {
+                                $('#confirmModal').modal('show');
 
-    <script src="assets/js/custom.js"></script>
+                                $('#confirmDelete').click(function () {
+                                    window.location.href = 'CrudProductos?accion=eliminar&id=' + productId;
+                                });
+                            }
+
+                            $(document).ready(function () {
+                                $('.delete-link').click(function (e) {
+                                    e.preventDefault();
+                                    var productId = $(this).data('id');
+                                    showConfirmModal(productId);
+                                });
+                            });
+    </script>
+
 
 </html>

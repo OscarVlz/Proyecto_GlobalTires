@@ -177,6 +177,24 @@
                 </div>
             </div>
         </div>
+
+        <div id="confirmClienteModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Confirmar Eliminación de Cliente</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Estás seguro de que quieres eliminar a este cliente?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" id="confirmDeleteCliente" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <footer>
             <div class="container">
                 <div class="row">
@@ -206,10 +224,26 @@
                                 });
 
                                 const seccionSeleccionada = document.getElementById(idSeccion);
-                                const seccionASombrear = document.getElementById(idSeccionNav)
+                                const seccionASombrear = document.getElementById(idSeccionNav);
                                 seccionSeleccionada.classList.add('seccion-activa');
                                 seccionASombrear.classList.add('active');
                             }
+
+                            function showConfirmClienteModal(clienteId) {
+                                $('#confirmClienteModal').modal('show');
+
+                                $('#confirmDeleteCliente').click(function () {
+                                    window.location.href = 'CrudClientes?accion=eliminar&id=' + clienteId;
+                                });
+                            }
+
+                            $(document).ready(function () {
+                                $('.delete-cliente-link').click(function (e) {
+                                    e.preventDefault();
+                                    let clienteId = $(this).data('id');
+                                    showConfirmClienteModal(clienteId);
+                                });
+                            });
     </script>
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
