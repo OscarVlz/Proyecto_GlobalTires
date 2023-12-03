@@ -25,14 +25,9 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 
         <title>Global Tires</title>
 
-        <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <!--
 
 
-        -->
-
-        <!-- Additional CSS Files -->
         <link rel="stylesheet" href="assets/css/fontawesome.css">
         <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
         <link rel="stylesheet" href="assets/css/owl.css">
@@ -41,7 +36,6 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 
     <body>
 
-        <!-- ***** Preloader Start ***** -->
         <div id="preloader">
             <div class="jumper">
                 <div></div>
@@ -49,9 +43,7 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                 <div></div>
             </div>
         </div>
-        <!-- ***** Preloader End ***** -->
 
-        <!-- Header -->
         <header class="">
             <nav class="navbar navbar-expand-lg">
                 <div class="container">
@@ -93,7 +85,7 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="CerrarSesion">Salir</a>
+                                <a class="nav-link" href="CerrarSesion" onclick="borrarDatos()">Salir</a>
                             </li>
                         </ul>
                     </div>
@@ -101,8 +93,6 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
             </nav>
         </header>
 
-        <!-- Page Content -->
-        <!-- Banner Starts Here -->
         <div class="banner header-text">
             <div class="owl-banner owl-carousel">
                 <div class="banner-item-01">
@@ -124,7 +114,6 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                 </div>
             </div>
         </div>
-        <!-- Banner Ends Here -->
 
         <div class="latest-products">
             <div class="container">
@@ -248,11 +237,9 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
         </footer>
 
 
-        <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Additional Scripts -->
         <script src="assets/js/custom.js"></script>
         <script src="assets/js/owl.js"></script>
         <script src="assets/js/slick.js"></script>
@@ -260,57 +247,11 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
         <script src="assets/js/accordions.js"></script>
 
 
-        <script language="text/Javascript">
-            cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-            function clearField(t) {                   //declaring the array outside of the
-                if (!cleared[t.id]) {                      // function makes it static and global
-                    cleared[t.id] = 1;  // you could use true and false, but that's more typing
-                    t.value = '';         // with more chance of typos
-                    t.style.color = '#fff';
-                }
-            }
-            // Get the modal
-            var modal = document.getElementById("myModal");
-
-            // Get the button that opens the modal
-            var btn = document.querySelector("button");
-
-            // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("close")[0];
-
-            // When the user clicks the button, open the modal
-            function openModal() {
-                modal.style.display = "block";
-            }
-
-            // When the user clicks on <span> (x), close the modal
-            function closeModal() {
-                modal.style.display = "none";
-            }
-
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function (event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            };
-
-            // Handle form submission
-            document.getElementById("profileForm").addEventListener("submit", function (event) {
-                event.preventDefault();
-
-                // Update profile information
-                var newName = document.getElementById("newName").value;
-                var newPassword = document.getElementById("newPassword").value;
-
-                document.getElementById("nombre").innerText = newName;
-                document.getElementById("pass").innerText = newPassword;
-
-                // Close the modal
-                closeModal();
-            });
-        </script>
         <script>
+            function borrarDatos(){
+                sessionStorage.clear();
+            }
+
             function abrirModal(mensaje) {
                 const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
                 $('#modalMensaje').modal('show');

@@ -20,8 +20,8 @@ public class Respuesta {
         this.respuesta = respueta;
         valores = new HashMap<>();
     }
-    
-    public Respuesta addValueRespuesta(String nombre, String valor){
+
+    public Respuesta addValueRespuesta(String nombre, String valor) {
         valores.put(nombre, valor);
         return this;
     }
@@ -35,6 +35,11 @@ public class Respuesta {
 
     public void setRespueta(String respueta) {
         this.respuesta = respueta;
+    }
+
+    @Override
+    public String toString() {
+        return "Respuesta{" + "respuesta=" + respuesta + ", valores=" + valores + '}';
     }
 
 }

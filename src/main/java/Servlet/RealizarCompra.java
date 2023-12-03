@@ -10,6 +10,7 @@ import Modelo.DTO.CompraDTO;
 import Modelo.ModeloCompra;
 import Modelo.ModeloProducto;
 import Modelo.DTO.ComprasDTO;
+import Modelo.DTO.ProductoDTO;
 import Modelo.ModeloException;
 import Modelo.dominio.Producto;
 import com.google.gson.Gson;
@@ -91,18 +92,46 @@ public class RealizarCompra extends HttpServlet {
         ComprasDTO data = gson.fromJson(json, ComprasDTO.class);
 
         CompraDTO compra = data.getData();
+        ArrayList<Integer> idsProductos = new ArrayList<>();
+        ArrayList<Integer> cantidad = new ArrayList<>();
+        Respuesta res = new Respuesta("exito");
+        ModeloProducto modeloP = new ModeloProducto();
+        boolean disponibles = true;
+        for (ProductoDTO pro : compra.getProductos()) {
+            System.out.println(pro);
+            Producto p = modeloP.getProducto(Integer.parseInt(pro.getId()));
+            if (p.getStock() < pro.getCantidad()) {
+                res = new Respuesta("fallo").addValueRespuesta("mensaje", "El stock del producto " + p.getNombre() + " no es suficiente, se cuentan con: " + p.getStock());
+                disponibles = false;
+            }
+            idsProductos.add(p.getId());
+            cantidad.add(pro.getCantidad());
+            modeloP.reconect();
 
-        ModeloCompra modelo = new ModeloCompra();
-        Respuesta res =new Respuesta("exito");
-        int id = Integer.parseInt(request.getSession().getAttribute("id").toString());
-        
-        try {
-            modelo.insertarCompra(id, compra);
-
-        } catch (ModeloException e) {
-            res = new Respuesta("fallo");
         }
 
+        if (disponibles) {
+            ModeloCompra modelo = new ModeloCompra();
+
+            int id = Integer.parseInt(request.getSession().getAttribute("id").toString());
+            try {
+                modelo.insertarCompra(id, compra);
+                for (int i = 0; i < cantidad.size(); i++) {
+                    modeloP.reconect();
+                    Producto p = modeloP.getProducto(idsProductos.get(i));
+                    System.out.println("-------------------------------");
+                    System.out.println(p);
+                    p.setStock(p.getStock() - cantidad.get(i));
+                    System.out.println(p.getStock() - cantidad.get(i));
+                    modeloP.reconect();
+                    modeloP.actualizarProducto(p);
+                }
+            } catch (ModeloException e) {
+                res = new Respuesta("fallo").addValueRespuesta("mensaje", "No se pudo concretar la compra");
+            }
+
+        }
+        System.out.println(res);
         String respuesta = gson.toJson(res);
         PrintWriter out = response.getWriter();
         out.print(respuesta);

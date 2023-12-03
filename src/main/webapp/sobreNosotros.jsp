@@ -88,7 +88,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="CerrarSesion">Salir</a>
+                                <a class="nav-link" onclick="borrarDatos()" href="CerrarSesion">Salir</a>
                             </li>
                         </ul>
                     </div>
@@ -285,6 +285,9 @@
             }
         </script>
         <script>
+            function borrarDatos(){
+                sessionStorage.clear();
+            }
             function abrirModal(mensaje) {
                 const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
                 $('#modalMensaje').modal('show');

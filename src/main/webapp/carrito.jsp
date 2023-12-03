@@ -101,7 +101,7 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="CerrarSesion">Salir</a>
+                            <a class="nav-link" onclick="borrarDatos()" href="CerrarSesion">Salir</a>
                         </li>
                     </ul>
                 </div>
@@ -277,6 +277,10 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
     <script src="assets/js/accordions.js"></script>
 
     <script>
+    function borrarDatos(){
+        sessionStorage.clear();
+    }
+
     let productosEnCarrito = sessionStorage.getItem("productos-en-carrito");
     productosEnCarrito = JSON.parse(productosEnCarrito);
 
@@ -484,12 +488,12 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                             window.location.href = "compras.jsp";
                         });
                     } else {
-                        abrirModal("El pago fallo!");
+                        console.log(data);
+                        abrirModal(JSON.stringify(data.valores.mensaje).replaceAll('"', ''));
                     }
-
                 })
                 .catch(error => {
-                    abrirModal("No se pudo realizar el pago del producto");
+                    abrirModal(JSON.stringify(data.valores.mensaje).replaceAll('"', ''));
                     console.log(error);
                 });
     });
