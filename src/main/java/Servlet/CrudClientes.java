@@ -86,9 +86,14 @@ public class CrudClientes extends HttpServlet {
         } else if (action.equalsIgnoreCase("Actualizar")) {
             modelC.reconect();
             int id = Integer.parseInt(request.getParameter("txtid"));
-            String nombre = request.getParameter("txtNom");
-            String contra = request.getParameter("txtContrasena");
-            cliente = new Cliente(id, nombre, contra);
+            String usuario = request.getParameter("usuario");
+            String contra = request.getParameter("pass");
+            String correo = request.getParameter("correo");
+            String nombres = request.getParameter("nombres");
+            String apellidoM = request.getParameter("apellidoM");
+            String  apellidoP = request.getParameter("apellidoP");
+            
+            cliente = new Cliente(id, usuario, contra, correo, apellidoP, apellidoM, nombres);
             modelC.actualizarCliente(cliente);
             acceso = consultar;
         } else if (action.equalsIgnoreCase("Eliminar")) {

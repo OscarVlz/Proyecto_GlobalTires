@@ -41,12 +41,28 @@
             <h1>Modificar Cliente</h1>
             <form action="CrudClientes?accion=consultar" method="get">
                 <div class="form-group">
-                    <label for="txtNom">Usuario:</label>
-                    <input type="text" id="txtNom" name="txtNom" class="form-control" value="<%= c.getUsuario()%>">
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" class="form-control" value="<%= c.getUsuario()%>">
                 </div>
                 <div class="form-group">
-                    <label for="txtContrasena">Contraseña:</label>
-                    <input type="password" id="txtContrasena" name="txtContrasena" class="form-control" value="<%= c.getClave()%>">
+                    <label for="pass">Contraseña:</label>
+                    <input type="password" id="pass" name="pass" class="form-control" value="<%= c.getPass()%>">
+                </div>
+                <div class="form-group">
+                    <label for="pass">Nombres:</label>
+                    <input type="text" id="nombres" name="nombres" class="form-control" placeholder="Nombres" value="<%= c.getNombres()%>" required>
+                </div>
+                <div class="form-group">
+                    <label for="pass">Apellido paterno:</label>
+                    <input type="text" id="apellidoP" name="apellidoP" class="form-control" placeholder="Apellido paterno" value="<%= c.getApellidoP()%>" required>
+                </div>
+                <div class="form-group">
+                    <label for="pass">Apellido materno:</label>
+                    <input type="text" id="apellidoM" name="apellidoM" class="form-control" placeholder="Apellido materno" value="<%= c.getApellidoM()%>" required>
+                </div>
+                <div class="form-group">
+                    <label for="pass">Correo:</label>
+                    <input type="email" id="correo" name="correo" class="form-control" placeholder="correo@mail.com" value="<%= c.getCorreo()%>" required>
                 </div>
                 <input type="hidden" name="txtid" value="<%= c.getId()%>">
                 <button type="submit" name="accion" value="Actualizar" class="btn btn-primary">Actualizar</button>

@@ -104,7 +104,6 @@ public class RealizarCompra extends HttpServlet {
         }
 
         String respuesta = gson.toJson(res);
-        System.out.println(respuesta);
         PrintWriter out = response.getWriter();
         out.print(respuesta);
         out.flush();
