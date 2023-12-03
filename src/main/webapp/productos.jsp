@@ -29,17 +29,8 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 
         <title>Nuestros productos</title>
 
-        <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <!--
-        
-        TemplateMo 546 Sixteen Clothing
-        
-        https://templatemo.com/tm-546-sixteen-clothing
-        
-        -->
 
-        <!-- Additional CSS Files -->
         <link rel="stylesheet" href="assets/css/fontawesome.css">
         <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
         <link rel="stylesheet" href="assets/css/owl.css">
@@ -48,7 +39,6 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 
     <body>
 
-        <!-- ***** Preloader Start ***** -->
         <div id="preloader">
             <div class="jumper">
                 <div></div>
@@ -56,7 +46,6 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                 <div></div>
             </div>
         </div>  
-        <!-- ***** Preloader End ***** -->
 
         <!-- Header -->
         <header class="">
@@ -145,38 +134,6 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
             </div>
         </div>
 
-
-        <!-- MODAL DE LOGIN -->
-        <div class="modal fade1" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header border-bottom-0">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-title text-center">
-                            <h4>Inicio de Sesión</h4>
-                        </div>
-                        <div class="d-flex flex-column text-center">
-                            <form action="iniciar" method="post">
-                                <div class="form-group">
-                                    <input name="usuario" type="text" class="form-control" id="email1"placeholder="Nombre de usuario...">
-                                </div>
-                                <div class="form-group">
-                                    <input name="pass" type="password" class="form-control" id="password1" placeholder="Escribir contraseña...">
-                                </div>
-                                <input type="submit" class="filled-button" value="Iniciar sesión">
-                            </form>
-                        </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <div class="signup-section">No tienes cuenta? <a href="registro.jsp" class="text-info"> Registrar</a>.</div>
-                    </div>
-                </div>
-            </div>      
-        </div>                    
         <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="updateUserModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -220,6 +177,8 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                                 <input type="text" class="form-control" id="apellidoM" name="apellidoM" value="<%= c.getApellidoM()%>" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+                            <button type="button" class="btn btn-secondary" id="btnRestaurar">Restaurar</button>
+
                         </form>
                     </div>
                 </div>
@@ -266,42 +225,66 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 
 
         <script>
-            function borrarDatos(){
-                sessionStorage.clear();
-            }
-            function abrirModal(mensaje) {
-                const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
-                $('#modalMensaje').modal('show');
-            }
+                                    function borrarDatos() {
+                                        sessionStorage.clear();
+                                    }
+                                    function abrirModal(mensaje) {
+                                        const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
+                                        $('#modalMensaje').modal('show');
+                                    }
 
-            document.addEventListener("DOMContentLoaded", function () {
-                const updateUserForm = document.getElementById("updateUserForm");
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        const updateUserForm = document.getElementById("updateUserForm");
 
-                updateUserForm.addEventListener("submit", function (event) {
-                    event.preventDefault();
+                                        updateUserForm.addEventListener("submit", function (event) {
+                                            event.preventDefault();
 
-                    const formData = new FormData(updateUserForm);
-                    const userData = {ClienteDTO: {}};
+                                            const formData = new FormData(updateUserForm);
+                                            const userData = {ClienteDTO: {}};
 
-                    formData.forEach((value, key) => {
-                        userData.ClienteDTO[key] = value;
-                    });
+                                            formData.forEach((value, key) => {
+                                                userData.ClienteDTO[key] = value;
+                                            });
 
-                    fetch("/Proyecto_GlobalTires/CrudClientes", {
-                        method: "POST",
-                        body: JSON.stringify(userData)
-                    })
-                            .then(response => response.json())
-                            .then(data => {
-                                $("#updateUserModal").modal("hide");
-                                abrirModal(JSON.stringify(data.respuesta).replaceAll('"', ''));
-                                document.getElementById("nombreUsuario").innerHTML = JSON.stringify(data.valores.usuario).replaceAll('"', '');
-                            })
-                            .catch(error => {
-                                console.error("Error al actualizar usuario:", error);
-                            });
-                });
-            });
+                                            fetch("/Proyecto_GlobalTires/CrudClientes", {
+                                                method: "POST",
+                                                body: JSON.stringify(userData)
+                                            })
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        $("#updateUserModal").modal("hide");
+                                                        abrirModal(JSON.stringify(data.respuesta).replaceAll('"', ''));
+                                                        document.getElementById("nombreUsuario").innerHTML = JSON.stringify(data.valores.usuario).replaceAll('"', '');
+                                                    })
+                                                    .catch(error => {
+                                                        console.error("Error al actualizar usuario:", error);
+                                                    });
+                                        });
+                                    });
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        let form = document.getElementById('updateUserForm');
+                                        let btnRestaurar = document.getElementById('btnRestaurar');
+
+                                        let initialValues = {
+                                            usuario: '<%= c.getUsuario()%>',
+                                            pass: '<%= c.getPass()%>',
+                                            correo: '<%= c.getCorreo()%>',
+                                            nombres: '<%= c.getNombres()%>',
+                                            apellidoP: '<%= c.getApellidoP()%>',
+                                            apellidoM: '<%= c.getApellidoM()%>'
+                                        };
+
+                                        function restaurarFormulario() {
+                                            form.reset();
+                                            Object.keys(initialValues).forEach(function (key) {
+                                                document.getElementById(key).value = initialValues[key];
+                                            });
+                                        }
+
+                                        btnRestaurar.addEventListener('click', function () {
+                                            restaurarFormulario();
+                                        });
+                                    });
         </script>
 
 

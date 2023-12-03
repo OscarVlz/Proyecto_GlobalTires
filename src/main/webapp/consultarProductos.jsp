@@ -184,21 +184,21 @@
         </div>
         <div id="confirmModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title">Confirmar Eliminación</h4>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Confirmar Eliminación</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Estás seguro de que quieres eliminar este producto?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="button" id="confirmDelete" class="btn btn-danger">Eliminar</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                  <p>¿Estás seguro de que quieres eliminar este producto?</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                  <button type="button" id="confirmDelete" class="btn btn-danger">Eliminar</button>
-                </div>
-              </div>
             </div>
-          </div>
+        </div>
         <footer>
             <div class="container">
                 <div class="row">
@@ -234,7 +234,7 @@
                                 seccionSeleccionada.classList.add('seccion-activa');
                                 seccionASombrear.classList.add('active');
                             }
-                            
+
                             function showConfirmModal(productId) {
                                 $('#confirmModal').modal('show');
 

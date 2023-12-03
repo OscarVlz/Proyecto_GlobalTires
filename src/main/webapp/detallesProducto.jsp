@@ -96,7 +96,7 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                         </div>
                         <h2><%= producto.getNombre()%></h2>
                         <h4><%= producto.getDescripcion()%></h4>
-                        
+
                         <form action="carrito.jsp" method="post" class="mt-3">
                             <div class="form-group">
                                 <span class="d-block">Precio $<%= producto.getPrecio()%></span>
@@ -161,6 +161,8 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                                 <input type="text" class="form-control" id="apellidoM" name="apellidoM" value="<%= c.getApellidoM()%>" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+                            <button type="button" class="btn btn-secondary" id="btnRestaurar">Restaurar</button>
+
                         </form>
                     </div>
                 </div>
@@ -197,7 +199,7 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 
 
         <script>
-            function borrarDatos(){
+            function borrarDatos() {
                 sessionStorage.clear();
             }
 
@@ -234,6 +236,30 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                             });
                 });
             });
+            document.addEventListener('DOMContentLoaded', function () {
+                let form = document.getElementById('updateUserForm');
+                let btnRestaurar = document.getElementById('btnRestaurar');
+
+                let initialValues = {
+                    usuario: '<%= c.getUsuario()%>',
+                    pass: '<%= c.getPass()%>',
+                    correo: '<%= c.getCorreo()%>',
+                    nombres: '<%= c.getNombres()%>',
+                    apellidoP: '<%= c.getApellidoP()%>',
+                    apellidoM: '<%= c.getApellidoM()%>'
+                };
+
+                function restaurarFormulario() {
+                    form.reset();
+                    Object.keys(initialValues).forEach(function (key) {
+                        document.getElementById(key).value = initialValues[key];
+                    });
+                }
+
+                btnRestaurar.addEventListener('click', function () {
+                    restaurarFormulario();
+                });
+            });
         </script>
 
 
@@ -251,51 +277,51 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 
     </body>
     <script>
-        let productData = {};
-        document.addEventListener("DOMContentLoaded", function () {
+            let productData = {};
+            document.addEventListener("DOMContentLoaded", function () {
 
-            const productContainer = document.getElementById("product-container");
-            if (productContainer) {
-                const productName = productContainer.querySelector("h2").innerText;
-                const productDescription = productContainer.querySelector("h4").innerText;
-                const productPrice = parseFloat(document.getElementById("precio").value);
-                const productId = productContainer.querySelector("input[name='idproducto']").value;
-                const productImageSrc = document.getElementById("imagenProducto").getAttribute("src").replaceAll(' ','%20');
+                const productContainer = document.getElementById("product-container");
+                if (productContainer) {
+                    const productName = productContainer.querySelector("h2").innerText;
+                    const productDescription = productContainer.querySelector("h4").innerText;
+                    const productPrice = parseFloat(document.getElementById("precio").value);
+                    const productId = productContainer.querySelector("input[name='idproducto']").value;
+                    const productImageSrc = document.getElementById("imagenProducto").getAttribute("src").replaceAll(' ', '%20');
 
-                productData = {
-                    name: productName,
-                    description: productDescription,
-                    price: productPrice,
-                    id: productId,
-                    imageSrc: productImageSrc
-                };
-            }
-        });
+                    productData = {
+                        name: productName,
+                        description: productDescription,
+                        price: productPrice,
+                        id: productId,
+                        imageSrc: productImageSrc
+                    };
+                }
+            });
 
-        let productosEnCarrito;
+            let productosEnCarrito;
 
-        let productosEnCarritoLS = sessionStorage.getItem("productos-en-carrito");
+            let productosEnCarritoLS = sessionStorage.getItem("productos-en-carrito");
 
-        if (productosEnCarritoLS) {
-            productosEnCarrito = JSON.parse(productosEnCarritoLS);
-        } else {
-            productosEnCarrito = [];
-        }
-
-        const boton = document.getElementById("botonAgregar");
-        boton.addEventListener("click", agregarAlCarrito);
-
-        function agregarAlCarrito(e) {
-
-            if (productosEnCarrito.some((element) => element.id === productData.id)) {
-                const index = productosEnCarrito.findIndex((element) => element.id === productData.id);
-                productosEnCarrito[index].cantidad += parseInt(document.getElementById("txt-cantidad").value);
+            if (productosEnCarritoLS) {
+                productosEnCarrito = JSON.parse(productosEnCarritoLS);
             } else {
-                productData.cantidad = parseInt(document.getElementById("txt-cantidad").value);
-                productosEnCarrito.push(productData);
+                productosEnCarrito = [];
             }
 
-            sessionStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
-        }
+            const boton = document.getElementById("botonAgregar");
+            boton.addEventListener("click", agregarAlCarrito);
+
+            function agregarAlCarrito(e) {
+
+                if (productosEnCarrito.some((element) => element.id === productData.id)) {
+                    const index = productosEnCarrito.findIndex((element) => element.id === productData.id);
+                    productosEnCarrito[index].cantidad += parseInt(document.getElementById("txt-cantidad").value);
+                } else {
+                    productData.cantidad = parseInt(document.getElementById("txt-cantidad").value);
+                    productosEnCarrito.push(productData);
+                }
+
+                sessionStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+            }
     </script>
 </html>

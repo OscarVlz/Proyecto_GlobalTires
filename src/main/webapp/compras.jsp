@@ -29,14 +29,9 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 
         <title>Mis compras</title>
 
-        <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <!--
-      
-      
-        -->
 
-        <!-- Additional CSS Files -->
+
         <link rel="stylesheet" href="assets/css/fontawesome.css">
         <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
         <link rel="stylesheet" href="assets/css/owl.css">
@@ -45,7 +40,6 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 
     <body>
 
-        <!-- ***** Preloader Start ***** -->
         <div id="preloader">
             <div class="jumper">
                 <div></div>
@@ -53,7 +47,6 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                 <div></div>
             </div>
         </div>
-        <!-- ***** Preloader End ***** -->
 
         <!-- Header -->
         <header class="">
@@ -164,6 +157,8 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                                 <input type="text" class="form-control" id="apellidoM" name="apellidoM" value="<%= c.getApellidoM()%>" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+                            <button type="button" class="btn btn-secondary" id="btnRestaurar">Restaurar</button>
+
                         </form>
                     </div>
                 </div>
@@ -211,43 +206,67 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 
 
         <script>
-            function borrarDatos(){
-                sessionStorage.clear();
-            }
+                                    function borrarDatos() {
+                                        sessionStorage.clear();
+                                    }
 
-            function abrirModal(mensaje) {
-                const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
-                $('#modalMensaje').modal('show');
-            }
+                                    function abrirModal(mensaje) {
+                                        const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
+                                        $('#modalMensaje').modal('show');
+                                    }
 
-            document.addEventListener("DOMContentLoaded", function () {
-                const updateUserForm = document.getElementById("updateUserForm");
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        const updateUserForm = document.getElementById("updateUserForm");
 
-                updateUserForm.addEventListener("submit", function (event) {
-                    event.preventDefault();
+                                        updateUserForm.addEventListener("submit", function (event) {
+                                            event.preventDefault();
 
-                    const formData = new FormData(updateUserForm);
-                    const userData = {ClienteDTO: {}};
+                                            const formData = new FormData(updateUserForm);
+                                            const userData = {ClienteDTO: {}};
 
-                    formData.forEach((value, key) => {
-                        userData.ClienteDTO[key] = value;
-                    });
+                                            formData.forEach((value, key) => {
+                                                userData.ClienteDTO[key] = value;
+                                            });
 
-                    fetch("/Proyecto_GlobalTires/CrudClientes", {
-                        method: "POST",
-                        body: JSON.stringify(userData)
-                    })
-                            .then(response => response.json())
-                            .then(data => {
-                                $("#updateUserModal").modal("hide");
-                                abrirModal(JSON.stringify(data.respuesta).replaceAll('"', ''));
-                                document.getElementById("nombreUsuario").innerHTML = JSON.stringify(data.valores.usuario).replaceAll('"', '');
-                            })
-                            .catch(error => {
-                                console.error("Error al actualizar usuario:", error);
-                            });
-                });
-            });
+                                            fetch("/Proyecto_GlobalTires/CrudClientes", {
+                                                method: "POST",
+                                                body: JSON.stringify(userData)
+                                            })
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        $("#updateUserModal").modal("hide");
+                                                        abrirModal(JSON.stringify(data.respuesta).replaceAll('"', ''));
+                                                        document.getElementById("nombreUsuario").innerHTML = JSON.stringify(data.valores.usuario).replaceAll('"', '');
+                                                    })
+                                                    .catch(error => {
+                                                        console.error("Error al actualizar usuario:", error);
+                                                    });
+                                        });
+                                    });
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        let form = document.getElementById('updateUserForm');
+                                        let btnRestaurar = document.getElementById('btnRestaurar');
+
+                                        let initialValues = {
+                                            usuario: '<%= c.getUsuario()%>',
+                                            pass: '<%= c.getPass()%>',
+                                            correo: '<%= c.getCorreo()%>',
+                                            nombres: '<%= c.getNombres()%>',
+                                            apellidoP: '<%= c.getApellidoP()%>',
+                                            apellidoM: '<%= c.getApellidoM()%>'
+                                        };
+
+                                        function restaurarFormulario() {
+                                            form.reset();
+                                            Object.keys(initialValues).forEach(function (key) {
+                                                document.getElementById(key).value = initialValues[key];
+                                            });
+                                        }
+
+                                        btnRestaurar.addEventListener('click', function () {
+                                            restaurarFormulario();
+                                        });
+                                    });
         </script>
 
 
