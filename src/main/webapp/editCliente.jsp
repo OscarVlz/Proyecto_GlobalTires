@@ -66,25 +66,33 @@
                 </div>
                 <input type="hidden" name="txtid" value="<%= c.getId()%>">
                 <button type="submit" name="accion" value="Actualizar" class="btn btn-primary">Actualizar</button>
+                <button type="button" class="btn btn-secondary" id="btnRecargar">Restaurar</button>
                 <a href="CrudClientes?accion=consultar" class="btn btn-secondary">Regresar</a>
             </form>
         </div>
-        
-                
-                <footer>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="inner-content">
-                                    <p> &copy; 2023 Equipo 2 & Global Tires
-                                </div>
-                            </div>
+
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="inner-content">
+                            <p> &copy; 2023 Equipo 2 & Global Tires
                         </div>
                     </div>
-                </footer>
-                
-        <!-- Bootstrap core JavaScript -->
-        <script src="vendor/jquery/jquery.min.js"></script>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                let btnRecargar = document.getElementById('btnRecargar');
+
+                btnRecargar.addEventListener('click', function () {
+                    location.reload(true);
+                });
+            });
+        </script>        
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     </body>
 
