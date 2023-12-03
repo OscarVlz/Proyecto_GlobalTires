@@ -33,7 +33,7 @@ public class ModeloCompra extends Conexion {
         Integer pkCompra = -1;
 
         try {
-            String pago = "INSERT INTO pagos(num_tarjeta, fecha_vencimiento, numSeguridad,cantidad_pagada) VALUES (?,?,?,?)";
+            String pago = "INSERT INTO pagos(num_tarjeta, fecha_vencimiento, numSeguridad,cantidad_pagada, id_cliente) VALUES (?, ?,?,?,?)";
             System.out.println("Insert es;" + pago);
 
             pst = getConexion().prepareStatement(pago, Statement.RETURN_GENERATED_KEYS);
@@ -41,7 +41,8 @@ public class ModeloCompra extends Conexion {
             pst.setDate(2, parseDateSQL(compra.getFechaVencimiento()));
             pst.setString(3, compra.getNumSeguridad());
             pst.setDouble(4, getTotal(compra.getProductos()));
-
+            pst.setInt(5, id_usuario);
+            
             pst.executeUpdate();
             rs = pst.getGeneratedKeys();
             if (rs.next()) {

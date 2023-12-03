@@ -191,7 +191,7 @@ public class ModeloCliente extends Conexion {
         ResultSet rs = null;
 
         try {
-            String delete = "delete from clientes where id=?";
+            String delete = "DELETE FROM clientes WHERE id = ?;";
             System.out.println("delete es;" + delete);
             pst = getConexion().prepareStatement(delete);
             pst.setInt(1, id);
