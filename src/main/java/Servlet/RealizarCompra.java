@@ -10,6 +10,7 @@ import Modelo.DTO.CompraDTO;
 import Modelo.ModeloCompra;
 import Modelo.ModeloProducto;
 import Modelo.DTO.ComprasDTO;
+import Modelo.ModeloException;
 import Modelo.dominio.Producto;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -26,6 +27,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 import java.util.Iterator;
 
 /**
@@ -85,22 +87,27 @@ public class RealizarCompra extends HttpServlet {
         }
         String json = sb.toString();
 
-            Gson gson = new Gson();
-            ComprasDTO data=  gson.fromJson(json, ComprasDTO.class);
-            
-            CompraDTO compra = data.getData();
-            
-            ModeloCompra modelo = new ModeloCompra();
-            int id = Integer.parseInt(request.getSession().getAttribute("id").toString());
-            
-            modelo.insertarCompra(id,compra);
-            
-            String respuesta = gson.toJson(new Respuesta("Al 100"));
-            System.out.println(respuesta);
-            PrintWriter out = response.getWriter();
-            out.print(respuesta);
-            out.flush();
+        Gson gson = new Gson();
+        ComprasDTO data = gson.fromJson(json, ComprasDTO.class);
 
+        CompraDTO compra = data.getData();
+
+        ModeloCompra modelo = new ModeloCompra();
+        Respuesta res =new Respuesta("exito");
+        int id = Integer.parseInt(request.getSession().getAttribute("id").toString());
+        
+        try {
+            modelo.insertarCompra(id, compra);
+
+        } catch (ModeloException e) {
+            res = new Respuesta("fallo");
+        }
+
+        String respuesta = gson.toJson(res);
+        System.out.println(respuesta);
+        PrintWriter out = response.getWriter();
+        out.print(respuesta);
+        out.flush();
 
     }
 
@@ -113,6 +120,5 @@ public class RealizarCompra extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 
 }

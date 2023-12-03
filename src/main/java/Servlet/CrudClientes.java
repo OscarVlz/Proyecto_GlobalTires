@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,6 +25,7 @@ import java.io.BufferedReader;
  *
  * @author Equipo 2
  */
+@WebServlet(name = "CrudClientes", urlPatterns = {"/CrudClientes"})
 public class CrudClientes extends HttpServlet {
 
     String consultar = "crudClientes.jsp";
@@ -140,7 +142,7 @@ public class CrudClientes extends HttpServlet {
         ClienteDTO data = gson.fromJson(json, ClienteDTO.class);
 
         ModeloCliente modelo = new ModeloCliente();
-
+        System.out.println(data.getCliente());
         modelC.actualizarCliente(data.getCliente());
 
         String respuesta = gson.toJson(new Respuesta("Valores actualizados").addValueRespuesta("usuario", data.getCliente().getUsuario()));

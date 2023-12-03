@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  */
 public class ModeloCompra extends Conexion {
 
-    public void insertarCompra(int id_usuario, CompraDTO compra) {
+    public void insertarCompra(int id_usuario, CompraDTO compra) throws ModeloException{
         PreparedStatement pst = null;
         ResultSet rs = null;
         Integer pkPago = -1;
@@ -48,7 +48,7 @@ public class ModeloCompra extends Conexion {
                 pkPago = rs.getInt(1);
             }
         } catch (Exception e) {
-            System.out.println("Error en: " + e);
+            throw new ModeloException("La insersion fallo");
         } finally {
             try {
                 if (getConexion() != null) {

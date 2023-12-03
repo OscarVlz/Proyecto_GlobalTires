@@ -9,9 +9,11 @@ String usuario=(String) new ModeloCliente().getCliente(Integer.parseInt(session.
 if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 <%@page import="Controlador.ControladorProducto"%>
 <%@page import="Modelo.dominio.Producto"%>
+<%@page import="Modelo.dominio.Cliente" %>
+<%@page import="Modelo.ModeloCliente" %>
 <%
-    int id = Integer.parseInt(request.getParameter("id"));
-    Producto producto = new ControladorProducto().getProducto(id);
+    int idPro = Integer.parseInt(request.getParameter("idPro"));
+    Producto producto = new ControladorProducto().getProducto(idPro);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,17 +28,8 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 
         <title>Nuestros productos</title>
 
-        <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <!--
-        
-        TemplateMo 546 Sixteen Clothing
-        
-        https://templatemo.com/tm-546-sixteen-clothing
-        
-        -->
 
-        <!-- Additional CSS Files -->
         <link rel="stylesheet" href="assets/css/fontawesome.css">
         <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
         <link rel="stylesheet" href="assets/css/owl.css">
@@ -45,7 +38,6 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 
     <body>
 
-        <!-- ***** Preloader Start ***** -->
         <div id="preloader">
             <div class="jumper">
                 <div></div>
@@ -53,9 +45,7 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                 <div></div>
             </div>
         </div>  
-        <!-- ***** Preloader End ***** -->
 
-        <!-- Header -->
         <header class="">
             <nav class="navbar navbar-expand-lg">
                 <div class="container">
@@ -84,7 +74,9 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                                 <a class="nav-link " href="compras.jsp"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Mis compras</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link"><i class="fa fa-user" aria-hidden="true"></i> <% out.println(usuario);%></a>
+                                <a class="nav-link" href="#" data-toggle="modal" data-target="#updateUserModal">
+                                    <i class="fa fa-user"  aria-hidden="true"> </i> <span id="nombreUsuario"><% out.println(usuario);%></span>
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="CerrarSesion">Salir</a>
@@ -95,38 +87,102 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
             </nav>
         </header>
 
-        <div class="col-sm-9 padding-right">
-            <div class="view-product">
-                <br>
-                <br>
-                <img src="assets/images/<%= producto.getTipo()%>/<%= producto.getImg()%>" alt="" width="500" height="500"/>
-                <h2><%= producto.getNombre()%></h2><br>
-                <h4><%= producto.getDescripcion()%></h4>
-                <img src="images/rating.png" alt="" />
-                <form action="agregarproducto" method="post">
-                    <span>
-                        <span>Precio $<%= producto.getPrecio()%></span><br>
-                        <label>Cantidad: </label>
-                        <input type="hidden" value="<%= producto.getId()%>" name="idproducto">
-                        <input type="hidden" value="<%= producto.getPrecio()%>" name="precio">
-
-                        <input type="text" value="1" id="txt-cantidad" name="cantidad"/><br>
-                        <button type="submit" class="btn btn-fefault cart">
-                            <i class="fa fa-shopping-cart"></i>
-                            Agregar al carrito
-                        </button>
-                        <button class="btn btn-fefault cart">
-                            <a href="productos.jsp"> 
-                                Volver 
-                            </a>
-                        </button>
-                    </span>
-                </form>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9 padding-right">
+                    <div class="view-product" id="product-container">
+                        <div class="mt-3 mb-3">
+                            <img src="assets/images/<%= producto.getTipo()%>/<%= producto.getImg()%>" alt="" id="imagenProducto" class="img-fluid" width="500" height="500"/>
+                        </div>
+                        <h2><%= producto.getNombre()%></h2>
+                        <h4><%= producto.getDescripcion()%></h4>
+                        
+                        <form action="carrito.jsp" method="post" class="mt-3">
+                            <div class="form-group">
+                                <span class="d-block">Precio $<%= producto.getPrecio()%></span>
+                                <label for="txt-cantidad">Cantidad:</label>
+                                <input type="hidden" value="<%= producto.getId()%>" name="idproducto">
+                                <input id="precio" type="hidden" value="<%= producto.getPrecio()%>" name="precio">
+                                <input type="number" value="1" id="txt-cantidad" name="cantidad" class="form-control" min="1"/>
+                            </div>
+                            <div class="form-group">
+                                <button id="botonAgregar" type="submit" href="carrito.jsp" class="btn btn-primary">
+                                    <i class="fa fa-shopping-cart"></i> Agregar al carrito
+                                </button>
+                                <a href="productos.jsp" class="btn btn-secondary ml-2">Volver</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div> 
+        </div>
 
 
-        <!-- Footer -->
+        <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="updateUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateUserModalLabel">Actualizar Usuario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mt-3">
+                        <%
+      ModeloCliente modelC = new ModeloCliente();
+      int id = Integer.parseInt(session.getAttribute("id").toString());
+      Cliente c = (Cliente) modelC.getCliente(id);
+                        %>
+                        <form id="updateUserForm">
+                            <h2>Actualizar Informacion</h2>
+                            <input type="number" class="form-control" id="id" name="id" value="<%= c.getId()%>" hidden>
+                            <div class="form-group">
+                                <label for="usuario">Nombre de usuario:</label>
+                                <input type="text" class="form-control" id="usuario" name="usuario" value="<%= c.getUsuario()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass">Password:</label>
+                                <input type="password" class="form-control" id="pass" name="pass" value="<%= c.getPass()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="correo">Correo electrónico:</label>
+                                <input type="email" class="form-control" id="correo" name="correo" value="<%= c.getCorreo()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="nombres">Nombres:</label>
+                                <input type="text" class="form-control" id="nombres" name="nombres" value="<%= c.getNombres()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="apellidoP">Apellido Paterno:</label>
+                                <input type="text" class="form-control" id="apellidoP" name="apellidoP" value="<%= c.getApellidoP()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="apellidoM">Apellido Materno:</label>
+                                <input type="text" class="form-control" id="apellidoM" name="apellidoM" value="<%= c.getApellidoM()%>" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-labelledby="modalMensajeLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalMensajeLabel">Mensaje Importante</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="textoModal"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <footer>
             <div class="container">
                 <div class="row">
@@ -140,12 +196,48 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
         </footer>
 
 
-        <!-- Bootstrap core JavaScript -->
+        <script>
+            console.log(document.getElementById("imagenProducto").getAttribute("src"));
+            function abrirModal(mensaje) {
+                const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
+                $('#modalMensaje').modal('show');
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const updateUserForm = document.getElementById("updateUserForm");
+
+                updateUserForm.addEventListener("submit", function (event) {
+                    event.preventDefault();
+
+                    const formData = new FormData(updateUserForm);
+                    const userData = {ClienteDTO: {}};
+
+                    formData.forEach((value, key) => {
+                        userData.ClienteDTO[key] = value;
+                    });
+
+                    fetch("/Proyecto_GlobalTires/CrudClientes", {
+                        method: "POST",
+                        body: JSON.stringify(userData)
+                    })
+                            .then(response => response.json())
+                            .then(data => {
+                                $("#updateUserModal").modal("hide");
+                                abrirModal(JSON.stringify(data.respuesta).replaceAll('"', ''));
+                                document.getElementById("nombreUsuario").innerHTML = JSON.stringify(data.valores.usuario).replaceAll('"', '');
+                            })
+                            .catch(error => {
+                                console.error("Error al actualizar usuario:", error);
+                            });
+                });
+            });
+        </script>
+
+
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-
-        <!-- Additional Scripts -->
+        <script src="assets/js/carrito.js"></script>
         <script src="assets/js/custom.js"></script>
         <script src="assets/js/owl.js"></script>
         <script src="assets/js/slick.js"></script>
@@ -166,5 +258,52 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 
 
     </body>
+    <script>
+        let productData = {};
+        document.addEventListener("DOMContentLoaded", function () {
 
+            const productContainer = document.getElementById("product-container");
+            if (productContainer) {
+                const productName = productContainer.querySelector("h2").innerText;
+                const productDescription = productContainer.querySelector("h4").innerText;
+                const productPrice = parseFloat(document.getElementById("precio").value);
+                const productId = productContainer.querySelector("input[name='idproducto']").value;
+                const productImageSrc = document.getElementById("imagenProducto").getAttribute("src").replaceAll(' ','%20');
+
+                productData = {
+                    name: productName,
+                    description: productDescription,
+                    price: productPrice,
+                    id: productId,
+                    imageSrc: productImageSrc
+                };
+            }
+        });
+
+        let productosEnCarrito;
+
+        let productosEnCarritoLS = sessionStorage.getItem("productos-en-carrito");
+
+        if (productosEnCarritoLS) {
+            productosEnCarrito = JSON.parse(productosEnCarritoLS);
+        } else {
+            productosEnCarrito = [];
+        }
+
+        const boton = document.getElementById("botonAgregar");
+        boton.addEventListener("click", agregarAlCarrito);
+
+        function agregarAlCarrito(e) {
+
+            if (productosEnCarrito.some((element) => element.id === productData.id)) {
+                const index = productosEnCarrito.findIndex((element) => element.id === productData.id);
+                productosEnCarrito[index].cantidad += parseInt(document.getElementById("txt-cantidad").value);
+            } else {
+                productData.cantidad = parseInt(document.getElementById("txt-cantidad").value);
+                productosEnCarrito.push(productData);
+            }
+
+            sessionStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+        }
+    </script>
 </html>

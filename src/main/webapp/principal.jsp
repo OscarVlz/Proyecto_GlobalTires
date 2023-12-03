@@ -329,7 +329,7 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                         userData.ClienteDTO[key] = value;
                     });
 
-                    fetch("/GlobalTires/CrudClientes", {
+                    fetch("/Proyecto_GlobalTires/CrudClientes", {
                         method: "POST",
                         body: JSON.stringify(userData)
                     })

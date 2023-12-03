@@ -5,7 +5,8 @@
 --%>
 <%@page import="Controlador.ControladorProducto"%>
 <%@page import="Modelo.dominio.Producto"%>
-<%@page import="Modelo.ModeloCliente"%>
+<%@page import="Modelo.dominio.Cliente" %>
+<%@page import="Modelo.ModeloCliente" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <% HttpSession objSesion=request.getSession(false);
 String usuario=(String) new ModeloCliente().getCliente(Integer.parseInt(session.getAttribute("id").toString())).getUsuario(); 
@@ -86,7 +87,9 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                                 <a class="nav-link" href="compras.jsp"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Mis compras</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link"><i class="fa fa-user" aria-hidden="true"></i> <% out.println(usuario);%></a>
+                                <a class="nav-link" href="#" data-toggle="modal" data-target="#updateUserModal">
+                                    <i class="fa fa-user"  aria-hidden="true"> </i> <span id="nombreUsuario"><% out.println(usuario);%></span>
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="CerrarSesion">Salir</a>
@@ -174,9 +177,71 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                 </div>
             </div>      
         </div>                    
+        <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="updateUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateUserModalLabel">Actualizar Usuario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mt-3">
+                        <%
+      ModeloCliente modelC = new ModeloCliente();
+      int id = Integer.parseInt(session.getAttribute("id").toString());
+      Cliente c = (Cliente) modelC.getCliente(id);
+                        %>
+                        <form id="updateUserForm">
+                            <h2>Actualizar Informacion</h2>
+                            <input type="number" class="form-control" id="id" name="id" value="<%= c.getId()%>" hidden>
+                            <div class="form-group">
+                                <label for="usuario">Nombre de usuario:</label>
+                                <input type="text" class="form-control" id="usuario" name="usuario" value="<%= c.getUsuario()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass">Password:</label>
+                                <input type="password" class="form-control" id="pass" name="pass" value="<%= c.getPass()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="correo">Correo electrónico:</label>
+                                <input type="email" class="form-control" id="correo" name="correo" value="<%= c.getCorreo()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="nombres">Nombres:</label>
+                                <input type="text" class="form-control" id="nombres" name="nombres" value="<%= c.getNombres()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="apellidoP">Apellido Paterno:</label>
+                                <input type="text" class="form-control" id="apellidoP" name="apellidoP" value="<%= c.getApellidoP()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="apellidoM">Apellido Materno:</label>
+                                <input type="text" class="form-control" id="apellidoM" name="apellidoM" value="<%= c.getApellidoM()%>" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-labelledby="modalMensajeLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalMensajeLabel">Mensaje Importante</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="textoModal"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <!-- Footer -->
         <footer>
             <div class="container">
                 <div class="row">
@@ -190,12 +255,9 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
         </footer>
 
 
-        <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-
-        <!-- Additional Scripts -->
         <script src="assets/js/custom.js"></script>
         <script src="assets/js/owl.js"></script>
         <script src="assets/js/slick.js"></script>
@@ -203,7 +265,7 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
         <script src="assets/js/accordions.js"></script>
 
 
-        <script language = "text/Javascript">
+        <script>
             cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
             function clearField(t) {                   //declaring the array outside of the
                 if (!cleared[t.id]) {                      // function makes it static and global
@@ -212,6 +274,41 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                     t.style.color = '#fff';
                 }
             }
+        </script>
+        <script>
+            function abrirModal(mensaje) {
+                const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
+                $('#modalMensaje').modal('show');
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const updateUserForm = document.getElementById("updateUserForm");
+
+                updateUserForm.addEventListener("submit", function (event) {
+                    event.preventDefault();
+
+                    const formData = new FormData(updateUserForm);
+                    const userData = {ClienteDTO: {}};
+
+                    formData.forEach((value, key) => {
+                        userData.ClienteDTO[key] = value;
+                    });
+
+                    fetch("/Proyecto_GlobalTires/CrudClientes", {
+                        method: "POST",
+                        body: JSON.stringify(userData)
+                    })
+                            .then(response => response.json())
+                            .then(data => {
+                                $("#updateUserModal").modal("hide");
+                                abrirModal(JSON.stringify(data.respuesta).replaceAll('"', ''));
+                                document.getElementById("nombreUsuario").innerHTML = JSON.stringify(data.valores.usuario).replaceAll('"', '');
+                            })
+                            .catch(error => {
+                                console.error("Error al actualizar usuario:", error);
+                            });
+                });
+            });
         </script>
 
 

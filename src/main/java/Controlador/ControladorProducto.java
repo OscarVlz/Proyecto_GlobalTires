@@ -20,9 +20,9 @@ public class ControladorProducto {
         for (Producto producto : mp.getAllProductos()) {
             if (producto.getTipo().equalsIgnoreCase("Todoterreno")) {
                 tipo = "gra";
-            } else if (producto.getTipo().equalsIgnoreCase("Automoviles")) {
+            } else if (producto.getTipo().equalsIgnoreCase("Vehiculos")) {
                 tipo = "des";
-            } else if (producto.getTipo().equalsIgnoreCase("Vehiculos Pesados")) {
+            } else if (producto.getTipo().equalsIgnoreCase("Pesados")) {
                 tipo = "dev";
             }
 
@@ -35,7 +35,7 @@ public class ControladorProducto {
                     + "<h6>$" + producto.getPrecio() + "</h6>\n"
                     + "<p>" + producto.getDescripcion() + "</p>\n"
                     + "<ul class=\"stars\">\n"
-                    + "<li><a href=\"detallesProducto.jsp?id=" + producto.getId() + "\" class=\"filled-button\">Ver detalles</a></li>"
+                    + "<li><a href=\"detallesProducto.jsp?idPro=" + producto.getId() + "\" class=\"filled-button\">Ver detalles</a></li>"
                     + "</ul>\n"
                     + "</div>\n"
                     + "</div>\n"
@@ -66,7 +66,7 @@ public class ControladorProducto {
                     + "<h6>$" + producto.getPrecio() + "</h6>\n"
                     + "<p>" + producto.getDescripcion() + "</p>\n"
                     + "<ul class=\"stars\">\n"
-                    + "<li><a href=\"detallesProducto.jsp?id=" + producto.getId() + "\" class=\"filled-button\">Ver detalles</a></li>"
+                    + "<li><a href=\"detallesProducto.jsp?idPro=" + producto.getId() + "\" class=\"filled-button\">Ver detalles</a></li>"
                     + "</ul>\n"
                     + "</div>\n"
                     + "</div>\n"
