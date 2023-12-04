@@ -126,27 +126,27 @@
                 <form action="CrudClientes?accion=mostrarCreado" method="get">
                     <div class="form-group">
                         <label for="usuario">Nombre de Usuario:</label>
-                        <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Nombre de Usuario" required>
+                        <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Nombre de Usuario" maxlength="16" pattern="^(?![\s]+$)[a-zA-Z0-9._-]+$" required>
                     </div>
                     <div class="form-group">
                         <label for="pass">Contraseña:</label>
-                        <input type="password" id="pass" name="pass" class="form-control" placeholder="Contraseña" required>
+                        <input type="password" id="pass" name="pass" class="form-control" placeholder="Contraseña"  required>
                     </div>
                     <div class="form-group">
-                        <label for="pass">Nombres:</label>
-                        <input type="text" id="nombres" name="nombres" class="form-control" placeholder="Nombres" required>
+                        <label for="nombres">Nombres:</label>
+                        <input type="text" id="nombres" name="nombres" class="form-control" placeholder="Nombres" maxlength="50" pattern="/^(?![\s]+$)[a-zA-Z\s]+$/" required>
                     </div>
                     <div class="form-group">
-                        <label for="pass">Apellido paterno:</label>
-                        <input type="text" id="apellidoP" name="apellidoP" class="form-control" placeholder="Apellido paterno" required>
+                        <label for="apellidoP">Apellido paterno:</label>
+                        <input type="text" id="apellidoP" name="apellidoP" class="form-control" placeholder="Apellido paterno" maxlength="40" pattern="/^(?![\s]+$)[a-zA-Z\s]+$/" required>
                     </div>
                     <div class="form-group">
-                        <label for="pass">Apellido materno:</label>
-                        <input type="text" id="apellidoM" name="apellidoM" class="form-control" placeholder="Apellido materno" required>
+                        <label for="apellidoM">Apellido materno:</label>
+                        <input type="text" id="apellidoM" name="apellidoM" class="form-control" placeholder="Apellido materno" maxlength="40" pattern="/^(?![\s]+$)[a-zA-Z\s]+$/" required>
                     </div>
                     <div class="form-group">
-                        <label for="pass">Correo:</label>
-                        <input type="email" id="correo" name="correo" class="form-control" placeholder="correo@mail.com" required>
+                        <label for="correo">Correo:</label>
+                        <input type="email" id="correo" name="correo" class="form-control" placeholder="correo@mail.com" maxlength="60" pattern="/^(?![\s]+$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/" required>
                     </div>
                     <button type="submit" name="accion" value="mostrarCreado" class="btn btn-primary">Crear</button>
                 </form>

@@ -1,6 +1,7 @@
 Modelo\dominio\Producto.class
 Modelo\DTO\ClienteDTO.class
 Servlet\IniciarSesión.class
+Modelo\ModeloException.class
 Servlet\CerrarSesion.class
 Servlet\RegistrarUsuarios.class
 Modelo\dominio\Articulo.class

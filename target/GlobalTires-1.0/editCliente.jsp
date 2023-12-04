@@ -41,34 +41,58 @@
             <h1>Modificar Cliente</h1>
             <form action="CrudClientes?accion=consultar" method="get">
                 <div class="form-group">
-                    <label for="txtNom">Usuario:</label>
-                    <input type="text" id="txtNom" name="txtNom" class="form-control" value="<%= c.getUsuario()%>">
+                    <label for="usuario">Usuario:</label>
+                    <input type="text" id="usuario" name="usuario" class="form-control" maxlength="16" pattern="/^(?![\s]+$)[a-zA-Z0-9._-]+$/" value="<%= c.getUsuario()%>">
                 </div>
                 <div class="form-group">
-                    <label for="txtContrasena">Contraseña:</label>
-                    <input type="password" id="txtContrasena" name="txtContrasena" class="form-control" value="<%= c.getClave()%>">
+                    <label for="pass">Contraseña:</label>
+                    <input type="password" id="pass" name="pass" class="form-control" maxlength="30" pattern="/^(?!\s+$).+/" value="<%= c.getPass()%>">
+                </div>
+                <div class="form-group">
+                    <label for="pass">Nombres:</label>
+                    <input type="text" id="nombres" name="nombres" class="form-control" placeholder="Nombres" maxlength="50" pattern="/^(?![\s]+$)[a-zA-Z\s]+$/" value="<%= c.getNombres()%>" required>
+                </div>
+                <div class="form-group">
+                    <label for="pass">Apellido paterno:</label>
+                    <input type="text" id="apellidoP" name="apellidoP" class="form-control" placeholder="Apellido paterno" maxlength="40" pattern="/^(?![\s]+$)[a-zA-Z\s]+$/" value="<%= c.getApellidoP()%>" required>
+                </div>
+                <div class="form-group">
+                    <label for="pass">Apellido materno:</label>
+                    <input type="text" id="apellidoM" name="apellidoM" class="form-control" placeholder="Apellido materno" maxlength="40" pattern="/^(?![\s]+$)[a-zA-Z\s]+$/" value="<%= c.getApellidoM()%>" required>
+                </div>
+                <div class="form-group">
+                    <label for="pass">Correo:</label>
+                    <input type="email" id="correo" name="correo" class="form-control" placeholder="correo@mail.com" maxlength="60" pattern="/^(?![\s]+$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/" value="<%= c.getCorreo()%>" required>
                 </div>
                 <input type="hidden" name="txtid" value="<%= c.getId()%>">
                 <button type="submit" name="accion" value="Actualizar" class="btn btn-primary">Actualizar</button>
+                <button type="button" class="btn btn-secondary" id="btnRecargar">Restaurar</button>
                 <a href="CrudClientes?accion=consultar" class="btn btn-secondary">Regresar</a>
             </form>
         </div>
-        
-                
-                <footer>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="inner-content">
-                                    <p> &copy; 2023 Equipo 2 & Global Tires
-                                </div>
-                            </div>
+
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="inner-content">
+                            <p> &copy; 2023 Equipo 2 & Global Tires
                         </div>
                     </div>
-                </footer>
-                
-        <!-- Bootstrap core JavaScript -->
-        <script src="vendor/jquery/jquery.min.js"></script>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                let btnRecargar = document.getElementById('btnRecargar');
+
+                btnRecargar.addEventListener('click', function () {
+                    location.reload(true);
+                });
+            });
+        </script>        
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     </body>
 

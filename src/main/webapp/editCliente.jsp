@@ -42,27 +42,27 @@
             <form action="CrudClientes?accion=consultar" method="get">
                 <div class="form-group">
                     <label for="usuario">Usuario:</label>
-                    <input type="text" id="usuario" name="usuario" class="form-control" value="<%= c.getUsuario()%>">
+                    <input type="text" id="usuario" name="usuario" class="form-control" maxlength="16" pattern="/^(?![\s]+$)[a-zA-Z0-9._-]+$/" value="<%= c.getUsuario()%>">
                 </div>
                 <div class="form-group">
                     <label for="pass">Contraseña:</label>
-                    <input type="password" id="pass" name="pass" class="form-control" value="<%= c.getPass()%>">
+                    <input type="password" id="pass" name="pass" class="form-control" maxlength="30" pattern="/^(?!\s+$).+/" value="<%= c.getPass()%>">
                 </div>
                 <div class="form-group">
                     <label for="pass">Nombres:</label>
-                    <input type="text" id="nombres" name="nombres" class="form-control" placeholder="Nombres" value="<%= c.getNombres()%>" required>
+                    <input type="text" id="nombres" name="nombres" class="form-control" placeholder="Nombres" maxlength="50" pattern="/^(?![\s]+$)[a-zA-Z\s]+$/" value="<%= c.getNombres()%>" required>
                 </div>
                 <div class="form-group">
                     <label for="pass">Apellido paterno:</label>
-                    <input type="text" id="apellidoP" name="apellidoP" class="form-control" placeholder="Apellido paterno" value="<%= c.getApellidoP()%>" required>
+                    <input type="text" id="apellidoP" name="apellidoP" class="form-control" placeholder="Apellido paterno" maxlength="40" pattern="/^(?![\s]+$)[a-zA-Z\s]+$/" value="<%= c.getApellidoP()%>" required>
                 </div>
                 <div class="form-group">
                     <label for="pass">Apellido materno:</label>
-                    <input type="text" id="apellidoM" name="apellidoM" class="form-control" placeholder="Apellido materno" value="<%= c.getApellidoM()%>" required>
+                    <input type="text" id="apellidoM" name="apellidoM" class="form-control" placeholder="Apellido materno" maxlength="40" pattern="/^(?![\s]+$)[a-zA-Z\s]+$/" value="<%= c.getApellidoM()%>" required>
                 </div>
                 <div class="form-group">
                     <label for="pass">Correo:</label>
-                    <input type="email" id="correo" name="correo" class="form-control" placeholder="correo@mail.com" value="<%= c.getCorreo()%>" required>
+                    <input type="email" id="correo" name="correo" class="form-control" placeholder="correo@mail.com" maxlength="60" pattern="/^(?![\s]+$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/" value="<%= c.getCorreo()%>" required>
                 </div>
                 <input type="hidden" name="txtid" value="<%= c.getId()%>">
                 <button type="submit" name="accion" value="Actualizar" class="btn btn-primary">Actualizar</button>

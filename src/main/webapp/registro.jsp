@@ -43,27 +43,27 @@
             <form>
                 <div class="form-group">
                     <label for="usuario">Nombre de Usuario:</label>
-                    <input type="text" id="usuario" name="usuario" class="form-control" placeholder="Nombre de Usuario" required>
+                    <input type="text" id="usuario" name="usuario" class="form-control" maxlength="16" placeholder="Nombre de Usuario" required>
                 </div>
                 <div class="form-group">
                     <label for="pass">Contraseña:</label>
-                    <input type="password" id="pass" name="pass" class="form-control" placeholder="Contraseña" required>
+                    <input type="password" id="pass" name="pass" class="form-control" maxlength="30" placeholder="Contraseña" required>
                 </div>
                 <div class="form-group">
                     <label for="pass">Nombres:</label>
-                    <input type="text" id="nombres" name="nombres" class="form-control" placeholder="Nombres" required>
+                    <input type="text" id="nombres" name="nombres" class="form-control" maxlength="50" placeholder="Nombres" required>
                 </div>
                 <div class="form-group">
                     <label for="pass">Apellido paterno:</label>
-                    <input type="text" id="apellidoP" name="apellidoP" class="form-control" placeholder="Apellido paterno" required>
+                    <input type="text" id="apellidoP" name="apellidoP" class="form-control" maxlength="40" placeholder="Apellido paterno" required>
                 </div>
                 <div class="form-group">
                     <label for="pass">Apellido materno:</label>
-                    <input type="text" id="apellidoM" name="apellidoM" class="form-control" placeholder="Apellido materno" required>
+                    <input type="text" id="apellidoM" name="apellidoM" class="form-control" maxlength="40" placeholder="Apellido materno" required>
                 </div>
                 <div class="form-group">
                     <label for="pass">Correo:</label>
-                    <input type="email" id="correo" name="correo" class="form-control" placeholder="correo@mail.com" required>
+                    <input type="email" id="correo" name="correo" class="form-control" maxlength="60" placeholder="correo@mail.com" required>
                 </div>
                 <button id="botonRegistrar" type="button" class="btn btn-primary" style="background-color: #324c69;">Registrar Usuario</button>
             </form>
@@ -104,6 +104,43 @@
         </div>
     </footer>
     <script>
+
+        function validarFormulario(usuario, pass, nombres, apellidoP, apellidoM, correo) {
+
+            if (usuario.length < 8 || !(/^[a-zA-Z0-9._-]+$/.test(usuario)) || !(/^(?!\s+$).+/.test(usuario))) {
+                alert('El usuario debe tener al menos 8 caracteres. Puede contener numeros y los caracteres= ". - _"');
+                return false;
+            }
+
+            if (pass.length < 8 || !(/^(?!\s+$).+/.test(pass))) {
+                alert('La contraseña debe de tener al menos 8 caracteres');
+                return false;
+            }
+
+            if (nombres.length < 3 || !(/^[a-zA-Z\s]+$/.test(nombres)) || !(/^(?!\s+$).+/.test(nombres))) {
+                alert('El nombre debe tener almenos 3 caracteres y solo puede contener letras y espacios.');
+                return false;
+            }
+
+            if (apellidoP.length < 3 || !(/^[a-zA-Z\s]+$/.test(apellidoP)) || !(/^(?!\s+$).+/.test(apellidoP))) {
+                alert('El apellido paterno debe de tener almenos 3 caracteres y solo puede contener letras y espacios');
+                return false;
+            }
+
+            if (apellidoM.length < 3 || !(/^[a-zA-Z\s]+$/.test(apellidoM) || !(/^(?!\s+$).+/.test(apellidoM)))) {
+                alert('El apellido materno debe de tener almenos 3 caracteres y solo puede contener letras y espacios');
+                return false;
+            }
+
+            if (correo.length < 8 || !(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(correo)) || !(/^(?!\s+$).+/.test(correo))) {
+                alert('El correo debe de seguir el formato example@example.com');
+                return false;
+            }
+
+            return true;
+        }
+
+
         const botonRegistrar = document.getElementById("botonRegistrar");
         const inputUsuario = document.getElementById("usuario");
         const inputPass = document.getElementById("pass");
@@ -112,7 +149,7 @@
         const inputApellidoM = document.getElementById("apellidoM");
         const inputCorreo = document.getElementById("correo");
 
-        botonRegistrar.addEventListener("click",(e)=>{
+        botonRegistrar.addEventListener("click", (e) => {
             let usuario = inputUsuario.value;
             let pass = inputPass.value;
             let nombres = inputNombres.value;
@@ -120,8 +157,12 @@
             let apellidoM = inputApellidoM.value;
             let correo = inputCorreo.value;
 
+            if (!validarFormulario(usuario, pass, nombres, apellidoP, apellidoM, correo)) {
+                return;
+            }
+
             const datos = {
-                ClienteDTO:{
+                ClienteDTO: {
                     usuario,
                     pass,
                     nombres,
@@ -131,37 +172,37 @@
                 }
             };
             let json = JSON.stringify(datos);
-            fetch("/Proyecto_GlobalTires/nuevousuario",{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: json
-        }).then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText);
-            }
-            return response.json();
-        }).then(data => {
+            fetch("/Proyecto_GlobalTires/nuevousuario", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: json
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText);
+                }
+                return response.json();
+            }).then(data => {
                 console.log(data);
-                    if (data.respuesta === "exito") {
-                        abrirModal(JSON.stringify(data.valores.mensaje).replaceAll('"', ''));
-                        $('#modalMensaje').on('hidden.bs.modal', function () {
-                            window.location.href = "index.jsp";
-                        });
-                    } else {
-                        abrirModal(JSON.stringify(data.valores.mensaje).replaceAll('"', ''));
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                });
+                if (data.respuesta === "exito") {
+                    abrirModal(JSON.stringify(data.valores.mensaje).replaceAll('"', ''));
+                    $('#modalMensaje').on('hidden.bs.modal', function () {
+                        window.location.href = "index.jsp";
+                    });
+                } else {
+                    abrirModal(JSON.stringify(data.valores.mensaje).replaceAll('"', ''));
+                }
+            })
+                    .catch(error => {
+                        console.log(error);
+                    });
 
         });
 
         function abrirModal(mensaje) {
-        const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
-        $('#modalMensaje').modal('show');
-    }
+            const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
+            $('#modalMensaje').modal('show');
+        }
     </script>
 </html>

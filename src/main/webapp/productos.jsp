@@ -154,27 +154,27 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                             <input type="number" class="form-control" id="id" name="id" value="<%= c.getId()%>" hidden>
                             <div class="form-group">
                                 <label for="usuario">Nombre de usuario:</label>
-                                <input type="text" class="form-control" id="usuario" name="usuario" value="<%= c.getUsuario()%>" required>
+                                <input type="text" class="form-control" id="usuario" name="usuario" maxlength="16" value="<%= c.getUsuario()%>" required>
                             </div>
                             <div class="form-group">
                                 <label for="pass">Password:</label>
-                                <input type="password" class="form-control" id="pass" name="pass" value="<%= c.getPass()%>" required>
+                                <input type="password" class="form-control" id="pass" name="pass" maxlength="30" value="<%= c.getPass()%>" required>
                             </div>
                             <div class="form-group">
                                 <label for="correo">Correo electrónico:</label>
-                                <input type="email" class="form-control" id="correo" name="correo" value="<%= c.getCorreo()%>" required>
+                                <input type="email" class="form-control" id="correo" name="correo" maxlength="60" value="<%= c.getCorreo()%>" required>
                             </div>
                             <div class="form-group">
                                 <label for="nombres">Nombres:</label>
-                                <input type="text" class="form-control" id="nombres" name="nombres" value="<%= c.getNombres()%>" required>
+                                <input type="text" class="form-control" id="nombres" name="nombres" maxlength="50"value="<%= c.getNombres()%>" required>
                             </div>
                             <div class="form-group">
                                 <label for="apellidoP">Apellido Paterno:</label>
-                                <input type="text" class="form-control" id="apellidoP" name="apellidoP" value="<%= c.getApellidoP()%>" required>
+                                <input type="text" class="form-control" id="apellidoP" name="apellidoP" maxlength="40" value="<%= c.getApellidoP()%>" required>
                             </div>
                             <div class="form-group">
                                 <label for="apellidoM">Apellido Materno:</label>
-                                <input type="text" class="form-control" id="apellidoM" name="apellidoM" value="<%= c.getApellidoM()%>" required>
+                                <input type="text" class="form-control" id="apellidoM" name="apellidoM" maxlength="40" value="<%= c.getApellidoM()%>" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
                             <button type="button" class="btn btn-secondary" id="btnRestaurar">Restaurar</button>
@@ -233,14 +233,66 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                                         $('#modalMensaje').modal('show');
                                     }
 
+                                    function validarFormulario(usuario, pass, nombres, apellidoP, apellidoM, correo) {
+
+                                        if (usuario.length < 8 || !(/^[a-zA-Z0-9._-]+$/.test(usuario)) || !(/^(?!\s+$).+/.test(usuario))) {
+                                            alert('El usuario debe tener al menos 8 caracteres. Puede contener numeros y los caracteres= ". - _"');
+                                            return false;
+                                        }
+
+                                        if (pass.length < 8 || !(/^(?!\s+$).+/.test(pass))) {
+                                            alert('La contraseña debe de tener al menos 8 caracteres');
+                                            return false;
+                                        }
+
+                                        if (nombres.length < 3 || !(/^[a-zA-Z\s]+$/.test(nombres)) || !(/^(?!\s+$).+/.test(nombres))) {
+                                            alert('El nombre debe tener almenos 3 caracteres y solo puede contener letras y espacios.');
+                                            return false;
+                                        }
+
+                                        if (apellidoP.length < 3 || !(/^[a-zA-Z\s]+$/.test(apellidoP)) || !(/^(?!\s+$).+/.test(apellidoP))) {
+                                            alert('El apellido paterno debe de tener almenos 3 caracteres y solo puede contener letras y espacios');
+                                            return false;
+                                        }
+
+                                        if (apellidoM.length < 3 || !(/^[a-zA-Z\s]+$/.test(apellidoM) || !(/^(?!\s+$).+/.test(apellidoM)))) {
+                                            alert('El apellido materno debe de tener almenos 3 caracteres y solo puede contener letras y espacios');
+                                            return false;
+                                        }
+
+                                        if (correo.length < 8 || !(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(correo)) || !(/^(?!\s+$).+/.test(correo))) {
+                                            alert('El correo debe de seguir el formato example@example.com');
+                                            return false;
+                                        }
+
+                                        return true;
+                                    }
+
                                     document.addEventListener("DOMContentLoaded", function () {
                                         const updateUserForm = document.getElementById("updateUserForm");
+                                        const botonRegistrar = document.getElementById("botonRegistrar");
+                                        const inputUsuario = document.getElementById("usuario");
+                                        const inputPass = document.getElementById("pass");
+                                        const inputNombres = document.getElementById("nombres");
+                                        const inputApellidoP = document.getElementById("apellidoP");
+                                        const inputApellidoM = document.getElementById("apellidoM");
+                                        const inputCorreo = document.getElementById("correo");
 
                                         updateUserForm.addEventListener("submit", function (event) {
                                             event.preventDefault();
 
                                             const formData = new FormData(updateUserForm);
                                             const userData = {ClienteDTO: {}};
+                                            let usuario = inputUsuario.value;
+                                            let pass = inputPass.value;
+                                            let nombres = inputNombres.value;
+                                            let apellidoP = inputApellidoP.value;
+                                            let apellidoM = inputApellidoM.value;
+                                            let correo = inputCorreo.value;
+
+                                            if (!validarFormulario(usuario, pass, nombres, apellidoP, apellidoM, correo)) {
+                                                return;
+                                            }
 
                                             formData.forEach((value, key) => {
                                                 userData.ClienteDTO[key] = value;
