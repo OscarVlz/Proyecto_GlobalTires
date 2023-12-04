@@ -5,12 +5,17 @@
 package Servlet;
 
 import Controlador.Consultas;
+import Modelo.DTO.ClienteDTO;
+import Modelo.ModeloCliente;
+import Modelo.dominio.Cliente;
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 
 /**
  *
@@ -38,10 +43,10 @@ public class RegistrarUsuarios extends HttpServlet {
         String apellidoP = request.getParameter("apellidoP");
         String apellidoM = request.getParameter("apellidoM");
         String correo = request.getParameter("correo");
-        
+
         Consultas sql = new Consultas();
 
-        if (sql.registrar(usuario, clave,nombres, apellidoP,apellidoM,correo)) {
+        if (sql.registrar(usuario, clave, nombres, apellidoP, apellidoM, correo)) {
             response.sendRedirect("index.jsp");
 
         } else {
@@ -77,7 +82,41 @@ public class RegistrarUsuarios extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("application/json");
+
+        BufferedReader reader = request.getReader();
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line);
+        }
+        String json = sb.toString();
+
+        Gson gson = new Gson();
+
+        ClienteDTO data = gson.fromJson(json, ClienteDTO.class);
+        Cliente c = data.getCliente();
+        System.out.println(c);
+        System.out.println(json);
+        Respuesta res = new Respuesta("fallo").addValueRespuesta("mensaje", "No se pudo realizar el registro");
+
+        if (c != null) {
+            Consultas cons = new Consultas();
+
+            if (!cons.verificarUsuario(c.getUsuario())) {
+                res = new Respuesta("fallo").addValueRespuesta("mensaje", "El usuario ingresado ya esta en uso");
+            } else if (!cons.verificarCorreo(c.getCorreo())) {
+                res = new Respuesta("fallo").addValueRespuesta("mensaje", "El correo ingresado ya esta en uso");
+            } else if (cons.registrar(c.getUsuario(), c.getPass(), c.getNombres(), c.getApellidoP(), c.getApellidoM(), c.getCorreo())) {
+                res = new Respuesta("exito").addValueRespuesta("mensaje", "Bienvenido " + c.getUsuario());
+            }
+        }
+
+        String respuesta = gson.toJson(res);
+
+        PrintWriter out = response.getWriter();
+        out.print(respuesta);
+        out.flush();
     }
 
     /**

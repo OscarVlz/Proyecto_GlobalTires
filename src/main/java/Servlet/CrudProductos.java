@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import java.nio.file.Path;
 
 /**
  *
@@ -39,10 +40,10 @@ public class CrudProductos extends HttpServlet {
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -54,10 +55,10 @@ public class CrudProductos extends HttpServlet {
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -90,10 +91,10 @@ public class CrudProductos extends HttpServlet {
     /**
      * Handles the HTTP <code>POST</code> method.
      *
-     * @param request  servlet request
+     * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException      if an I/O error occurs
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -115,25 +116,20 @@ public class CrudProductos extends HttpServlet {
         } else if (action.equalsIgnoreCase("mostrarCreado")) {
             String nombre = request.getParameter("txtNom");
             double precio = Double.parseDouble(request.getParameter("txtPrecio"));
-
-            String uploadDirectory = getServletContext().getRealPath("") + "assets" + File.separator + "images"
-                    + File.separator + "Pesados";
-
-            // Obtenemos el archivo enviado desde el formulario
+            String tipo = request.getParameter("txtTipo");
+            int stock = Integer.parseInt(request.getParameter("txtStock"));
+            String descripcion = request.getParameter("txtDescripcion");
             Part filePart = request.getPart("txtimg");
-
             String foto = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
             System.out.println(foto);
             filePart.write(foto);
 
-            int stock = Integer.parseInt(request.getParameter("txtStock"));
-            String descripcion = request.getParameter("txtDescripcion");
-            String tipo = request.getParameter("txtTipo");
+            if (isValidImageFile(foto)) {
+                producto = new Producto(nombre, foto, precio, stock, descripcion, tipo);
+                modeloProducto.insertarProducto(nombre, tipo, foto, precio, stock, descripcion);
 
-            producto = new Producto(nombre, foto, precio, stock, descripcion, tipo);
-            modeloProducto.insertarProducto(nombre, tipo, foto, precio, stock, descripcion);
+            }
             acceso = consultar;
-
         }
 
         response.sendRedirect(acceso);
@@ -149,4 +145,9 @@ public class CrudProductos extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private static boolean isValidImageFile(String fileName) {
+        return fileName.toLowerCase().endsWith(".jpg")
+                || fileName.toLowerCase().endsWith(".jpeg")
+                || fileName.toLowerCase().endsWith(".png");
+    }
 }

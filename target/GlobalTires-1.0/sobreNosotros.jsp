@@ -5,14 +5,12 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%
-    HttpSession objSesion = request.getSession(false);
-    String usuario = (String) objSesion.getAttribute("usuario");
-    if (usuario == null) {
-        response.sendRedirect("index.jsp");
-    }
-%>
+<%@page import="Modelo.dominio.Cliente" %>
+<%@page import="Modelo.ModeloCliente" %>
 <%@page import="Controlador.ControladorProducto"%>
+<% HttpSession objSesion=request.getSession(false);
+String usuario=(String) new ModeloCliente().getCliente(Integer.parseInt(session.getAttribute("id").toString())).getUsuario(); 
+if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 <%
     ControladorProducto cp = new ControladorProducto();
 %>
@@ -29,11 +27,9 @@
 
         <title>Acerca de nosotros</title>
 
-        <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 
-        <!-- Additional CSS Files -->
         <link rel="stylesheet" href="assets/css/fontawesome.css">
         <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
         <link rel="stylesheet" href="assets/css/owl.css">
@@ -42,7 +38,6 @@
 
     <body>
 
-        <!-- ***** Preloader Start ***** -->
         <div id="preloader">
             <div class="jumper">
                 <div></div>
@@ -50,9 +45,7 @@
                 <div></div>
             </div>
         </div>  
-        <!-- ***** Preloader End ***** -->
 
-        <!-- Header -->
         <header class="">
             <nav class="navbar navbar-expand-lg">
                 <div class="container">
@@ -81,10 +74,12 @@
                                 <a class="nav-link " href="compras.jsp"><i class="fa fa-shopping-bag" aria-hidden="true"></i> Mis compras</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link "><i class="fa fa-user" aria-hidden="true"></i> <% out.println(usuario);%></a>
+                                <a class="nav-link" href="#" data-toggle="modal" data-target="#updateUserModal">
+                                    <i class="fa fa-user"  aria-hidden="true"> </i> <span id="nombreUsuario"><% out.println(usuario);%></span>
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="CerrarSesion">Salir</a>
+                                <a class="nav-link" onclick="borrarDatos()" href="CerrarSesion">Salir</a>
                             </li>
                         </ul>
                     </div>
@@ -179,7 +174,72 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="updateUserModal" tabindex="-1" role="dialog" aria-labelledby="updateUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateUserModalLabel">Actualizar Usuario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mt-3">
+                        <%
+      ModeloCliente modelC = new ModeloCliente();
+      int id = Integer.parseInt(session.getAttribute("id").toString());
+      Cliente c = (Cliente) modelC.getCliente(id);
+                        %>
+                        <form id="updateUserForm">
+                            <h2>Actualizar Informacion</h2>
+                            <input type="number" class="form-control" id="id" name="id" value="<%= c.getId()%>" hidden>
+                            <div class="form-group">
+                                <label for="usuario">Nombre de usuario:</label>
+                                <input type="text" class="form-control" id="usuario" name="usuario" value="<%= c.getUsuario()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass">Password:</label>
+                                <input type="password" class="form-control" id="pass" name="pass" value="<%= c.getPass()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="correo">Correo electrónico:</label>
+                                <input type="email" class="form-control" id="correo" name="correo" value="<%= c.getCorreo()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="nombres">Nombres:</label>
+                                <input type="text" class="form-control" id="nombres" name="nombres" value="<%= c.getNombres()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="apellidoP">Apellido Paterno:</label>
+                                <input type="text" class="form-control" id="apellidoP" name="apellidoP" value="<%= c.getApellidoP()%>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="apellidoM">Apellido Materno:</label>
+                                <input type="text" class="form-control" id="apellidoM" name="apellidoM" value="<%= c.getApellidoM()%>" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+                            <button type="button" class="btn btn-secondary" id="btnRestaurar">Restaurar</button>
 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-labelledby="modalMensajeLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalMensajeLabel">Mensaje Importante</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="textoModal"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <footer>
             <div class="container">
@@ -207,15 +267,119 @@
         <script src="assets/js/accordions.js"></script>
 
 
-        <script language = "text/Javascript">
-            cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-            function clearField(t) {                   //declaring the array outside of the
-                if (!cleared[t.id]) {                      // function makes it static and global
-                    cleared[t.id] = 1;  // you could use true and false, but that's more typing
-                    t.value = '';         // with more chance of typos
-                    t.style.color = '#fff';
-                }
-            }
+        <script>
+                                    function borrarDatos() {
+                                        sessionStorage.clear();
+                                    }
+                                    function abrirModal(mensaje) {
+                                        const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
+                                        $('#modalMensaje').modal('show');
+                                    }
+
+                                    function validarFormulario(usuario, pass, nombres, apellidoP, apellidoM, correo) {
+
+                                        if (usuario.length < 8 || !(/^[a-zA-Z0-9._-]+$/.test(usuario)) || !(/^(?!\s+$).+/.test(usuario))) {
+                                            alert('El usuario debe tener al menos 8 caracteres. Puede contener numeros y los caracteres= ". - _"');
+                                            return false;
+                                        }
+
+                                        if (pass.length < 8 || !(/^(?!\s+$).+/.test(pass))) {
+                                            alert('La contraseña debe de tener al menos 8 caracteres');
+                                            return false;
+                                        }
+
+                                        if (nombres.length < 3 || !(/^[a-zA-Z\s]+$/.test(nombres)) || !(/^(?!\s+$).+/.test(nombres))) {
+                                            alert('El nombre debe tener almenos 3 caracteres y solo puede contener letras y espacios.');
+                                            return false;
+                                        }
+
+                                        if (apellidoP.length < 3 || !(/^[a-zA-Z\s]+$/.test(apellidoP)) || !(/^(?!\s+$).+/.test(apellidoP))) {
+                                            alert('El apellido paterno debe de tener almenos 3 caracteres y solo puede contener letras y espacios');
+                                            return false;
+                                        }
+
+                                        if (apellidoM.length < 3 || !(/^[a-zA-Z\s]+$/.test(apellidoM) || !(/^(?!\s+$).+/.test(apellidoM)))) {
+                                            alert('El apellido materno debe de tener almenos 3 caracteres y solo puede contener letras y espacios');
+                                            return false;
+                                        }
+
+                                        if (correo.length < 8 || !(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(correo)) || !(/^(?!\s+$).+/.test(correo))) {
+                                            alert('El correo debe de seguir el formato example@example.com');
+                                            return false;
+                                        }
+
+                                        return true;
+                                    }
+
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        const updateUserForm = document.getElementById("updateUserForm");
+                                        const botonRegistrar = document.getElementById("botonRegistrar");
+                                        const inputUsuario = document.getElementById("usuario");
+                                        const inputPass = document.getElementById("pass");
+                                        const inputNombres = document.getElementById("nombres");
+                                        const inputApellidoP = document.getElementById("apellidoP");
+                                        const inputApellidoM = document.getElementById("apellidoM");
+                                        const inputCorreo = document.getElementById("correo");
+
+                                        updateUserForm.addEventListener("submit", function (event) {
+                                            event.preventDefault();
+
+                                            const formData = new FormData(updateUserForm);
+                                            const userData = {ClienteDTO: {}};
+                                            let usuario = inputUsuario.value;
+                                            let pass = inputPass.value;
+                                            let nombres = inputNombres.value;
+                                            let apellidoP = inputApellidoP.value;
+                                            let apellidoM = inputApellidoM.value;
+                                            let correo = inputCorreo.value;
+
+                                            if (!validarFormulario(usuario, pass, nombres, apellidoP, apellidoM, correo, )) {
+                                                return;
+                                            }
+                                            
+                                            formData.forEach((value, key) => {
+                                                userData.ClienteDTO[key] = value;
+                                            });
+
+                                            fetch("/Proyecto_GlobalTires/CrudClientes", {
+                                                method: "POST",
+                                                body: JSON.stringify(userData)
+                                            })
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        $("#updateUserModal").modal("hide");
+                                                        abrirModal(JSON.stringify(data.respuesta).replaceAll('"', ''));
+                                                        document.getElementById("nombreUsuario").innerHTML = JSON.stringify(data.valores.usuario).replaceAll('"', '');
+                                                    })
+                                                    .catch(error => {
+                                                        console.error("Error al actualizar usuario:", error);
+                                                    });
+                                        });
+                                    });
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        let form = document.getElementById('updateUserForm');
+                                        let btnRestaurar = document.getElementById('btnRestaurar');
+
+                                        let initialValues = {
+                                            usuario: '<%= c.getUsuario()%>',
+                                            pass: '<%= c.getPass()%>',
+                                            correo: '<%= c.getCorreo()%>',
+                                            nombres: '<%= c.getNombres()%>',
+                                            apellidoP: '<%= c.getApellidoP()%>',
+                                            apellidoM: '<%= c.getApellidoM()%>'
+                                        };
+
+                                        function restaurarFormulario() {
+                                            form.reset();
+                                            Object.keys(initialValues).forEach(function (key) {
+                                                document.getElementById(key).value = initialValues[key];
+                                            });
+                                        }
+
+                                        btnRestaurar.addEventListener('click', function () {
+                                            restaurarFormulario();
+                                        });
+                                    });
         </script>
 
 

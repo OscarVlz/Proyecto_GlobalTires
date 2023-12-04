@@ -26,16 +26,17 @@ public class ControladorProducto {
                 tipo = "dev";
             }
 
-            htmlcode
-                    += "<div class=\"col-lg-4 col-md-4 all " + tipo + "\">"
+            htmlcode += "<div class=\"col-lg-4 col-md-4 all " + tipo + "\">"
                     + "<div class=\"product-item\">"
-                    + "<img src=\"" + "assets/images" + "/" + producto.getTipo() + "/" + producto.getImg() + "\" alt=\"\">\n"
+                    + "<img src=\"" + "assets/images" + "/" + producto.getTipo() + "/" + producto.getImg()
+                    + "\" alt=\"\">\n"
                     + "<div class=\"down-content\">\n"
                     + "<h4>" + producto.getNombre() + "</h4>\n"
                     + "<h6>$" + producto.getPrecio() + "</h6>\n"
                     + "<p>" + producto.getDescripcion() + "</p>\n"
                     + "<ul class=\"stars\">\n"
-                    + "<li><a href=\"detallesProducto.jsp?idPro=" + producto.getId() + "\" class=\"filled-button\">Ver detalles</a></li>"
+                    + "<li><a href=\"detallesProducto.jsp?idPro=" + producto.getId()
+                    + "\" class=\"filled-button\">Ver detalles</a></li>"
                     + "</ul>\n"
                     + "</div>\n"
                     + "</div>\n"
@@ -43,7 +44,7 @@ public class ControladorProducto {
         }
         return htmlcode;
     }
-    
+
     public String getUltimosProductos() {
         ModeloProducto mp = new ModeloProducto();
         String htmlcode = "";
@@ -57,16 +58,17 @@ public class ControladorProducto {
                 tipo = "dev";
             }
 
-            htmlcode
-                    += "<div class=\"col-lg-4 col-md-4 all " + tipo + "\">"
+            htmlcode += "<div class=\"col-lg-4 col-md-4 all " + tipo + "\">"
                     + "<div class=\"product-item\">"
-                    + "<img src=\"" + "assets/images" + "/" + producto.getTipo() + "/" + producto.getImg() + "\" alt=\"\">\n"
+                    + "<img src=\"" + "assets/images" + "/" + producto.getTipo() + "/" + producto.getImg()
+                    + "\" alt=\"\">\n"
                     + "<div class=\"down-content\">\n"
                     + "<h4>" + producto.getNombre() + "</h4>\n"
                     + "<h6>$" + producto.getPrecio() + "</h6>\n"
                     + "<p>" + producto.getDescripcion() + "</p>\n"
                     + "<ul class=\"stars\">\n"
-                    + "<li><a href=\"detallesProducto.jsp?idPro=" + producto.getId() + "\" class=\"filled-button\">Ver detalles</a></li>"
+                    + "<li><a href=\"detallesProducto.jsp?idPro=" + producto.getId()
+                    + "\" class=\"filled-button\">Ver detalles</a></li>"
                     + "</ul>\n"
                     + "</div>\n"
                     + "</div>\n"
@@ -79,17 +81,17 @@ public class ControladorProducto {
         ModeloProducto mp = new ModeloProducto();
         String htmlcode = "";
         for (Producto producto : mp.getAllProductos()) {
-            htmlcode
-                    += "<tr>"
-                    + "<td>"+producto.getId()+"</td>"
-                    + "<td>"+producto.getNombre()+"</td>"
-                    + "<td>"+producto.getTipo()+"</td>"
-                    + "<td>"+producto.getImg()+"</td>"
-                    + "<td>$"+producto.getPrecio()+"</td>"
-                    + "<td>"+producto.getStock()+"</td>"
-                    + "<td>"+producto.getDescripcion()+"</td>"
-                     +"<td>" + "<a href=\"CrudProductos?accion=editar&id="+producto.getId()+"\">Editar</a>" + "</td>"
-                    +"<td>" + "<a href=\"CrudProductos?accion=eliminar&id="+producto.getId()+"\">Eliminar</a>" + "</td>"
+            htmlcode += "<tr>"
+                    + "<td>" + producto.getId() + "</td>"
+                    + "<td>" + producto.getNombre() + "</td>"
+                    + "<td>" + producto.getTipo() + "</td>"
+                    + "<td>" + producto.getImg() + "</td>"
+                    + "<td>$" + producto.getPrecio() + "</td>"
+                    + "<td>" + producto.getStock() + "</td>"
+                    + "<td>" + producto.getDescripcion() + "</td>"
+                    + "<td>" + "<a href=\"CrudProductos?accion=editar&id=" + producto.getId() + "\">Editar</a>"
+                    + "</td>"
+                    + "<td><a href=\"#\" class=\"delete-link\" data-id=\"" + producto.getId() + "\">Eliminar</a></td>"
                     + "</tr>";
         }
         return htmlcode;

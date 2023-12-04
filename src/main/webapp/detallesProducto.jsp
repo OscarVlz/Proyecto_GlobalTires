@@ -79,7 +79,7 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="CerrarSesion">Salir</a>
+                                <a class="nav-link" onclick="borrarDatos()" href="CerrarSesion">Salir</a>
                             </li>
                         </ul>
                     </div>
@@ -96,7 +96,7 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                         </div>
                         <h2><%= producto.getNombre()%></h2>
                         <h4><%= producto.getDescripcion()%></h4>
-                        
+
                         <form action="carrito.jsp" method="post" class="mt-3">
                             <div class="form-group">
                                 <span class="d-block">Precio $<%= producto.getPrecio()%></span>
@@ -138,29 +138,31 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                             <input type="number" class="form-control" id="id" name="id" value="<%= c.getId()%>" hidden>
                             <div class="form-group">
                                 <label for="usuario">Nombre de usuario:</label>
-                                <input type="text" class="form-control" id="usuario" name="usuario" value="<%= c.getUsuario()%>" required>
+                                <input type="text" class="form-control" id="usuario" name="usuario" maxlength="16" value="<%= c.getUsuario()%>" required>
                             </div>
                             <div class="form-group">
                                 <label for="pass">Password:</label>
-                                <input type="password" class="form-control" id="pass" name="pass" value="<%= c.getPass()%>" required>
+                                <input type="password" class="form-control" id="pass" name="pass" maxlength="30" value="<%= c.getPass()%>" required>
                             </div>
                             <div class="form-group">
                                 <label for="correo">Correo electrónico:</label>
-                                <input type="email" class="form-control" id="correo" name="correo" value="<%= c.getCorreo()%>" required>
+                                <input type="email" class="form-control" id="correo" name="correo" maxlength="60" value="<%= c.getCorreo()%>" required>
                             </div>
                             <div class="form-group">
                                 <label for="nombres">Nombres:</label>
-                                <input type="text" class="form-control" id="nombres" name="nombres" value="<%= c.getNombres()%>" required>
+                                <input type="text" class="form-control" id="nombres" name="nombres" maxlength="50" value="<%= c.getNombres()%>" required>
                             </div>
                             <div class="form-group">
                                 <label for="apellidoP">Apellido Paterno:</label>
-                                <input type="text" class="form-control" id="apellidoP" name="apellidoP" value="<%= c.getApellidoP()%>" required>
+                                <input type="text" class="form-control" id="apellidoP" name="apellidoP" maxlength="40" value="<%= c.getApellidoP()%>" required>
                             </div>
                             <div class="form-group">
                                 <label for="apellidoM">Apellido Materno:</label>
-                                <input type="text" class="form-control" id="apellidoM" name="apellidoM" value="<%= c.getApellidoM()%>" required>
+                                <input type="text" class="form-control" id="apellidoM" name="apellidoM" maxlength="40" value="<%= c.getApellidoM()%>" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+                            <button type="button" class="btn btn-secondary" id="btnRestaurar">Restaurar</button>
+
                         </form>
                     </div>
                 </div>
@@ -197,20 +199,78 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
 
 
         <script>
-            console.log(document.getElementById("imagenProducto").getAttribute("src"));
+            function borrarDatos() {
+                sessionStorage.clear();
+            }
+
             function abrirModal(mensaje) {
                 const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
                 $('#modalMensaje').modal('show');
             }
 
+            function validarFormulario(usuario, pass, nombres, apellidoP, apellidoM, correo) {
+
+                if (usuario.length < 8 || !(/^[a-zA-Z0-9._-]+$/.test(usuario)) || !(/^(?!\s+$).+/.test(usuario))) {
+                    alert('El usuario debe tener al menos 8 caracteres. Puede contener numeros y los caracteres= ". - _"');
+                    return false;
+                }
+
+                if (pass.length < 8 || !(/^(?!\s+$).+/.test(pass))) {
+                    alert('La contraseña debe de tener al menos 8 caracteres');
+                    return false;
+                }
+
+                if (nombres.length < 3 || !(/^[a-zA-Z\s]+$/.test(nombres)) || !(/^(?!\s+$).+/.test(nombres))) {
+                    alert('El nombre debe tener almenos 3 caracteres y solo puede contener letras y espacios.');
+                    return false;
+                }
+
+                if (apellidoP.length < 3 || !(/^[a-zA-Z\s]+$/.test(apellidoP)) || !(/^(?!\s+$).+/.test(apellidoP))) {
+                    alert('El apellido paterno debe de tener almenos 3 caracteres y solo puede contener letras y espacios');
+                    return false;
+                }
+
+                if (apellidoM.length < 3 || !(/^[a-zA-Z\s]+$/.test(apellidoM) || !(/^(?!\s+$).+/.test(apellidoM)))) {
+                    alert('El apellido materno debe de tener almenos 3 caracteres y solo puede contener letras y espacios');
+                    return false;
+                }
+
+                if (correo.length < 8 || !(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(correo)) || !(/^(?!\s+$).+/.test(correo))) {
+                    alert('El correo debe de seguir el formato example@example.com');
+                    return false;
+                }
+
+                return true;
+            }
+
+
+
             document.addEventListener("DOMContentLoaded", function () {
                 const updateUserForm = document.getElementById("updateUserForm");
+                const botonRegistrar = document.getElementById("botonRegistrar");
+                const inputUsuario = document.getElementById("usuario");
+                const inputPass = document.getElementById("pass");
+                const inputNombres = document.getElementById("nombres");
+                const inputApellidoP = document.getElementById("apellidoP");
+                const inputApellidoM = document.getElementById("apellidoM");
+                const inputCorreo = document.getElementById("correo");
 
                 updateUserForm.addEventListener("submit", function (event) {
                     event.preventDefault();
 
                     const formData = new FormData(updateUserForm);
                     const userData = {ClienteDTO: {}};
+                    let usuario = inputUsuario.value;
+                    let pass = inputPass.value;
+                    let nombres = inputNombres.value;
+                    let apellidoP = inputApellidoP.value;
+                    let apellidoM = inputApellidoM.value;
+                    let correo = inputCorreo.value;
+
+                    if (!validarFormulario(usuario, pass, nombres, apellidoP, apellidoM, correo)) {
+                        return;
+                    }
+
 
                     formData.forEach((value, key) => {
                         userData.ClienteDTO[key] = value;
@@ -231,6 +291,33 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                             });
                 });
             });
+            document.addEventListener('DOMContentLoaded', function () {
+                let form = document.getElementById('updateUserForm');
+                let btnRestaurar = document.getElementById('btnRestaurar');
+
+                let initialValues = {
+                    usuario: '<%= c.getUsuario()%>',
+                    pass: '<%= c.getPass()%>',
+                    correo: '<%= c.getCorreo()%>',
+                    nombres: '<%= c.getNombres()%>',
+                    apellidoP: '<%= c.getApellidoP()%>',
+                    apellidoM: '<%= c.getApellidoM()%>'
+                };
+
+                function restaurarFormulario() {
+                    form.reset();
+                    Object.keys(initialValues).forEach(function (key) {
+                        document.getElementById(key).value = initialValues[key];
+                    });
+                }
+
+                btnRestaurar.addEventListener('click', function () {
+                    restaurarFormulario();
+                });
+            });
+
+
+
         </script>
 
 
@@ -245,65 +332,53 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
         <script src="assets/js/accordions.js"></script>
 
 
-        <script language = "text/Javascript">
-            cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-            function clearField(t) {                   //declaring the array outside of the
-                if (!cleared[t.id]) {                      // function makes it static and global
-                    cleared[t.id] = 1;  // you could use true and false, but that's more typing
-                    t.value = '';         // with more chance of typos
-                    t.style.color = '#fff';
-                }
-            }
-        </script>
-
 
     </body>
     <script>
-        let productData = {};
-        document.addEventListener("DOMContentLoaded", function () {
+            let productData = {};
+            document.addEventListener("DOMContentLoaded", function () {
+                const productContainer = document.getElementById("product-container");
+                if (productContainer) {
+                    const productName = productContainer.querySelector("h2").innerText;
+                    const productDescription = productContainer.querySelector("h4").innerText;
+                    const productPrice = parseFloat(document.getElementById("precio").value);
+                    const productId = productContainer.querySelector("input[name='idproducto']").value;
+                    const productImageSrc = document.getElementById("imagenProducto").getAttribute("src").replaceAll(' ', '%20');
 
-            const productContainer = document.getElementById("product-container");
-            if (productContainer) {
-                const productName = productContainer.querySelector("h2").innerText;
-                const productDescription = productContainer.querySelector("h4").innerText;
-                const productPrice = parseFloat(document.getElementById("precio").value);
-                const productId = productContainer.querySelector("input[name='idproducto']").value;
-                const productImageSrc = document.getElementById("imagenProducto").getAttribute("src").replaceAll(' ','%20');
+                    productData = {
+                        name: productName,
+                        description: productDescription,
+                        price: productPrice,
+                        id: productId,
+                        imageSrc: productImageSrc
+                    };
+                }
+            });
 
-                productData = {
-                    name: productName,
-                    description: productDescription,
-                    price: productPrice,
-                    id: productId,
-                    imageSrc: productImageSrc
-                };
-            }
-        });
+            let productosEnCarrito;
 
-        let productosEnCarrito;
+            let productosEnCarritoLS = sessionStorage.getItem("productos-en-carrito");
 
-        let productosEnCarritoLS = sessionStorage.getItem("productos-en-carrito");
-
-        if (productosEnCarritoLS) {
-            productosEnCarrito = JSON.parse(productosEnCarritoLS);
-        } else {
-            productosEnCarrito = [];
-        }
-
-        const boton = document.getElementById("botonAgregar");
-        boton.addEventListener("click", agregarAlCarrito);
-
-        function agregarAlCarrito(e) {
-
-            if (productosEnCarrito.some((element) => element.id === productData.id)) {
-                const index = productosEnCarrito.findIndex((element) => element.id === productData.id);
-                productosEnCarrito[index].cantidad += parseInt(document.getElementById("txt-cantidad").value);
+            if (productosEnCarritoLS) {
+                productosEnCarrito = JSON.parse(productosEnCarritoLS);
             } else {
-                productData.cantidad = parseInt(document.getElementById("txt-cantidad").value);
-                productosEnCarrito.push(productData);
+                productosEnCarrito = [];
             }
 
-            sessionStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
-        }
+            const boton = document.getElementById("botonAgregar");
+            boton.addEventListener("click", agregarAlCarrito);
+
+            function agregarAlCarrito(e) {
+
+                if (productosEnCarrito.some((element) => element.id === productData.id)) {
+                    const index = productosEnCarrito.findIndex((element) => element.id === productData.id);
+                    productosEnCarrito[index].cantidad += parseInt(document.getElementById("txt-cantidad").value);
+                } else {
+                    productData.cantidad = parseInt(document.getElementById("txt-cantidad").value);
+                    productosEnCarrito.push(productData);
+                }
+
+                sessionStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+            }
     </script>
 </html>

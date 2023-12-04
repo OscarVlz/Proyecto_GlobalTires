@@ -101,7 +101,7 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="CerrarSesion">Salir</a>
+                            <a class="nav-link" onclick="borrarDatos()" href="CerrarSesion">Salir</a>
                         </li>
                     </ul>
                 </div>
@@ -221,29 +221,31 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                         <input type="number" class="form-control" id="id" name="id" value="<%= c.getId()%>" hidden>
                         <div class="form-group">
                             <label for="usuario">Nombre de usuario:</label>
-                            <input type="text" class="form-control" id="usuario" name="usuario" value="<%= c.getUsuario()%>" required>
+                            <input type="text" class="form-control" id="usuario" name="usuario" maxlength="16" value="<%= c.getUsuario()%>" required>
                         </div>
                         <div class="form-group">
                             <label for="pass">Password:</label>
-                            <input type="password" class="form-control" id="pass" name="pass" value="<%= c.getPass()%>" required>
+                            <input type="password" class="form-control" id="pass" name="pass" maxlength="30" value="<%= c.getPass()%>" required>
                         </div>
                         <div class="form-group">
                             <label for="correo">Correo electrónico:</label>
-                            <input type="email" class="form-control" id="correo" name="correo" value="<%= c.getCorreo()%>" required>
+                            <input type="email" class="form-control" id="correo" name="correo" maxlength="60" value="<%= c.getCorreo()%>" required>
                         </div>
                         <div class="form-group">
                             <label for="nombres">Nombres:</label>
-                            <input type="text" class="form-control" id="nombres" name="nombres" value="<%= c.getNombres()%>" required>
+                            <input type="text" class="form-control" id="nombres" name="nombres" maxlength="50" value="<%= c.getNombres()%>" required>
                         </div>
                         <div class="form-group">
                             <label for="apellidoP">Apellido Paterno:</label>
-                            <input type="text" class="form-control" id="apellidoP" name="apellidoP" value="<%= c.getApellidoP()%>" required>
+                            <input type="text" class="form-control" id="apellidoP" name="apellidoP" maxlength="40" value="<%= c.getApellidoP()%>" required>
                         </div>
                         <div class="form-group">
                             <label for="apellidoM">Apellido Materno:</label>
-                            <input type="text" class="form-control" id="apellidoM" name="apellidoM" value="<%= c.getApellidoM()%>" required>
+                            <input type="text" class="form-control" id="apellidoM" name="apellidoM" maxlength="40" value="<%= c.getApellidoM()%>" required>
                         </div>
-                        <button type="button" class="btn btn-primary">Actualizar Usuario</button>
+                        <button type="submit" class="btn btn-primary">Actualizar Usuario</button>
+                        <button type="button" class="btn btn-secondary" id="btnRestaurar">Restaurar</button>
+
                     </form>
                 </div>
             </div>
@@ -277,20 +279,24 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
     <script src="assets/js/accordions.js"></script>
 
     <script>
-    let productosEnCarrito = sessionStorage.getItem("productos-en-carrito");
-    productosEnCarrito = JSON.parse(productosEnCarrito);
+                                function borrarDatos() {
+                                    sessionStorage.clear();
+                                }
 
-    function cargarCarrito() {
-        productosEnCarrito = sessionStorage.getItem("productos-en-carrito");
-        const contenedorCarritoProductos = document.querySelector("#tablaBody");
-        productosEnCarrito = JSON.parse(productosEnCarrito);
-        contenedorCarritoProductos.innerHTML = "";
+                                let productosEnCarrito = sessionStorage.getItem("productos-en-carrito");
+                                productosEnCarrito = JSON.parse(productosEnCarrito);
 
-        if (productosEnCarrito && productosEnCarrito.length > 0) {
-            productosEnCarrito.forEach(producto => {
-                const tr = document.createElement("tr");
-                tr.setAttribute("data-id", producto.id);
-                tr.innerHTML = `
+                                function cargarCarrito() {
+                                    productosEnCarrito = sessionStorage.getItem("productos-en-carrito");
+                                    const contenedorCarritoProductos = document.querySelector("#tablaBody");
+                                    productosEnCarrito = JSON.parse(productosEnCarrito);
+                                    contenedorCarritoProductos.innerHTML = "";
+
+                                    if (productosEnCarrito && productosEnCarrito.length > 0) {
+                                        productosEnCarrito.forEach(producto => {
+                                            const tr = document.createElement("tr");
+                                            tr.setAttribute("data-id", producto.id);
+                                            tr.innerHTML = `
                 <td class="cart_product">
                     <a id="idProducto" hidden>` + producto.id + `</a>
                     <a><img src=` + producto.imageSrc + ` alt="" width="120" height="120"></a>
@@ -316,216 +322,293 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                     <a class="cart_quantity_delete" href="#" id="deleteitem"><i class="fa fa-times"></i></a>
                 </td>`;
 
-                contenedorCarritoProductos.appendChild(tr);
-            });
-            actualizarTotales();
-            asignarBotones();
-        } else {
-            const div = document.createElement("tr");
-            div.innerHTML = `<h2>Carrito vacio</h2>`;
-            contenedorCarritoProductos.appendChild(div);
-            actualizarTotales();
-        }
-    }
-    cargarCarrito();
+                                            contenedorCarritoProductos.appendChild(tr);
+                                        });
+                                        actualizarTotales();
+                                        asignarBotones();
+                                    } else {
+                                        const div = document.createElement("tr");
+                                        div.innerHTML = `<h2>Carrito vacio</h2>`;
+                                        contenedorCarritoProductos.appendChild(div);
+                                        actualizarTotales();
+                                    }
+                                }
+                                cargarCarrito();
 
-    function asignarBotones() {
-        let botonesEliminar = document.querySelectorAll(".cart_quantity_delete");
-        botonesEliminar.forEach(boton => {
-            boton.addEventListener("click", eliminarDelCarrito);
-        });
-    }
+                                function asignarBotones() {
+                                    let botonesEliminar = document.querySelectorAll(".cart_quantity_delete");
+                                    botonesEliminar.forEach(boton => {
+                                        boton.addEventListener("click", eliminarDelCarrito);
+                                    });
+                                }
 
-    function eliminarDelCarrito(e) {
-        const fila = e.target.closest('tr');
-        const idProducto = fila.querySelector('#idProducto').innerText;
-        const index = productosEnCarrito.findIndex(producto => producto.id === idProducto);
+                                function eliminarDelCarrito(e) {
+                                    const fila = e.target.closest('tr');
+                                    const idProducto = fila.querySelector('#idProducto').innerText;
+                                    const index = productosEnCarrito.findIndex(producto => producto.id === idProducto);
 
-        productosEnCarrito.splice(index, 1);
-        console.log(productosEnCarrito);
-        sessionStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
-        cargarCarrito();
-    }
+                                    productosEnCarrito.splice(index, 1);
+                                    console.log(productosEnCarrito);
+                                    sessionStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
+                                    cargarCarrito();
+                                }
 
-    function cambiarCantidadCarrito(operacion, element) {
-        const input = element.parentElement.querySelector('input');
-        cantidad = input.value;
+                                function cambiarCantidadCarrito(operacion, element) {
+                                    const input = element.parentElement.querySelector('input');
+                                    cantidad = input.value;
 
-        if (operacion === 'aumentar') {
-            const nuevaCantidad = parseInt(input.value) + 1;
-            input.value = nuevaCantidad;
-        }
-        if (operacion === 'reducir') {
-            if (cantidad == 1) {
-                const fila = element.closest('tr');
-                const idProducto = fila.querySelector('#idProducto').innerText;
-                fila.parentNode.removeChild(fila);
-                window.location.href = '?idToRemove=' + idProducto;
+                                    if (operacion === 'aumentar') {
+                                        const nuevaCantidad = parseInt(input.value) + 1;
+                                        input.value = nuevaCantidad;
+                                    }
+                                    if (operacion === 'reducir') {
+                                        if (cantidad == 1) {
+                                            const fila = element.closest('tr');
+                                            const idProducto = fila.querySelector('#idProducto').innerText;
+                                            fila.parentNode.removeChild(fila);
+                                            window.location.href = '?idToRemove=' + idProducto;
 
-            }
-            if (cantidad >= 2) {
-                const nuevaCantidad = parseInt(input.value) - 1;
-                input.value = nuevaCantidad;
-            }
+                                        }
+                                        if (cantidad >= 2) {
+                                            const nuevaCantidad = parseInt(input.value) - 1;
+                                            input.value = nuevaCantidad;
+                                        }
 
-        }
-        actualizarTotales();
-    }
+                                    }
+                                    actualizarTotales();
+                                }
 
-    function actualizarTotales() {
-        let subtotal = 0.0;
-        let iva = 0.0;
-        document.querySelectorAll('tr[data-id]').forEach(fila => {
-            const cantidad = parseInt(fila.querySelector('.cart_quantity_input').value);
-            const precioUnitario = parseFloat(fila.querySelector('.precioUnitario').innerText);
-            const aux = cantidad * precioUnitario;
+                                function actualizarTotales() {
+                                    let subtotal = 0.0;
+                                    let iva = 0.0;
+                                    document.querySelectorAll('tr[data-id]').forEach(fila => {
+                                        const cantidad = parseInt(fila.querySelector('.cart_quantity_input').value);
+                                        const precioUnitario = parseFloat(fila.querySelector('.precioUnitario').innerText);
+                                        const aux = cantidad * precioUnitario;
 
-            subtotal += aux;
+                                        subtotal += aux;
 
-        });
-        iva = subtotal * 0.16;
+                                    });
+                                    iva = subtotal * 0.16;
 
-        document.getElementById('sub-total').innerText = subtotal.toFixed(2);
-        document.getElementById('iva').innerText = (iva).toFixed(2);
-        document.getElementById('txt-total').innerText = (subtotal + iva).toFixed(2);
-    }
+                                    document.getElementById('sub-total').innerText = subtotal.toFixed(2);
+                                    document.getElementById('iva').innerText = (iva).toFixed(2);
+                                    document.getElementById('txt-total').innerText = (subtotal + iva).toFixed(2);
+                                }
 
-    function eliminarCarrito(element) {
-        const fila = element.closest('tr');
-        const idProducto = fila.querySelector('#idProducto').innerText;
-        fila.parentNode.removeChild(fila);
-        window.location.href = '?idToRemove=' + idProducto;
-    }
+                                function eliminarCarrito(element) {
+                                    const fila = element.closest('tr');
+                                    const idProducto = fila.querySelector('#idProducto').innerText;
+                                    fila.parentNode.removeChild(fila);
+                                    window.location.href = '?idToRemove=' + idProducto;
+                                }
 
-    function abrirModal(mensaje) {
-        const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
-        $('#modalMensaje').modal('show');
-    }
+                                function abrirModal(mensaje) {
+                                    const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
+                                    $('#modalMensaje').modal('show');
+                                }
 
-    function cerrarModalPago() {
-        $('#modalPago').modal('hide');
-    }
-    function validarPago(numTarjeta, fecha, numSeguridad) {
-        if (!(/^\d{16}$/.test(numTarjeta))) {
-            alert("Formato de tarjeta invalido");
-            return false;
-        }
-        if (!(/^[0-9]{3}$/.test(numSeguridad))) {
-            alert("Numero de seguridad invalido");
-            return false;
-        }
+                                function cerrarModalPago() {
+                                    $('#modalPago').modal('hide');
+                                }
+                                function validarPago(numTarjeta, fecha, numSeguridad) {
+                                    if (!(/^\d{16}$/.test(numTarjeta))) {
+                                        alert("Formato de tarjeta invalido");
+                                        return false;
+                                    }
+                                    if (!(/^[0-9]{3}$/.test(numSeguridad))) {
+                                        alert("Numero de seguridad invalido");
+                                        return false;
+                                    }
 
-        if (new Date(fecha) <= new Date()) {
-            alert("Tarjeta vencida");
-            return false;
-        }
-        return true;
-    }
+                                    if (new Date(fecha) <= new Date()) {
+                                        alert("Tarjeta vencida");
+                                        return false;
+                                    }
+                                    return true;
+                                }
 
-    const botonPagar = document.getElementById("botonPagar");
-    const numTarjetaTxt = document.getElementById("numeroTarjeta");
-    const fechaVencimientoTxt = document.getElementById("fechaVencimiento");
-    const numSeguridadTxt = document.getElementById("numSeguridad");
-    const tablaProductos = document.getElementById("shop-table");
+                                function validarFormulario(usuario, pass, nombres, apellidoP, apellidoM, correo) {
 
-    botonPagar.addEventListener("click", () => {
-        const numTarjeta = numTarjetaTxt.value;
-        const fechaVencimiento = fechaVencimientoTxt.value;
-        const numSeguridad = numSeguridadTxt.value;
-        filas = tablaProductos.rows;
+                                    if (usuario.length < 8 || !(/^[a-zA-Z0-9._-]+$/.test(usuario)) || !(/^(?!\s+$).+/.test(usuario))) {
+                                        alert('El usuario debe tener al menos 8 caracteres. Puede contener numeros y los caracteres= ". - _"');
+                                        return false;
+                                    }
 
-        if (!validarPago(numTarjeta, fechaVencimiento, numSeguridad)) {
-            return;
-        }
+                                    if (pass.length < 8 || !(/^(?!\s+$).+/.test(pass))) {
+                                        alert('La contraseña debe de tener al menos 8 caracteres');
+                                        return false;
+                                    }
 
-        const infoCompra = {
-            CompraDTO: {
-                numTarjeta,
-                fechaVencimiento,
-                numSeguridad,
-                productos: []
-            }
-        };
-        for (let i = 1; i < filas.length; i++) {
-            const celdas = filas[i].cells;
-            console.log(celdas[0].querySelector('#idProducto').innerText);
+                                    if (nombres.length < 3 || !(/^[a-zA-Z\s]+$/.test(nombres)) || !(/^(?!\s+$).+/.test(nombres))) {
+                                        alert('El nombre debe tener almenos 3 caracteres y solo puede contener letras y espacios.');
+                                        return false;
+                                    }
 
-            const producto = {
-                id: celdas[0].querySelector('#idProducto').innerText,
-                precio: parseFloat(celdas[2].querySelector("p").innerText.replace('$', '')),
-                cantidad: parseInt(celdas[3].querySelector(".cart_quantity_input").value),
-                totalProducto: parseFloat(celdas[4].querySelector(".cart_total_price").innerText.replace('$', ''))
-            };
+                                    if (apellidoP.length < 3 || !(/^[a-zA-Z\s]+$/.test(apellidoP)) || !(/^(?!\s+$).+/.test(apellidoP))) {
+                                        alert('El apellido paterno debe de tener almenos 3 caracteres y solo puede contener letras y espacios');
+                                        return false;
+                                    }
 
-            infoCompra.CompraDTO.productos.push(producto);
-        }
-        const infoCompraJSON = JSON.stringify(infoCompra);
+                                    if (apellidoM.length < 3 || !(/^[a-zA-Z\s]+$/.test(apellidoM) || !(/^(?!\s+$).+/.test(apellidoM)))) {
+                                        alert('El apellido materno debe de tener almenos 3 caracteres y solo puede contener letras y espacios');
+                                        return false;
+                                    }
 
-        cerrarModalPago();
+                                    if (correo.length < 8 || !(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(correo)) || !(/^(?!\s+$).+/.test(correo))) {
+                                        alert('El correo debe de seguir el formato example@example.com');
+                                        return false;
+                                    }
 
-        fetch("/Proyecto_GlobalTires/RealizarCompra", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: infoCompraJSON
-        }).then(response => {
-            if (!response.ok) {
-                throw new Error(response.statusText);
-            }
-            return response.json();
-        })
-                .then(data => {
-                    if (data.respuesta === "exito") {
-                        abrirModal("Pago realizado con exito!");
-                        $('#modalMensaje').on('hidden.bs.modal', function () {
-                            sessionStorage.setItem("productos-en-carrito", JSON.stringify([]));
-                            cargarCarrito();
-                            window.location.href = "compras.jsp";
-                        });
-                    } else {
-                        abrirModal("El pago fallo!");
-                    }
+                                    return true;
+                                }
 
-                })
-                .catch(error => {
-                    abrirModal("No se pudo realizar el pago del producto");
-                    console.log(error);
-                });
-    });
-    function abrirModal(mensaje) {
-        const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
-        $('#modalMensaje').modal('show');
-    }
+                                const botonPagar = document.getElementById("botonPagar");
+                                const numTarjetaTxt = document.getElementById("numeroTarjeta");
+                                const fechaVencimientoTxt = document.getElementById("fechaVencimiento");
+                                const numSeguridadTxt = document.getElementById("numSeguridad");
+                                const tablaProductos = document.getElementById("shop-table");
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const updateUserForm = document.getElementById("updateUserForm");
+                                botonPagar.addEventListener("click", () => {
+                                    const numTarjeta = numTarjetaTxt.value;
+                                    const fechaVencimiento = fechaVencimientoTxt.value;
+                                    const numSeguridad = numSeguridadTxt.value;
+                                    filas = tablaProductos.rows;
 
-        updateUserForm.addEventListener("submit", function (event) {
-            event.preventDefault();
+                                    if (!validarPago(numTarjeta, fechaVencimiento, numSeguridad)) {
+                                        return;
+                                    }
 
-            const formData = new FormData(updateUserForm);
-            const userData = {ClienteDTO: {}};
+                                    const infoCompra = {
+                                        CompraDTO: {
+                                            numTarjeta,
+                                            fechaVencimiento,
+                                            numSeguridad,
+                                            productos: []
+                                        }
+                                    };
+                                    for (let i = 1; i < filas.length; i++) {
+                                        const celdas = filas[i].cells;
+                                        console.log(celdas[0].querySelector('#idProducto').innerText);
 
-            formData.forEach((value, key) => {
-                userData.ClienteDTO[key] = value;
-            });
+                                        const producto = {
+                                            id: celdas[0].querySelector('#idProducto').innerText,
+                                            precio: parseFloat(celdas[2].querySelector("p").innerText.replace('$', '')),
+                                            cantidad: parseInt(celdas[3].querySelector(".cart_quantity_input").value),
+                                            totalProducto: parseFloat(celdas[4].querySelector(".cart_total_price").innerText.replace('$', ''))
+                                        };
 
-            fetch("/Proyecto_GlobalTires/CrudClientes", {
-                method: "POST",
-                body: JSON.stringify(userData)
-            })
-                    .then(response => response.json())
-                    .then(data => {
-                        $("#updateUserModal").modal("hide");
-                        abrirModal(JSON.stringify(data.respuesta).replaceAll('"', ''));
-                        document.getElementById("nombreUsuario").innerHTML = JSON.stringify(data.valores.usuario).replaceAll('"', '');
-                    })
-                    .catch(error => {
-                        console.error("Error al actualizar usuario:", error);
-                    });
-        });
-    });
+                                        infoCompra.CompraDTO.productos.push(producto);
+                                    }
+                                    const infoCompraJSON = JSON.stringify(infoCompra);
+
+                                    cerrarModalPago();
+
+                                    fetch("/Proyecto_GlobalTires/RealizarCompra", {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: infoCompraJSON
+                                    }).then(response => {
+                                        if (!response.ok) {
+                                            throw new Error(response.statusText);
+                                        }
+                                        return response.json();
+                                    })
+                                            .then(data => {
+                                                if (data.respuesta === "exito") {
+                                                    abrirModal("Pago realizado con exito!");
+                                                    $('#modalMensaje').on('hidden.bs.modal', function () {
+                                                        sessionStorage.setItem("productos-en-carrito", JSON.stringify([]));
+                                                        cargarCarrito();
+                                                        window.location.href = "compras.jsp";
+                                                    });
+                                                } else {
+                                                    console.log(data);
+                                                    abrirModal(JSON.stringify(data.valores.mensaje).replaceAll('"', ''));
+                                                }
+                                            })
+                                            .catch(error => {
+                                                abrirModal(JSON.stringify(data.valores.mensaje).replaceAll('"', ''));
+                                                console.log(error);
+                                            });
+                                });
+                                function abrirModal(mensaje) {
+                                    const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
+                                    $('#modalMensaje').modal('show');
+                                }
+
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    const updateUserForm = document.getElementById("updateUserForm");
+                                    const botonRegistrar = document.getElementById("botonRegistrar");
+                                    const inputUsuario = document.getElementById("usuario");
+                                    const inputPass = document.getElementById("pass");
+                                    const inputNombres = document.getElementById("nombres");
+                                    const inputApellidoP = document.getElementById("apellidoP");
+                                    const inputApellidoM = document.getElementById("apellidoM");
+                                    const inputCorreo = document.getElementById("correo");
+
+                                    updateUserForm.addEventListener("submit", function (event) {
+                                        event.preventDefault();
+
+                                        const formData = new FormData(updateUserForm);
+                                        const userData = {ClienteDTO: {}};
+                                        let usuario = inputUsuario.value;
+                                        let pass = inputPass.value;
+                                        let nombres = inputNombres.value;
+                                        let apellidoP = inputApellidoP.value;
+                                        let apellidoM = inputApellidoM.value;
+                                        let correo = inputCorreo.value;
+
+                                        if (!validarFormulario(usuario, pass, nombres, apellidoP, apellidoM, correo, )) {
+                                            return;
+                                        }
+
+
+                                        formData.forEach((value, key) => {
+                                            userData.ClienteDTO[key] = value;
+                                        });
+
+                                        fetch("/Proyecto_GlobalTires/CrudClientes", {
+                                            method: "POST",
+                                            body: JSON.stringify(userData)
+                                        })
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    $("#updateUserModal").modal("hide");
+                                                    abrirModal(JSON.stringify(data.respuesta).replaceAll('"', ''));
+                                                    document.getElementById("nombreUsuario").innerHTML = JSON.stringify(data.valores.usuario).replaceAll('"', '');
+                                                })
+                                                .catch(error => {
+                                                    console.error("Error al actualizar usuario:", error);
+                                                });
+                                    });
+                                });
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    let form = document.getElementById('updateUserForm');
+                                    let btnRestaurar = document.getElementById('btnRestaurar');
+
+                                    let initialValues = {
+                                        usuario: '<%= c.getUsuario()%>',
+                                        pass: '<%= c.getPass()%>',
+                                        correo: '<%= c.getCorreo()%>',
+                                        nombres: '<%= c.getNombres()%>',
+                                        apellidoP: '<%= c.getApellidoP()%>',
+                                        apellidoM: '<%= c.getApellidoM()%>'
+                                    };
+
+                                    function restaurarFormulario() {
+                                        form.reset();
+                                        Object.keys(initialValues).forEach(function (key) {
+                                            document.getElementById(key).value = initialValues[key];
+                                        });
+                                    }
+
+                                    btnRestaurar.addEventListener('click', function () {
+                                        restaurarFormulario();
+                                    });
+                                });
     </script>
 </body>
 </html>
