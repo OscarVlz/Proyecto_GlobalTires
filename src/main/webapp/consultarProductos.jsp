@@ -134,7 +134,11 @@
                     </div>
                     <div class="form-group">
                         <label for="txtTipo">Tipo:</label>
-                        <input type="text" id="txtTipo" name="txtTipo" class="form-control" required>
+                        <select id="txtTipo" name="txtTipo" class="form-control" required>
+                            <option value="Vehiculos">Vehiculos</option>
+                            <option value="Pesados">Pesados</option>
+                            <option value="TodoTerreno">TodoTerreno</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="txtimg">Imagen:</label>
