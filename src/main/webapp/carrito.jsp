@@ -30,15 +30,6 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
         HttpSession sesion = request.getSession(true);
         ArrayList<Articulo> articulos = sesion.getAttribute("carrito") == null ? null : (ArrayList) sesion.getAttribute("carrito");
     %>
-    <%
-    String idProductoToRemove = request.getParameter("idToRemove");
-    if (idProductoToRemove != null && !idProductoToRemove.isEmpty()) {
-        int id = Integer.parseInt(idProductoToRemove);
-        if(articulos.contains(new Articulo(id))){
-            articulos.remove(articulos.indexOf(new Articulo(id)));
-        }
-    }
-    %>
 <!DOCTYPE html>
 <head>
 
@@ -124,7 +115,6 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                                 <td class="description">Descripción</td>
                                 <td class="price">Precio</td>
                                 <td class="quantity">Cantidad</td>
-                                <td class="total">Total</td>
                                 <td></td>
                             </tr>
                         </thead>
@@ -149,8 +139,7 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                         </table>
                     </div>
                     <div class="card-footer">
-                        <a class="btn btn-default update" href=""><i class="fa fa-shopping-cart"></i> Update</a>
-                        <a class="btn btn-default check_out" href="" data-toggle="modal" data-target="#modalPago"><i class="fa fa-shopping-cart"></i> Check Out</a>
+                        <a class="btn btn-default check_out" href="" data-toggle="modal" data-target="#modalPago"><i class="fa fa-shopping-cart"></i> Pagar</a>
                     </div>
                 </div>
             </div>
@@ -311,12 +300,9 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                 <td class="cart_quantity">
                     <div class="cart_quantity_button">
                         <a class="cart_quantity_up" href="#" onclick="cambiarCantidadCarrito('aumentar', this)"> + </a>
-                        <input class="cart_quantity_input" type="text" name="quantity" value="` + producto.cantidad + `" autocomplete="off" size="2">
+                        <input class="cart_quantity_input" type="text" name="quantity" value="` + producto.cantidad + `" max="99" autocomplete="off" size="2" disabled>
                         <a class="cart_quantity_down"  href="#" onclick="cambiarCantidadCarrito('reducir', this)"> - </a>
                     </div>
-                </td>
-                <td class="cart_total">
-                    <p class="cart_total_price">$<span class="subtotal">` + producto.price * producto.cantidad + `</span></p>
                 </td>
                 <td class="cart_delete">
                     <a class="cart_quantity_delete" href="#" id="deleteitem"><i class="fa fa-times"></i></a>
@@ -348,7 +334,6 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                                     const index = productosEnCarrito.findIndex(producto => producto.id === idProducto);
 
                                     productosEnCarrito.splice(index, 1);
-                                    console.log(productosEnCarrito);
                                     sessionStorage.setItem("productos-en-carrito", JSON.stringify(productosEnCarrito));
                                     cargarCarrito();
                                 }
@@ -357,23 +342,18 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                                     const input = element.parentElement.querySelector('input');
                                     cantidad = input.value;
 
-                                    if (operacion === 'aumentar') {
+                                    if (operacion === 'aumentar' && cantidad < 99) {
                                         const nuevaCantidad = parseInt(input.value) + 1;
                                         input.value = nuevaCantidad;
                                     }
                                     if (operacion === 'reducir') {
-                                        if (cantidad == 1) {
-                                            const fila = element.closest('tr');
-                                            const idProducto = fila.querySelector('#idProducto').innerText;
-                                            fila.parentNode.removeChild(fila);
-                                            window.location.href = '?idToRemove=' + idProducto;
-
+                                        if (cantidad <= 1) {
+                                            return;
                                         }
                                         if (cantidad >= 2) {
                                             const nuevaCantidad = parseInt(input.value) - 1;
                                             input.value = nuevaCantidad;
                                         }
-
                                     }
                                     actualizarTotales();
                                 }
@@ -396,12 +376,6 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                                     document.getElementById('txt-total').innerText = (subtotal + iva).toFixed(2);
                                 }
 
-                                function eliminarCarrito(element) {
-                                    const fila = element.closest('tr');
-                                    const idProducto = fila.querySelector('#idProducto').innerText;
-                                    fila.parentNode.removeChild(fila);
-                                    window.location.href = '?idToRemove=' + idProducto;
-                                }
 
                                 function abrirModal(mensaje) {
                                     const textoModal = document.getElementById("textoModal").innerHTML = mensaje;
@@ -495,7 +469,7 @@ if (usuario==null) { response.sendRedirect("index.jsp"); } %>
                                             id: celdas[0].querySelector('#idProducto').innerText,
                                             precio: parseFloat(celdas[2].querySelector("p").innerText.replace('$', '')),
                                             cantidad: parseInt(celdas[3].querySelector(".cart_quantity_input").value),
-                                            totalProducto: parseFloat(celdas[4].querySelector(".cart_total_price").innerText.replace('$', ''))
+                                            totalProducto: parseFloat(celdas[2].querySelector("p").innerText.replace('$', '')) * parseInt(celdas[3].querySelector(".cart_quantity_input").value)
                                         };
 
                                         infoCompra.CompraDTO.productos.push(producto);
