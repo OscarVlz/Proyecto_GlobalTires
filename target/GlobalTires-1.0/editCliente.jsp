@@ -30,7 +30,41 @@
         <link rel="stylesheet" href="assets/css/templatemo-sixteen.css">
         <link rel="stylesheet" href="assets/css/owl.css">
     </head>
+    
+    <header class="">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="principalAdmin.jsp"><img src="assets/images/logo.png" alt="" class="logoImg"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="principalAdmin.jsp"> <i class="fa fa-home" aria-hidden="true"></i> Inicio
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link"><i class="fa fa-user" aria-hidden="true"></i> <% out.println(usuario);%></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="" data-toggle="modal"
+                               data-target="#ModalCRUD"><i class="fa fa-database"
+                                                        aria-hidden="true"></i> Administrar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="CerrarSesion">Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="banner header-text">
+    </div>
     <body>
         <div class="container mt-5">
             <%

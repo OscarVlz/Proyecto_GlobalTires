@@ -37,11 +37,11 @@
             <form action="CrudProductos?accion = mostrarCreado" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="txtNom">Nombre:</label>
-                    <input type="text" id="txtNom" pattern=".{5,25}" minlength="5" maxlength="25" name="txtNom"  class="form-control" required>
+                    <input type="text" placeholder="Ingrese el nombre del Producto" id="txtNom" pattern=".{5,25}" minlength="5" maxlength="25" name="txtNom"  class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="txtTipo">Tipo:</label>
-                    <input type="text" id="txtTipo" name="txtTipo" class="form-control" required>
+                    <input type="text"  id="txtTipo" name="txtTipo" class="form-control" required>
                 </div>
                 <div class="form-group">
                     <label for="txtimg">Imagen:</label>
@@ -49,15 +49,15 @@
                 </div>
                 <div class="form-group">
                     <label for="txtPrecio">Precio:</label>
-                    <input type="number" id="txtPrecio" pattern="^(?:[1-9]\d{2,6}|100)$" name="txtPrecio" class="form-control"required>
+                    <input type="number" placeholder="Ingrese el precio del Producto" id="txtPrecio" pattern="^(?:[1-9]\d{2,6}|100)$" name="txtPrecio" class="form-control"required>
                 </div>
                 <div class="form-group">
                     <label for="txtStock">Stock:</label>
-                    <input type="number" id="txtStock" name="txtStock" pattern="^(?:[1-9]|[1-9]\d|999)$" class="form-control"required>
+                    <input type="number" placeholder="Ingrese la cantidad de Producto" id="txtStock" name="txtStock" pattern="^(?:[1-9]|[1-9]\d|999)$" class="form-control"required>
                 </div>
                 <div class="form-group">
                     <label for="txtDescripcion">Descripción:</label>
-                    <input type="text" id="txtDescripcion" name="txtDescripcion" pattern="^[A-Za-z0-9,.;:ÑñÁáÉéÍíÓóÚúÜü¿?!¡'\s]{20,175}$" minlength="20" maxlength="175" class="form-control"required>
+                    <input type="text" placeholder="Ingrese la Descripción del Producto" id="txtDescripcion" name="txtDescripcion" pattern="^[A-Za-z0-9,.;:ÑñÁáÉéÍíÓóÚúÜü¿?!¡'\s]{20,175}$" minlength="20" maxlength="175" class="form-control"required>
                 </div>
 
                 <button type="submit" name="accion" value="mostrarCreado" class="btn btn-primary">Crear</button>
