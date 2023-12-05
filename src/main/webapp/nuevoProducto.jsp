@@ -57,7 +57,7 @@
                 </div>
                 <div class="form-group">
                     <label for="txtDescripcion">Descripción:</label>
-                    <input type="text" id="txtDescripcion" name="txtDescripcion" pattern="^[A-Za-z0-9,.;:]{20,175}$" minlength="20" maxlength="175" class="form-control"required>
+                    <input type="text" id="txtDescripcion" name="txtDescripcion" pattern="^[A-Za-z0-9,.;:ÑñÁáÉéÍíÓóÚúÜü¿?!¡'\s]{20,175}$" minlength="20" maxlength="175" class="form-control"required>
                 </div>
 
                 <button type="submit" name="accion" value="mostrarCreado" class="btn btn-primary">Crear</button>
